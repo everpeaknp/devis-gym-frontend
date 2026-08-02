@@ -8,15 +8,15 @@ import Image from "next/image";
 import { AnimatedLayerButton } from "@/components/ui/AnimatedLayerButton";
 import { businessData } from "@/data/business";
 import HeroScrollSequence from "./HeroScrollSequence";
-import { Gauge } from "@/components/ui/gauge-1";
+import HeroProgress from "@/components/ui/hero-progress";
 
-// Hero media data
+// Hero media data - using actual files from public/hero directory
 const heroMedia = [
   { type: 'video', src: '/hero/135161-761273563_medium.mp4' },
   { type: 'image', src: '/hero/Untitled-design-2026-04-02T110204.155.jpg' },
   { type: 'video', src: '/hero/143431-782373969_medium.mp4' },
   { type: 'image', src: '/hero/Untitled-design-2026-04-02T110712.060.jpg' },
-  { type: 'video', src: '/hero/200657-913478674_medium.mp4' },
+  { type: 'image', src: '/hero/f45-video-thumb.jpg' },
   { type: 'image', src: '/hero/Untitled-design-2026-04-02T111150.046.jpg' },
   { type: 'video', src: '/hero/27088-361827441_medium.mp4' },
   { type: 'image', src: '/hero/Untitled-design-2026-04-02T113009.615.jpg' },
@@ -31,7 +31,7 @@ export default function Hero() {
   const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
-  const intervalRef = useRef<number>();
+  const intervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   // Preload and prepare videos for smooth playback
@@ -171,60 +171,91 @@ export default function Hero() {
       }}
     >
       {/* Background Media Slider */}
-      <div className="absolute inset-0">
-        {heroMedia.map((media, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-500 ${
-              index === currentMediaIndex ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            {media.type === 'video' ? (
-              <video
-                ref={(el) => {
-                  if (el) videoRefs.current[index] = el;
-                }}
-                src={media.src}
-                autoPlay={index === currentMediaIndex}
-                muted
-                loop
-                playsInline
-                className="w-full h-full object-cover"
-                preload="auto"
-                style={{
-                  objectFit: 'cover',
-                  willChange: 'transform',
-                  backfaceVisibility: 'hidden',
-                  transform: 'translateZ(0)' // Hardware acceleration
-                }}
-              />
-            ) : (
-              <Image
-                src={media.src}
-                alt="Devi's Gym"
-                fill
-                className="object-cover"
-                sizes="100vw"
-                quality={85}
-                priority={index <= 2} // Preload first 3 images
-              />
-            )}
-          </div>
-        ))}
+      <div className="absolute inset-0 overflow-hidden">
+        {heroMedia.map((media, index) => {
+          const isActive = index === currentMediaIndex;
+          const isPrev = index === (currentMediaIndex - 1 + heroMedia.length) % heroMedia.length;
+          const isNext = index === (currentMediaIndex + 1) % heroMedia.length;
+          
+          // Calculate proper positioning based on relative position to current slide
+          let positionClass = '';
+          if (isActive) {
+            positionClass = 'translate-x-0 z-10';
+          } else if (isPrev) {
+            positionClass = '-translate-x-full z-0';
+          } else if (isNext) {
+            positionClass = 'translate-x-full z-0';
+          } else {
+            // For slides that are not adjacent, position them off-screen based on their relative position
+            const distance = (index - currentMediaIndex + heroMedia.length) % heroMedia.length;
+            if (distance > heroMedia.length / 2) {
+              positionClass = '-translate-x-full z-0'; // Position to the left
+            } else {
+              positionClass = 'translate-x-full z-0'; // Position to the right
+            }
+          }
+          
+          return (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-transform duration-700 ease-in-out ${positionClass}`}
+              style={{
+                willChange: 'transform'
+              }}
+            >
+              {media.type === 'video' ? (
+                <video
+                  ref={(el) => {
+                    if (el) videoRefs.current[index] = el;
+                  }}
+                  src={media.src}
+                  autoPlay={index === currentMediaIndex}
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                  preload="auto"
+                  style={{
+                    objectFit: 'cover',
+                    willChange: 'transform',
+                    backfaceVisibility: 'hidden',
+                    transform: 'translateZ(0)' // Hardware acceleration
+                  }}
+                />
+              ) : (
+                <Image
+                  src={media.src}
+                  alt="Devi's Gym"
+                  fill
+                  className="object-cover"
+                  sizes="100vw"
+                  quality={85}
+                  priority={index <= 2} // Preload first 3 images
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
       
-      {/* Dark overlay for text readability */}
+      {/* Overall black opacity overlay for all media */}
       <div 
-        className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-black/50 sm:from-black/80 sm:via-black/60 sm:to-black/40"
+        className="absolute inset-0 bg-black/50"
         style={{ zIndex: 2 }}
       />
       
-      {/* Bottom black opacity gradient */}
+      {/* Additional gradient overlay for text readability */}
+      <div 
+        className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/20"
+        style={{ zIndex: 3 }}
+      />
+      
+      {/* Bottom area overlay for tagline */}
       <div 
         className="absolute inset-0"
         style={{
-          zIndex: 3,
-          background: 'linear-gradient(to bottom, transparent 0%, transparent 50%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.95) 100%)'
+          zIndex: 4,
+          background: 'linear-gradient(to bottom, transparent 0%, transparent 60%, rgba(0,0,0,0.4) 80%, rgba(0,0,0,0.7) 100%)'
         }}
       />
 
@@ -279,21 +310,8 @@ export default function Hero() {
         onMouseLeave={handleMouseLeave}
       >
         <div className="relative group">
-          {/* Progress Gauge */}
-          <Gauge
-            value={progress}
-            size={32}
-            primary="#c7ff3d"
-            showValue={false}
-            showPercentage={false}
-            gradient={true}
-            glowEffect={true}
-            transition={{ length: 100, delay: 0 }}
-            className="text-white"
-          />
-          
-          {/* Slide Number / Pause Icon - Centered over gauge */}
-          <div className="absolute inset-0 flex items-center justify-center text-white text-[10px] font-bold">
+          {/* Progress Circle */}
+          <HeroProgress value={progress} size={32}>
             {isPaused ? (
               // Small pause icon (two vertical lines)
               <div className="flex gap-0.5">
@@ -301,10 +319,10 @@ export default function Hero() {
                 <div className="w-0.5 h-1 bg-white/80"></div>
               </div>
             ) : (
-              // Slide number - smaller size
-              <span className="leading-none">{currentMediaIndex + 1}</span>
+              // Slide sequence format: 1/10
+              <span className="leading-none">{currentMediaIndex + 1}/{heroMedia.length}</span>
             )}
-          </div>
+          </HeroProgress>
           
           {/* Hover tooltip */}
           <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
