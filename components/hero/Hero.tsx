@@ -8,6 +8,7 @@ import Image from "next/image";
 import { AnimatedLayerButton } from "@/components/ui/AnimatedLayerButton";
 import { businessData } from "@/data/business";
 import HeroScrollSequence from "./HeroScrollSequence";
+import { Gauge } from "@/components/ui/gauge-1";
 
 // Hero media data
 const heroMedia = [
@@ -27,15 +28,93 @@ export default function Hero() {
   const heroSectionRef = useRef<HTMLElement>(null);
   const logoCircleRef = useRef<HTMLDivElement>(null);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const intervalRef = useRef<number>();
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-  // Auto-advance slider
+  // Preload and prepare videos for smooth playback
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentMediaIndex((prev) => (prev + 1) % heroMedia.length);
-    }, 5000); // Change every 5 seconds
-
-    return () => clearInterval(interval);
+    const videos = videoRefs.current;
+    
+    // Preload all videos
+    videos.forEach((video, index) => {
+      if (video && heroMedia[index]?.type === 'video') {
+        video.load(); // Reload to ensure it's properly loaded
+        
+        // Set video to ready state
+        video.addEventListener('canplaythrough', () => {
+          if (index === currentMediaIndex && video.paused) {
+            video.currentTime = 0;
+            video.play().catch(console.warn);
+          }
+        });
+      }
+    });
   }, []);
+
+  // Handle video playback when slide changes
+  useEffect(() => {
+    const videos = videoRefs.current;
+    
+    videos.forEach((video, index) => {
+      if (video && heroMedia[index]?.type === 'video') {
+        if (index === currentMediaIndex) {
+          // Play current video
+          video.currentTime = 0;
+          video.play().catch(console.warn);
+        } else {
+          // Pause other videos
+          video.pause();
+        }
+      }
+    });
+  }, [currentMediaIndex]);
+
+  // Auto-advance slider with progress
+  useEffect(() => {
+    const slideInterval = 5000; // 5 seconds per slide
+    
+    const updateProgress = () => {
+      if (!isPaused) {
+        setElapsedTime(prev => {
+          const newElapsed = prev + 100; // Add 100ms
+          const newProgress = Math.min((newElapsed / slideInterval) * 100, 100);
+          setProgress(newProgress);
+          
+          if (newElapsed >= slideInterval) {
+            setCurrentMediaIndex((prevIndex) => (prevIndex + 1) % heroMedia.length);
+            return 0; // Reset elapsed time
+          }
+          
+          return newElapsed;
+        });
+      }
+    };
+
+    // Clear any existing interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    
+    // Start new interval
+    intervalRef.current = setInterval(updateProgress, 100);
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isPaused]);
+
+  const handleMouseEnter = () => {
+    setIsPaused(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsPaused(false);
+  };
 
   useEffect(() => {
     // Scroll to top on mount to ensure first frame is visible
@@ -96,19 +175,28 @@ export default function Hero() {
         {heroMedia.map((media, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
+            className={`absolute inset-0 transition-opacity duration-500 ${
               index === currentMediaIndex ? 'opacity-100' : 'opacity-0'
             }`}
           >
             {media.type === 'video' ? (
               <video
+                ref={(el) => {
+                  if (el) videoRefs.current[index] = el;
+                }}
                 src={media.src}
-                autoPlay
+                autoPlay={index === currentMediaIndex}
                 muted
                 loop
                 playsInline
                 className="w-full h-full object-cover"
-                preload="metadata"
+                preload="auto"
+                style={{
+                  objectFit: 'cover',
+                  willChange: 'transform',
+                  backfaceVisibility: 'hidden',
+                  transform: 'translateZ(0)' // Hardware acceleration
+                }}
               />
             ) : (
               <Image
@@ -118,7 +206,7 @@ export default function Hero() {
                 className="object-cover"
                 sizes="100vw"
                 quality={85}
-                priority={index === 0}
+                priority={index <= 2} // Preload first 3 images
               />
             )}
           </div>
@@ -157,8 +245,8 @@ export default function Hero() {
               </span>
             </h1>
 
-            {/* Tagline */}
-            <p className="hero-line text-muted text-sm uppercase tracking-[0.2em] font-bold mb-8">
+            {/* Tagline - Mobile/Tablet only */}
+            <p className="hero-line text-muted text-sm uppercase tracking-[0.2em] font-bold mb-8 lg:hidden">
               Train. Fuel. Repeat.
             </p>
 
@@ -177,39 +265,69 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right Column - Slider Indicators */}
-          <div className="flex justify-center lg:justify-end">
-            <div className="flex flex-col gap-2">
-              <p className="text-white/60 text-xs uppercase tracking-wider mb-4 text-center lg:text-right">
-                Media {currentMediaIndex + 1} of {heroMedia.length}
-              </p>
-              <div className="flex flex-row lg:flex-col gap-2">
-                {heroMedia.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentMediaIndex(index)}
-                    className={`w-2 h-8 lg:w-8 lg:h-2 rounded-full transition-all duration-300 ${
-                      index === currentMediaIndex 
-                        ? 'bg-accent' 
-                        : 'bg-white/30 hover:bg-white/50'
-                    }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
+          {/* Right Column - Empty space for balance */}
+          <div className="hidden lg:block">
+            {/* Empty space to balance the layout */}
+          </div>
+        </div>
+      </div>
+
+      {/* Current Slide Indicator with Progress - Bottom Right Corner */}
+      <div 
+        className="absolute bottom-4 right-2 sm:right-3 lg:right-4 z-40 cursor-pointer"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <div className="relative group">
+          {/* Progress Gauge */}
+          <Gauge
+            value={progress}
+            size={32}
+            primary="#c7ff3d"
+            showValue={false}
+            showPercentage={false}
+            gradient={true}
+            glowEffect={true}
+            transition={{ length: 100, delay: 0 }}
+            className="text-white"
+          />
+          
+          {/* Slide Number / Pause Icon - Centered over gauge */}
+          <div className="absolute inset-0 flex items-center justify-center text-white text-[10px] font-bold">
+            {isPaused ? (
+              // Small pause icon (two vertical lines)
+              <div className="flex gap-0.5">
+                <div className="w-0.5 h-1 bg-white/80"></div>
+                <div className="w-0.5 h-1 bg-white/80"></div>
               </div>
-            </div>
+            ) : (
+              // Slide number - smaller size
+              <span className="leading-none">{currentMediaIndex + 1}</span>
+            )}
+          </div>
+          
+          {/* Hover tooltip */}
+          <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            {isPaused ? 'Paused' : 'Hover to pause'}
           </div>
         </div>
       </div>
 
       {/* Scroll Down Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2" style={{ zIndex: 30 }}>
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center" style={{ zIndex: 30 }}>
+        {/* Desktop tagline above arrow */}
+        <div className="hidden lg:block mb-2">
+          <p className="text-muted text-sm uppercase tracking-[0.2em] font-bold text-center">
+            Train. Fuel. Repeat.
+          </p>
+        </div>
+        
         <a
           href="#frames"
           aria-label="Scroll to next section"
-          className="relative flex items-center justify-center w-8 h-8 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 animate-bounce text-muted-dim transition-colors hover:text-accent hover:bg-white/20 motion-reduce:animate-none"
+          className="relative flex items-center justify-center animate-bounce text-muted-dim transition-colors hover:text-accent motion-reduce:animate-none"
         >
-          <ChevronDown size={16} />
+          <ChevronDown size={12} />
         </a>
       </div>
     </section>

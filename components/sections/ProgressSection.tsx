@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useLayoutEffect } from "react";
+import { useRef, useLayoutEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Gauge } from "@/components/ui/gauge-1";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -30,6 +31,13 @@ export default function ProgressSection() {
   const athleticAthleteRef = useRef<HTMLImageElement>(null);
   const muscularAthleteRef = useRef<HTMLImageElement>(null);
 
+  // Gauge refs and states
+  const gaugeContainerRef = useRef<HTMLDivElement>(null);
+  const [strengthGauge, setStrengthGauge] = useState(0);
+  const [muscleGauge, setMuscleGauge] = useState(0);
+  const [enduranceGauge, setEnduranceGauge] = useState(0);
+  const [confidenceGauge, setConfidenceGauge] = useState(0);
+
   useLayoutEffect(() => {
     const section = sectionRef.current;
     
@@ -48,6 +56,12 @@ export default function ProgressSection() {
         scale: 0.8
       });
 
+      // Set gauge container
+      gsap.set(gaugeContainerRef.current, {
+        opacity: 0,
+        y: 50
+      });
+
       // Set athlete initial states
       gsap.set(skinnyAthleteRef.current, { opacity: 1 });
       gsap.set([athleticAthleteRef.current, muscularAthleteRef.current], { opacity: 0 });
@@ -63,6 +77,43 @@ export default function ProgressSection() {
           anticipatePin: 1,
           onUpdate: (self) => {
             const progress = self.progress;
+            
+            // Update gauge values based on progress
+            const phaseProgress = Math.floor(progress * 5);
+            
+            switch(phaseProgress) {
+              case 0:
+                setStrengthGauge(0);
+                setMuscleGauge(0);
+                setEnduranceGauge(0);
+                setConfidenceGauge(0);
+                break;
+              case 1:
+                setStrengthGauge(25);
+                setMuscleGauge(15);
+                setEnduranceGauge(20);
+                setConfidenceGauge(30);
+                break;
+              case 2:
+                setStrengthGauge(45);
+                setMuscleGauge(35);
+                setEnduranceGauge(40);
+                setConfidenceGauge(50);
+                break;
+              case 3:
+                setStrengthGauge(70);
+                setMuscleGauge(60);
+                setEnduranceGauge(65);
+                setConfidenceGauge(75);
+                break;
+              case 4:
+              default:
+                setStrengthGauge(95);
+                setMuscleGauge(90);
+                setEnduranceGauge(85);
+                setConfidenceGauge(100);
+                break;
+            }
             
             // Phase-based athlete transformation
             if (progress < 0.2) {
@@ -114,6 +165,12 @@ export default function ProgressSection() {
         duration: 0.8,
         ease: "power3.out"
       }, 0.18)
+      .to(gaugeContainerRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out"
+      }, 0.20)
       .to(phase2TextRef.current, {
         opacity: 0,
         y: -50,
@@ -200,7 +257,7 @@ export default function ProgressSection() {
           {/* Weight Plate */}
           <img
             ref={weightPlateRef}
-            src="/equipment/plate.png"
+            src="/equipment/1.webp"
             alt="Weight Plate"
             className="w-20 h-20 md:w-32 md:h-32 object-contain"
           />
@@ -208,7 +265,7 @@ export default function ProgressSection() {
           {/* Extra Plate */}
           <img
             ref={extraPlateRef}
-            src="/equipment/plate.png"
+            src="/equipment/2.webp"
             alt="Extra Weight Plate"
             className="w-16 h-16 md:w-24 md:h-24 object-contain"
           />
@@ -231,6 +288,66 @@ export default function ProgressSection() {
             alt="Barbell"
             className="w-28 h-28 md:w-40 md:h-40 object-contain"
           />
+        </div>
+
+        {/* Progress Gauges - Bottom Right Corner */}
+        <div ref={gaugeContainerRef} className="absolute bottom-8 right-8 grid grid-cols-2 gap-6">
+          <div className="text-center">
+            <Gauge
+              value={strengthGauge}
+              size={80}
+              primary="danger"
+              label="Strength"
+              showValue={true}
+              showPercentage={true}
+              gradient={true}
+              glowEffect={true}
+              transition={{ length: 800, delay: 100 }}
+              className="text-white"
+            />
+          </div>
+          <div className="text-center">
+            <Gauge
+              value={muscleGauge}
+              size={80}
+              primary="warning"
+              label="Muscle"
+              showValue={true}
+              showPercentage={true}
+              gradient={true}
+              glowEffect={true}
+              transition={{ length: 800, delay: 200 }}
+              className="text-white"
+            />
+          </div>
+          <div className="text-center">
+            <Gauge
+              value={enduranceGauge}
+              size={80}
+              primary="info"
+              label="Endurance"
+              showValue={true}
+              showPercentage={true}
+              gradient={true}
+              glowEffect={true}
+              transition={{ length: 800, delay: 300 }}
+              className="text-white"
+            />
+          </div>
+          <div className="text-center">
+            <Gauge
+              value={confidenceGauge}
+              size={80}
+              primary="success"
+              label="Confidence"
+              showValue={true}
+              showPercentage={true}
+              gradient={true}
+              glowEffect={true}
+              transition={{ length: 800, delay: 400 }}
+              className="text-white"
+            />
+          </div>
         </div>
 
         {/* Central Athlete */}
@@ -265,54 +382,54 @@ export default function ProgressSection() {
         {/* Typography Phases */}
         {/* Phase 1: ZERO */}
         <div ref={phase1TextRef} className="absolute top-[15%] left-1/2 -translate-x-1/2 text-center">
-          <h2 className="font-oswald text-6xl md:text-8xl font-bold text-white uppercase tracking-wider">
+          <h2 className="font-display text-6xl md:text-8xl font-bold text-white uppercase tracking-wider">
             Zero
           </h2>
-          <p className="font-oswald text-lg md:text-xl text-white/80 uppercase tracking-widest mt-4">
+          <p className="text-lg md:text-xl text-white/80 uppercase tracking-widest mt-4">
             Every Journey Starts Somewhere
           </p>
         </div>
 
         {/* Phase 2: FIRST REP */}
         <div ref={phase2TextRef} className="absolute top-[20%] left-1/2 -translate-x-1/2 text-center">
-          <h3 className="font-oswald text-4xl md:text-6xl font-bold text-accent uppercase tracking-wider">
+          <h3 className="font-display text-4xl md:text-6xl font-bold text-accent uppercase tracking-wider">
             01
           </h3>
-          <p className="font-oswald text-lg md:text-xl text-white uppercase tracking-widest mt-2">
+          <p className="text-lg md:text-xl text-white uppercase tracking-widest mt-2">
             The First Rep
           </p>
         </div>
 
         {/* Phase 3: PROGRESS */}
         <div ref={phase3TextRef} className="absolute top-[25%] left-1/2 -translate-x-1/2 text-center">
-          <h3 className="font-oswald text-4xl md:text-6xl font-bold text-accent uppercase tracking-wider">
+          <h3 className="font-display text-4xl md:text-6xl font-bold text-accent uppercase tracking-wider">
             02
           </h3>
-          <p className="font-oswald text-lg md:text-xl text-white uppercase tracking-widest mt-2">
+          <p className="text-lg md:text-xl text-white uppercase tracking-widest mt-2">
             Built Rep By Rep
           </p>
         </div>
 
         {/* Phase 4: THE WEIGHT BUILDS */}
         <div ref={phase4TextRef} className="absolute top-[30%] left-1/2 -translate-x-1/2 text-center">
-          <h3 className="font-oswald text-4xl md:text-6xl font-bold text-accent uppercase tracking-wider">
+          <h3 className="font-display text-4xl md:text-6xl font-bold text-accent uppercase tracking-wider">
             03
           </h3>
-          <p className="font-oswald text-lg md:text-xl text-white uppercase tracking-widest mt-2">
+          <p className="text-lg md:text-xl text-white uppercase tracking-widest mt-2">
             More Weight, More Growth
           </p>
         </div>
 
         {/* Phase 5: BUILT */}
         <div ref={phase5TextRef} className="absolute bottom-[15%] left-1/2 -translate-x-1/2 text-center max-w-4xl">
-          <h2 className="font-oswald text-7xl md:text-9xl font-bold text-white uppercase tracking-wider mb-8">
+          <h2 className="font-display text-7xl md:text-9xl font-bold text-white uppercase tracking-wider mb-8">
             Built
           </h2>
           <div className="space-y-4">
-            <p className="font-oswald text-2xl md:text-3xl text-white uppercase tracking-widest">
+            <p className="text-2xl md:text-3xl text-white uppercase tracking-widest">
               Progress Isn't Given
             </p>
-            <p className="font-oswald text-2xl md:text-3xl text-accent uppercase tracking-widest font-bold">
+            <p className="text-2xl md:text-3xl text-accent uppercase tracking-widest font-bold">
               It's Built
             </p>
           </div>
