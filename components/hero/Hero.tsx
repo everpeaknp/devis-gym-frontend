@@ -27,6 +27,13 @@ export default function Hero() {
   const [elapsedTime, setElapsedTime] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  
+  // Mouse drag/swipe functionality
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStartX, setDragStartX] = useState(0);
+  const [dragCurrentX, setDragCurrentX] = useState(0);
+  const dragThreshold = 30; // Reduced threshold for easier triggering
 
   // Preload and prepare videos for smooth playback
   useEffect(() => {
@@ -82,7 +89,11 @@ export default function Hero() {
           setProgress(newProgress);
           
           if (newElapsed >= slideInterval) {
-            setCurrentMediaIndex((prevIndex) => (prevIndex + 1) % heroMedia.length);
+            setIsTransitioning(true);
+            setTimeout(() => {
+              setCurrentMediaIndex((prevIndex) => (prevIndex + 1) % heroMedia.length);
+              setIsTransitioning(false);
+            }, 200); // Brief delay for smooth transition
             return 0; // Reset elapsed time
           }
           
@@ -111,12 +122,90 @@ export default function Hero() {
   };
 
   const handleMouseLeave = () => {
+    if (isDragging) {
+      handleMouseUp();
+    }
     setIsHovering(false);
   };
 
-  const handleProgressClick = () => {
+  // Mouse drag handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+    setDragStartX(e.clientX);
+    setDragCurrentX(e.clientX);
+    // Pause auto-advance during drag
+    setIsPaused(true);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    setDragCurrentX(e.clientX);
+  };
+
+  const handleMouseUp = (e?: React.MouseEvent) => {
+    if (!isDragging) return;
+    
+    const dragDistance = dragCurrentX - dragStartX;
+    
+    // Check if drag distance meets threshold
+    if (Math.abs(dragDistance) > dragThreshold) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        if (dragDistance > 0) {
+          // Dragged right - go to previous slide
+          setCurrentMediaIndex((prev) => (prev - 1 + heroMedia.length) % heroMedia.length);
+        } else {
+          // Dragged left - go to next slide  
+          setCurrentMediaIndex((prev) => (prev + 1) % heroMedia.length);
+        }
+        setIsTransitioning(false);
+        // Reset progress for new slide
+        setElapsedTime(0);
+        setProgress(0);
+      }, 200);
+    }
+    
+    setIsDragging(false);
+    setDragStartX(0);
+    setDragCurrentX(0);
+    // Resume auto-advance after a delay
+    setTimeout(() => setIsPaused(false), 500);
+  };
+
+  // Global mouse events for better drag handling
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      setDragCurrentX(e.clientX);
+    };
+
+    const handleGlobalMouseUp = () => {
+      if (isDragging) {
+        handleMouseUp();
+      }
+    };
+
+    if (isDragging) {
+      document.addEventListener('mousemove', handleGlobalMouseMove);
+      document.addEventListener('mouseup', handleGlobalMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleGlobalMouseMove);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDragging, dragCurrentX, dragStartX]);
+
+  const handleProgressClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering drag
+    console.log('Progress clicked, current paused state:', isPaused); // Debug log
+    
     const newPausedState = !isPaused;
     setIsPaused(newPausedState);
+    
+    console.log('New paused state:', newPausedState); // Debug log
     
     // Also control video playback immediately
     const videos = videoRefs.current;
@@ -178,12 +267,16 @@ export default function Hero() {
     <section
       ref={heroSectionRef}
       id="home"
-      className="relative flex w-full flex-col justify-center bg-background pt-[60px] sm:pt-[80px] md:pt-[92px]"
+      className="relative flex w-full flex-col justify-center bg-background pt-[60px] sm:pt-[80px] md:pt-[92px] select-none"
       style={{ 
         minHeight: '100dvh', // Dynamic viewport height for mobile
         overflow: 'hidden',
-        zIndex: 50
+        zIndex: 50,
+        cursor: isDragging ? 'grabbing' : 'grab',
+        userSelect: 'none'
       }}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
     >
       {/* Background Media Slider */}
       <div className="absolute inset-0 overflow-hidden">
@@ -253,39 +346,12 @@ export default function Hero() {
         })}
       </div>
       
-      {/* Strong black opacity overlay for all media */}
+      {/* Gradient overlay - darker left, lighter right */}
       <div 
         className="absolute inset-0"
         style={{ 
-          zIndex: 2,
-          backgroundColor: 'rgba(0, 0, 0, 0.6)'
-        }}
-      />
-      
-      {/* Additional gradient overlay for text readability */}
-      <div 
-        className="absolute inset-0"
-        style={{
-          zIndex: 3,
-          background: 'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%)'
-        }}
-      />
-      
-      {/* Left side overlay for title and buttons area */}
-      <div 
-        className="absolute inset-0"
-        style={{
-          zIndex: 4,
-          background: 'linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 40%, transparent 60%)'
-        }}
-      />
-      
-      {/* Bottom area overlay for tagline */}
-      <div 
-        className="absolute inset-0"
-        style={{
-          zIndex: 5,
-          background: 'linear-gradient(to bottom, transparent 0%, transparent 60%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.8) 100%)'
+          zIndex: 10,
+          background: 'linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.65) 40%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.1) 100%)'
         }}
       />
 
@@ -294,35 +360,178 @@ export default function Hero() {
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-16 items-center">
           {/* Left Column - Title and Buttons */}
           <div className="flex flex-col justify-center text-center lg:text-left">
-            <h1 className="font-display flex flex-col text-[clamp(3rem,15vw,8rem)] font-extrabold uppercase leading-[0.8] tracking-tight relative mb-8">
-              {/* Devi's in pure white */}
-              <span className="overflow-hidden">
-                <span className="hero-line block text-white">Devi&apos;s</span>
-              </span>
+            {/* Welcome text - Show for all slides with animation */}
+            <div 
+              className={`transition-all duration-500 ease-in-out ${
+                isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+              }`}
+            >
+              {currentMediaIndex === 0 && (
+                <p className="font-gotham text-white font-bold uppercase tracking-wider mb-1 lg:mb-1" 
+                   style={{ 
+                     fontWeight: 700,
+                     fontSize: '17px',
+                     lineHeight: '24px',
+                     color: 'rgb(255, 255, 255)'
+                   }}>
+                  Experience The Devi's Difference
+                </p>
+              )}
+              {currentMediaIndex === 1 && (
+                <p className="font-gotham text-white font-bold uppercase tracking-wider mb-1 lg:mb-1" 
+                   style={{ 
+                     fontWeight: 700,
+                     fontSize: '17px',
+                     lineHeight: '24px',
+                     color: 'rgb(255, 255, 255)'
+                   }}>
+                  More Than A Gym
+                </p>
+              )}
+              {currentMediaIndex === 2 && (
+                <p className="font-gotham text-white font-bold uppercase tracking-wider mb-1 lg:mb-1" 
+                   style={{ 
+                     fontWeight: 700,
+                     fontSize: '17px',
+                     lineHeight: '24px',
+                     color: 'rgb(255, 255, 255)'
+                   }}>
+                  Built For Every Goal
+                </p>
+              )}
+            </div>
 
-              {/* Gym with yellow accent */}
-              <span className="overflow-hidden">
-                <span className="hero-line block text-accent">Gym</span>
-              </span>
-            </h1>
+            {/* Main heading - Changes based on slide with animation */}
+            <div 
+              className={`transition-all duration-500 ease-in-out ${
+                isTransitioning ? 'opacity-0 translate-y-8' : 'opacity-100 translate-y-0'
+              }`}
+            >
+              <h1 className="font-gotham-condensed flex flex-col font-bold uppercase leading-[0.9] tracking-tight relative mb-3 lg:mb-4"
+                  style={{ 
+                    fontSize: '81px',
+                    lineHeight: '81px',
+                    fontWeight: 700,
+                    color: 'rgb(255, 255, 255)'
+                  }}>
+                {currentMediaIndex === 0 ? (
+                  // First slide content
+                  <>
+                    <span className="overflow-hidden">
+                      <span className="hero-line block text-white">Start</span>
+                    </span>
+                    <span className="overflow-hidden">
+                      <span className="hero-line block text-white">Your Fitness</span>
+                    </span>
+                    <span className="overflow-hidden">
+                      <span className="hero-line block text-white">Journey.</span>
+                    </span>
+                  </>
+                ) : currentMediaIndex === 1 ? (
+                  // Second slide content
+                  <>
+                    <span className="overflow-hidden">
+                      <span className="hero-line block text-white">Discover</span>
+                    </span>
+                    <span className="overflow-hidden">
+                      <span className="hero-line block text-white">Your</span>
+                    </span>
+                    <span className="overflow-hidden">
+                      <span className="hero-line block text-white">Strength.</span>
+                    </span>
+                  </>
+                ) : (
+                  // Third slide content
+                  <>
+                    <span className="overflow-hidden">
+                      <span className="hero-line block text-white">Feel</span>
+                    </span>
+                    <span className="overflow-hidden">
+                      <span className="hero-line block text-white">Stronger.</span>
+                    </span>
+                    <span className="overflow-hidden">
+                      <span className="hero-line block text-white">Every Day.</span>
+                    </span>
+                  </>
+                )}
+              </h1>
+            </div>
 
-            {/* Tagline - Mobile/Tablet only */}
-            <p className="hero-line text-muted text-sm uppercase tracking-[0.2em] font-bold mb-8 lg:hidden">
-              Train. Fuel. Repeat.
-            </p>
+            {/* Description text - Show for all slides with animation */}
+            <div 
+              className={`transition-all duration-500 ease-in-out ${
+                isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+              }`}
+            >
+              {currentMediaIndex === 0 && (
+                <p className="font-gotham text-white mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
+                   style={{ 
+                     fontWeight: 500,
+                     fontSize: '13px',
+                     lineHeight: '19px',
+                     color: 'rgb(255, 255, 255)'
+                   }}>
+                  Devi's Training is group training with the effectiveness and attention of a certified personal trainer.
+                </p>
+              )}
+              {currentMediaIndex === 1 && (
+                <p className="font-gotham text-white mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
+                   style={{ 
+                     fontWeight: 500,
+                     fontSize: '13px',
+                     lineHeight: '19px',
+                     color: 'rgb(255, 255, 255)'
+                   }}>
+                  Fitness is easier when you're surrounded by people who encourage you. At Devi's Gym, you'll train alongside a welcoming community, learn from experienced coaches, and celebrate every milestone, big or small, together.
+                </p>
+              )}
+              {currentMediaIndex === 2 && (
+                <p className="font-gotham text-white mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
+                   style={{ 
+                     fontWeight: 500,
+                     fontSize: '13px',
+                     lineHeight: '19px',
+                     color: 'rgb(255, 255, 255)'
+                   }}>
+                  Whether your goal is to lose weight, build muscle, improve your fitness, or simply feel healthier, Devi's Gym gives you the right environment to keep moving forward. Progress doesn't happen overnight, but every workout brings you one step closer.
+                </p>
+              )}
+            </div>
 
-            {/* Hero Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            {/* Hero Buttons with animation */}
+            <div 
+              className={`flex flex-col sm:flex-row gap-2 justify-center lg:justify-start relative z-10 transition-all duration-500 ease-in-out ${
+                isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+              }`}
+            >
               <span className="hero-cta">
-                <button className="bg-accent text-black px-8 py-4 text-base font-semibold uppercase tracking-wide hover:bg-accent/90 transition-colors rounded-sm w-full sm:w-auto">
-                  Join the Gym
-                </button>
+                <a 
+                  href={currentMediaIndex === 0 ? '/membership' : currentMediaIndex === 1 ? '/gym' : '/contact'}
+                  className="bg-accent text-black px-6 py-3 text-sm font-semibold uppercase tracking-wide hover:bg-accent/90 transition-colors rounded-full w-full sm:w-auto inline-block text-center"
+                  style={{ 
+                    fontFamily: 'Gotham, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', 
+                    fontWeight: 700
+                  }}
+                  onMouseDown={(e) => e.stopPropagation()}
+                >
+                  {currentMediaIndex === 0 ? 'Start A Trial' : currentMediaIndex === 1 ? 'Join Our Community' : 'Contact Us'}
+                </a>
               </span>
-              <span className="hero-cta">
-                <button className="bg-transparent border border-white text-white px-8 py-4 text-base font-semibold uppercase tracking-wide hover:bg-white hover:text-black transition-colors rounded-sm w-full sm:w-auto">
-                  See the Gym
-                </button>
-              </span>
+              {currentMediaIndex === 0 && (
+                <span className="hero-cta">
+                  <a 
+                    href="/gym"
+                    className="bg-transparent border border-white text-white px-6 py-3 text-sm font-semibold uppercase tracking-wide hover:bg-white hover:text-black transition-colors rounded-full w-full sm:w-auto inline-block text-center"
+                    style={{ 
+                      fontFamily: 'Gotham, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', 
+                      fontWeight: 700
+                    }}
+                    onMouseDown={(e) => e.stopPropagation()}
+                  >
+                    Find The Gym
+                  </a>
+                </span>
+              )}
             </div>
           </div>
 
@@ -339,6 +548,7 @@ export default function Hero() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleProgressClick}
+        onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="relative group">
           {/* Progress Circle */}
@@ -351,22 +561,20 @@ export default function Hero() {
                 </svg>
               </div>
             ) : (
-              // Slide sequence format: 1/10
-              <span className="leading-none">{currentMediaIndex + 1}/{heroMedia.length}</span>
+              // Show slide numbers when playing
+              <span className="text-white/80 text-xs font-medium leading-none">
+                {currentMediaIndex + 1}/{heroMedia.length}
+              </span>
             )}
           </HeroProgress>
         </div>
       </div>
 
+      {/* Hero Down Border */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-black/20" style={{ zIndex: 25 }} />
+
       {/* Scroll Down Indicator */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center" style={{ zIndex: 30 }}>
-        {/* Desktop tagline above arrow */}
-        <div className="hidden lg:block mb-2">
-          <p className="text-muted text-sm uppercase tracking-[0.2em] font-bold text-center">
-            Train. Fuel. Repeat.
-          </p>
-        </div>
-        
         <a
           href="#frames"
           aria-label="Scroll to next section"

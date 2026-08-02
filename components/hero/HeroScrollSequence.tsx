@@ -37,7 +37,7 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
 
     console.log("HeroScrollSequence: Refs found");
 
-    const frameCount = 11; // Using frames 001-011 (all available frames)
+    const frameCount = 31; // Using all available frames 001-031
     const frames = Array.from(framesContainer.querySelectorAll<HTMLImageElement>(".hero-frame"));
     
     console.log(`Found ${frames.length} frame elements`);
@@ -64,7 +64,7 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
     const st = ScrollTrigger.create({
       trigger: section,
       start: "top top",
-      end: "+=2200", // Adjusted scroll distance for 11 frames (was 3000 for 14 frames)
+      end: "+=4000", // Increased scroll distance for 31 frames
       pin: true,
       scrub: 1.5, // Smoother scrub with more lag
       pinSpacing: true, // Proper spacing to prevent overlap
@@ -146,7 +146,7 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
             className="absolute inset-0 w-full h-full"
             style={{ zIndex: 1 }}
           >
-            {Array.from({ length: 11 }, (_, i) => (
+            {Array.from({ length: 31 }, (_, i) => (
               <Image
                 key={`frame-${i}`}
                 src={`/frame/frame_${String(i + 1).padStart(3, "0")}.png`}
