@@ -10,18 +10,11 @@ import { businessData } from "@/data/business";
 import HeroScrollSequence from "./HeroScrollSequence";
 import HeroProgress from "@/components/ui/hero-progress";
 
-// Hero media data - using actual files from public/hero directory
+// Hero media data - 2 videos first, then 1 image (3 slides total)
 const heroMedia = [
   { type: 'video', src: '/hero/135161-761273563_medium.mp4' },
-  { type: 'image', src: '/hero/Untitled-design-2026-04-02T110204.155.jpg' },
-  { type: 'video', src: '/hero/143431-782373969_medium.mp4' },
-  { type: 'image', src: '/hero/Untitled-design-2026-04-02T110712.060.jpg' },
-  { type: 'image', src: '/hero/f45-video-thumb.jpg' },
-  { type: 'image', src: '/hero/Untitled-design-2026-04-02T111150.046.jpg' },
-  { type: 'video', src: '/hero/27088-361827441_medium.mp4' },
-  { type: 'image', src: '/hero/Untitled-design-2026-04-02T113009.615.jpg' },
   { type: 'video', src: '/hero/293079_medium.mp4' },
-  { type: 'image', src: '/hero/Untitled-design-2026-04-02T113302.665.jpg' },
+  { type: 'image', src: '/hero/Untitled-design-2026-04-02T110712.060.jpg' },
 ];
 
 export default function Hero() {
@@ -30,6 +23,7 @@ export default function Hero() {
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
@@ -54,23 +48,27 @@ export default function Hero() {
     });
   }, []);
 
-  // Handle video playback when slide changes
+  // Handle video playback when slide changes or pause state changes
   useEffect(() => {
     const videos = videoRefs.current;
     
     videos.forEach((video, index) => {
       if (video && heroMedia[index]?.type === 'video') {
         if (index === currentMediaIndex) {
-          // Play current video
-          video.currentTime = 0;
-          video.play().catch(console.warn);
+          // Play current video only if not paused
+          if (isPaused) {
+            video.pause();
+          } else {
+            video.currentTime = 0;
+            video.play().catch(console.warn);
+          }
         } else {
           // Pause other videos
           video.pause();
         }
       }
     });
-  }, [currentMediaIndex]);
+  }, [currentMediaIndex, isPaused]);
 
   // Auto-advance slider with progress
   useEffect(() => {
@@ -109,11 +107,28 @@ export default function Hero() {
   }, [isPaused]);
 
   const handleMouseEnter = () => {
-    setIsPaused(true);
+    setIsHovering(true);
   };
 
   const handleMouseLeave = () => {
-    setIsPaused(false);
+    setIsHovering(false);
+  };
+
+  const handleProgressClick = () => {
+    const newPausedState = !isPaused;
+    setIsPaused(newPausedState);
+    
+    // Also control video playback immediately
+    const videos = videoRefs.current;
+    const currentVideo = videos[currentMediaIndex];
+    
+    if (currentVideo && heroMedia[currentMediaIndex]?.type === 'video') {
+      if (newPausedState) {
+        currentVideo.pause();
+      } else {
+        currentVideo.play().catch(console.warn);
+      }
+    }
   };
 
   useEffect(() => {
@@ -238,24 +253,39 @@ export default function Hero() {
         })}
       </div>
       
-      {/* Overall black opacity overlay for all media */}
+      {/* Strong black opacity overlay for all media */}
       <div 
-        className="absolute inset-0 bg-black/50"
-        style={{ zIndex: 2 }}
+        className="absolute inset-0"
+        style={{ 
+          zIndex: 2,
+          backgroundColor: 'rgba(0, 0, 0, 0.6)'
+        }}
       />
       
       {/* Additional gradient overlay for text readability */}
       <div 
-        className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/20"
-        style={{ zIndex: 3 }}
+        className="absolute inset-0"
+        style={{
+          zIndex: 3,
+          background: 'linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%)'
+        }}
+      />
+      
+      {/* Left side overlay for title and buttons area */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          zIndex: 4,
+          background: 'linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 40%, transparent 60%)'
+        }}
       />
       
       {/* Bottom area overlay for tagline */}
       <div 
         className="absolute inset-0"
         style={{
-          zIndex: 4,
-          background: 'linear-gradient(to bottom, transparent 0%, transparent 60%, rgba(0,0,0,0.4) 80%, rgba(0,0,0,0.7) 100%)'
+          zIndex: 5,
+          background: 'linear-gradient(to bottom, transparent 0%, transparent 60%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.8) 100%)'
         }}
       />
 
@@ -308,26 +338,23 @@ export default function Hero() {
         className="absolute bottom-4 right-2 sm:right-3 lg:right-4 z-40 cursor-pointer"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onClick={handleProgressClick}
       >
         <div className="relative group">
           {/* Progress Circle */}
           <HeroProgress value={progress} size={32}>
             {isPaused ? (
-              // Small pause icon (two vertical lines)
-              <div className="flex gap-0.5">
-                <div className="w-0.5 h-1 bg-white/80"></div>
-                <div className="w-0.5 h-1 bg-white/80"></div>
+              // Play icon when paused
+              <div className="flex items-center justify-center">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor" className="text-white/80">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
               </div>
             ) : (
               // Slide sequence format: 1/10
               <span className="leading-none">{currentMediaIndex + 1}/{heroMedia.length}</span>
             )}
           </HeroProgress>
-          
-          {/* Hover tooltip */}
-          <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-            {isPaused ? 'Paused' : 'Hover to pause'}
-          </div>
         </div>
       </div>
 
