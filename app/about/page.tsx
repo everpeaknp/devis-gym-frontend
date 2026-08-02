@@ -9,7 +9,7 @@ import {
 import { galleryImages } from "@/data/gallery";
 import Reveal from "@/components/ui/Reveal";
 import Footer from "@/components/layout/Footer";
-import Breadcrumb from "@/components/ui/Breadcrumb";
+import ScrollExpandMedia from "@/components/ui/scroll-expansion-hero";
 
 // Counter component with animation
 function StatCounter({ stat }: { stat: { id: string; value: string; label: string } }) {
@@ -75,70 +75,10 @@ function StatCounter({ stat }: { stat: { id: string; value: string; label: strin
   );
 }
 
-export default function AboutPage() {
+// About Content Component
+const AboutContent = () => {
   return (
-    <>
-      <Breadcrumb 
-        items={[{ label: "Home", href: "/" }]}
-        currentPage="About Us"
-        eyebrow="WHO WE ARE"
-      />
-      <main className="bg-background">
-        {/* Devi's Gym Introduction Section */}
-        <section className="bg-background">
-          <div className="container-edge py-16 md:py-20">
-            <Reveal>
-              <div className="text-center mb-16">
-                <h1 className="font-oswald text-[64px] leading-[72px] md:text-[96px] md:leading-[104px] font-bold uppercase tracking-tight mb-6 text-white">
-                  Devi's Gym
-                </h1>
-                <div className="max-w-4xl mx-auto">
-                  <h2 className="font-oswald text-[32px] leading-[40px] md:text-[40px] md:leading-[48px] font-bold uppercase tracking-tight mb-8 text-accent">
-                    Introduction
-                  </h2>
-                  <div className="grid md:grid-cols-2 gap-12 items-center">
-                    {/* Mission */}
-                    <div className="text-left">
-                      <h3 className="font-oswald text-[24px] leading-[32px] font-bold uppercase tracking-tight mb-4 text-white">
-                        Mission
-                      </h3>
-                      <p className="text-muted leading-relaxed mb-6">
-                        Our purpose is to pass on empowering knowledge and training guidance in order to have a positive impact on the health and fitness of everyone we work with.
-                      </p>
-                      <p className="text-muted leading-relaxed">
-                        To provide a personalised health and fitness service that unlocks every individual's true potential so they can achieve their desired goals.
-                      </p>
-                    </div>
-                    
-                    {/* Story */}
-                    <div className="text-left">
-                      <h3 className="font-oswald text-[24px] leading-[32px] font-bold uppercase tracking-tight mb-4 text-white">
-                        Story
-                      </h3>
-                      <p className="text-muted leading-relaxed">
-                        Our main focus at Devi's Gym is functional training because of the proven benefits. With an emphasis on mobility, strength and conditioning, the benefits of functional training differ from other workouts because of the way it targets your body.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </section>
-        
-      {/* Stats Section */}
-      <section className="bg-background">
-        <div className="container-edge py-12 md:py-16">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {aboutStats.map((stat, index) => (
-              <Reveal key={stat.id} delay={index * 0.1}>
-                <StatCounter stat={stat} />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
+    <div className="bg-background">
       {/* Team Section */}
       <section className="bg-background">
         <div className="container-edge py-16 md:py-20">
@@ -271,8 +211,334 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-    </main>
-    <Footer />
-    </>
+    </div>
+  );
+};
+
+export default function AboutPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-background">
+      <ScrollExpandMedia
+        mediaType="video"
+        mediaSrc="/hero/293079_medium.mp4"
+        posterSrc="/hero/Untitled-design-2026-04-02T110712.060.jpg"
+        bgImageSrc="/hero/Untitled-design-2026-04-02T110712.060.jpg"
+        title="Devi's Gym Experience"
+        date="Pokhara Fitness"
+        scrollToExpand="Scroll to Explore Our Gym"
+        textBlend
+      >
+        {/* About Hero Content - All in One Horizontal Row */}
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <p className="font-gotham font-bold uppercase tracking-wider mb-1 lg:mb-1" 
+               style={{ 
+                 fontWeight: 700,
+                 fontSize: '17px',
+                 lineHeight: '24px',
+                 color: 'rgb(255, 255, 255)'
+               }}>
+              About Devi&apos;s Gym
+            </p>
+            
+            <h1 className="font-gotham-condensed font-bold uppercase leading-[0.9] tracking-tight relative mb-3 lg:mb-4"
+                style={{ 
+                  fontSize: '81px',
+                  lineHeight: '81px',
+                  fontWeight: 700,
+                  color: 'rgb(255, 255, 255)'
+                }}>
+              <span className="block" style={{ color: 'rgb(255, 255, 255)' }}>More Than</span>
+              <span className="block" style={{ color: 'rgb(255, 255, 255)' }}>Just A</span>
+              <span className="block" style={{ color: 'rgb(255, 255, 255)' }}>Gym.</span>
+            </h1>
+            
+            <p className="font-gotham max-w-4xl mx-auto"
+               style={{ 
+                 fontWeight: 500,
+                 fontSize: '13px',
+                 lineHeight: '19px',
+                 color: 'rgb(255, 255, 255)'
+               }}>
+              Devi&apos;s Gym provides a unique way to engage with our fitness community through interactive experiences. Located in the heart of Pokhara, we&apos;ve been transforming lives for over 5 years with our commitment to functional training and personalized fitness solutions. Our state-of-the-art facility combines modern equipment with expert guidance from 15+ certified trainers who are passionate about helping you achieve your goals. With 24/7 access and a supportive community of 500+ active members, we offer more than just a workout space - we provide a complete fitness ecosystem designed to unlock your true potential. Discover what makes our gym different with this innovative presentation of our facilities and services.
+            </p>
+          </div>
+
+          {/* All Content in Single Horizontal Row */}
+          <div className="flex flex-col lg:flex-row gap-8 items-start">
+            {/* Column 1: Our Facilities */}
+            <div className="flex-1 space-y-4">
+              <h3 className="font-gotham font-bold uppercase tracking-wider"
+                  style={{ 
+                    fontWeight: 700,
+                    fontSize: '17px',
+                    lineHeight: '24px',
+                    color: 'rgb(255, 255, 255)'
+                  }}>
+                Our Facilities
+              </h3>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-3">
+                  <span className="w-2 h-2 bg-accent rounded-full"></span>
+                  <span className="font-gotham"
+                        style={{ 
+                          fontWeight: 500,
+                          fontSize: '13px',
+                          lineHeight: '19px',
+                          color: 'rgb(255, 255, 255)'
+                        }}>
+                    Modern cardio equipment
+                  </span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="w-2 h-2 bg-accent rounded-full"></span>
+                  <span className="font-gotham"
+                        style={{ 
+                          fontWeight: 500,
+                          fontSize: '13px',
+                          lineHeight: '19px',
+                          color: 'rgb(255, 255, 255)'
+                        }}>
+                    Comprehensive free weight area
+                  </span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="w-2 h-2 bg-accent rounded-full"></span>
+                  <span className="font-gotham"
+                        style={{ 
+                          fontWeight: 500,
+                          fontSize: '13px',
+                          lineHeight: '19px',
+                          color: 'rgb(255, 255, 255)'
+                        }}>
+                    Functional training space
+                  </span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="w-2 h-2 bg-accent rounded-full"></span>
+                  <span className="font-gotham"
+                        style={{ 
+                          fontWeight: 500,
+                          fontSize: '13px',
+                          lineHeight: '19px',
+                          color: 'rgb(255, 255, 255)'
+                        }}>
+                    Professional coaching available
+                  </span>
+                </li>
+              </ul>
+            </div>
+            
+            {/* Column 2: Why Choose Us */}
+            <div className="flex-1 space-y-4">
+              <h3 className="font-gotham font-bold uppercase tracking-wider"
+                  style={{ 
+                    fontWeight: 700,
+                    fontSize: '17px',
+                    lineHeight: '24px',
+                    color: 'rgb(255, 255, 255)'
+                  }}>
+                Why Choose Us
+              </h3>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-3">
+                  <span className="w-2 h-2 bg-accent rounded-full"></span>
+                  <span className="font-gotham"
+                        style={{ 
+                          fontWeight: 500,
+                          fontSize: '13px',
+                          lineHeight: '19px',
+                          color: 'rgb(255, 255, 255)'
+                        }}>
+                    Located in the heart of Pokhara
+                  </span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="w-2 h-2 bg-accent rounded-full"></span>
+                  <span className="font-gotham"
+                        style={{ 
+                          fontWeight: 500,
+                          fontSize: '13px',
+                          lineHeight: '19px',
+                          color: 'rgb(255, 255, 255)'
+                        }}>
+                    Supportive fitness community
+                  </span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="w-2 h-2 bg-accent rounded-full"></span>
+                  <span className="font-gotham"
+                        style={{ 
+                          fontWeight: 500,
+                          fontSize: '13px',
+                          lineHeight: '19px',
+                          color: 'rgb(255, 255, 255)'
+                        }}>
+                    Flexible membership options
+                  </span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="w-2 h-2 bg-accent rounded-full"></span>
+                  <span className="font-gotham"
+                        style={{ 
+                          fontWeight: 500,
+                          fontSize: '13px',
+                          lineHeight: '19px',
+                          color: 'rgb(255, 255, 255)'
+                        }}>
+                    Clean and well-maintained facility
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 3: Mission */}
+            <div className="flex-1 space-y-4">
+              <h3 className="font-gotham font-bold uppercase tracking-wider"
+                  style={{ 
+                    fontWeight: 700,
+                    fontSize: '17px',
+                    lineHeight: '24px',
+                    color: 'rgb(255, 255, 255)'
+                  }}>
+                Mission
+              </h3>
+              <p className="font-gotham"
+                 style={{ 
+                   fontWeight: 500,
+                   fontSize: '13px',
+                   lineHeight: '19px',
+                   color: 'rgb(255, 255, 255)'
+                 }}>
+                Our purpose is to pass on empowering knowledge and training guidance in order to have a positive impact on the health and fitness of everyone we work with.
+              </p>
+              <p className="font-gotham"
+                 style={{ 
+                   fontWeight: 500,
+                   fontSize: '13px',
+                   lineHeight: '19px',
+                   color: 'rgb(255, 255, 255)'
+                 }}>
+                To provide a personalised health and fitness service that unlocks every individual&apos;s true potential so they can achieve their desired goals.
+              </p>
+            </div>
+
+            {/* Column 4: Story */}
+            <div className="flex-1 space-y-4">
+              <h3 className="font-gotham font-bold uppercase tracking-wider"
+                  style={{ 
+                    fontWeight: 700,
+                    fontSize: '17px',
+                    lineHeight: '24px',
+                    color: 'rgb(255, 255, 255)'
+                  }}>
+                Story
+              </h3>
+              <p className="font-gotham"
+                 style={{ 
+                   fontWeight: 500,
+                   fontSize: '13px',
+                   lineHeight: '19px',
+                   color: 'rgb(255, 255, 255)'
+                 }}>
+                Our main focus at Devi&apos;s Gym is functional training because of the proven benefits. With an emphasis on mobility, strength and conditioning, the benefits of functional training differ from other workouts because of the way it targets your body.
+              </p>
+            </div>
+          </div>
+
+          {/* Stats Section - Horizontal Row Below */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
+            <div className="text-center">
+              <div className="font-oswald font-bold mb-2"
+                   style={{
+                     fontSize: '48px',
+                     lineHeight: '56px',
+                     fontWeight: 700,
+                     color: 'rgb(212, 255, 0)'
+                   }}>
+                5+
+              </div>
+              <div className="font-gotham font-bold uppercase tracking-wide"
+                   style={{
+                     fontSize: '12px',
+                     fontWeight: 700,
+                     color: 'rgb(255, 255, 255)'
+                   }}>
+                Years Serving Pokhara
+              </div>
+            </div>
+            
+            <div className="text-center">
+              <div className="font-oswald font-bold mb-2"
+                   style={{
+                     fontSize: '48px',
+                     lineHeight: '56px',
+                     fontWeight: 700,
+                     color: 'rgb(212, 255, 0)'
+                   }}>
+                500+
+              </div>
+              <div className="font-gotham font-bold uppercase tracking-wide"
+                   style={{
+                     fontSize: '12px',
+                     fontWeight: 700,
+                     color: 'rgb(255, 255, 255)'
+                   }}>
+                Active Members
+              </div>
+            </div>
+            
+            <div className="text-center">
+              <div className="font-oswald font-bold mb-2"
+                   style={{
+                     fontSize: '48px',
+                     lineHeight: '56px',
+                     fontWeight: 700,
+                     color: 'rgb(212, 255, 0)'
+                   }}>
+                15+
+              </div>
+              <div className="font-gotham font-bold uppercase tracking-wide"
+                   style={{
+                     fontSize: '12px',
+                     fontWeight: 700,
+                     color: 'rgb(255, 255, 255)'
+                   }}>
+                Certified Trainers
+              </div>
+            </div>
+
+            <div className="text-center">
+              <div className="font-oswald font-bold mb-2"
+                   style={{
+                     fontSize: '48px',
+                     lineHeight: '56px',
+                     fontWeight: 700,
+                     color: 'rgb(212, 255, 0)'
+                   }}>
+                24/7
+              </div>
+              <div className="font-gotham font-bold uppercase tracking-wide"
+                   style={{
+                     fontSize: '12px',
+                     fontWeight: 700,
+                     color: 'rgb(255, 255, 255)'
+                   }}>
+                Open Access
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <AboutContent />
+      </ScrollExpandMedia>
+      
+      <Footer />
+    </div>
   );
 }

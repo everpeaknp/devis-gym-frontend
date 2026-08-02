@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald+Condensed:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
 @import "tailwindcss";
 
@@ -12,6 +14,8 @@
   
   --font-oswald: 'Oswald', sans-serif;
   --font-kanit: 'Kanit', sans-serif;
+  --font-gotham-condensed: 'Gotham Condensed', 'Oswald', 'Anton', 'Impact', 'Arial Narrow', sans-serif;
+  --font-gotham: 'Gotham', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --accent: #c7ff3d;
   --accent-dim: #9fd12f;
   --border: rgba(245, 244, 240, 0.12);
@@ -159,6 +163,14 @@ body {
 
 .font-kanit {
   font-family: var(--font-kanit);
+}
+
+.font-gotham-condensed {
+  font-family: var(--font-gotham-condensed);
+}
+
+.font-gotham {
+  font-family: var(--font-gotham);
 }
 
 * {
