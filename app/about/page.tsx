@@ -7,6 +7,7 @@ import {
   aboutStats,
 } from "@/data/about";
 import { galleryImages } from "@/data/gallery";
+import InstagramFeed from "@/components/ui/InstagramFeed";
 import Reveal from "@/components/ui/Reveal";
 import Footer from "@/components/layout/Footer";
 import ScrollExpandMedia from "@/components/ui/scroll-expansion-hero";
@@ -65,7 +66,7 @@ function StatCounter({ stat }: { stat: { id: string; value: string; label: strin
 
   return (
     <div ref={ref} className="text-center">
-      <div className="font-oswald text-[48px] leading-[56px] md:text-[64px] md:leading-[72px] font-bold text-accent mb-2">
+      <div className="font-oswald text-[48px] leading-[56px] md:text-[64px] md:leading-[72px] font-bold mb-2" style={{ color: '#c7ff3d', fontFamily: 'Oswald, Arial, sans-serif' }}>
         {shouldAnimate ? `${count}${suffix}` : stat.value}
       </div>
       <div className="text-muted text-sm uppercase tracking-wide font-bold">
@@ -79,6 +80,19 @@ function StatCounter({ stat }: { stat: { id: string; value: string; label: strin
 const AboutContent = () => {
   return (
     <div className="bg-background">
+      {/* Stats Section - Above Team Section */}
+      <section className="bg-background">
+        <div className="container-edge py-16 md:py-20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            {aboutStats.map((stat, index) => (
+              <Reveal key={stat.id} delay={index * 0.1}>
+                <StatCounter stat={stat} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Team Section */}
       <section className="bg-background">
         <div className="container-edge py-16 md:py-20">
@@ -143,8 +157,8 @@ const AboutContent = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-background-elevated">
+      {/* CTA Section - Full Width */}
+      <section className="w-full bg-background-elevated">
         <div className="container-edge py-16 md:py-20">
           <Reveal>
             <div className="max-w-3xl mx-auto text-center">
@@ -174,11 +188,11 @@ const AboutContent = () => {
         </div>
       </section>
 
-      {/* Instagram Gallery */}
-      <section className="bg-background border-y border-zinc-800">
-        <div className="flex">
+      {/* Instagram Gallery - Full Viewport Width */}
+      <section className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-background border-y border-zinc-800">
+        <div className="flex w-full">
           {/* Vertical Instagram Bar */}
-          <div className="bg-[#d4ff00] flex flex-col items-center justify-center py-8 px-4 min-w-[56px]">
+          <div className="bg-[#d4ff00] flex flex-col items-center justify-center py-8 px-4 min-w-[60px] flex-shrink-0 z-10">
             <div className="flex flex-col items-center gap-4">
               <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-black/10">
                 <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 24 24">
@@ -186,28 +200,14 @@ const AboutContent = () => {
                 </svg>
               </div>
               <div className="text-black font-bold text-xs tracking-wide" style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}>
-                @trainwithgorge
+                @devisgym_pokhara
               </div>
             </div>
           </div>
 
           {/* Images - Full Width */}
-          <div className="flex-1 overflow-hidden">
-            <div className="flex h-full">
-              {galleryImages.slice(0, 6).map((img) => (
-                <div key={img.id} className="flex-1 min-w-0">
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    width={300}
-                    height={200}
-                    className="w-full h-full object-cover hover:opacity-90 transition-opacity cursor-pointer"
-                    loading="lazy"
-                    quality={75}
-                  />
-                </div>
-              ))}
-            </div>
+          <div className="flex-1">
+            <InstagramFeed />
           </div>
         </div>
       </section>
@@ -254,8 +254,7 @@ export default function AboutPage() {
                   color: 'rgb(255, 255, 255)'
                 }}>
               <span className="block" style={{ color: 'rgb(255, 255, 255)' }}>More Than</span>
-              <span className="block" style={{ color: 'rgb(255, 255, 255)' }}>Just A</span>
-              <span className="block" style={{ color: 'rgb(255, 255, 255)' }}>Gym.</span>
+              <span className="block" style={{ color: '#c7ff3d' }}>Just A Gym.</span>
             </h1>
             
             <p className="font-gotham max-w-4xl mx-auto"
@@ -448,89 +447,6 @@ export default function AboutPage() {
                  }}>
                 Our main focus at Devi&apos;s Gym is functional training because of the proven benefits. With an emphasis on mobility, strength and conditioning, the benefits of functional training differ from other workouts because of the way it targets your body.
               </p>
-            </div>
-          </div>
-
-          {/* Stats Section - Horizontal Row Below */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
-            <div className="text-center">
-              <div className="font-oswald font-bold mb-2"
-                   style={{
-                     fontSize: '48px',
-                     lineHeight: '56px',
-                     fontWeight: 700,
-                     color: 'rgb(212, 255, 0)'
-                   }}>
-                5+
-              </div>
-              <div className="font-gotham font-bold uppercase tracking-wide"
-                   style={{
-                     fontSize: '12px',
-                     fontWeight: 700,
-                     color: 'rgb(255, 255, 255)'
-                   }}>
-                Years Serving Pokhara
-              </div>
-            </div>
-            
-            <div className="text-center">
-              <div className="font-oswald font-bold mb-2"
-                   style={{
-                     fontSize: '48px',
-                     lineHeight: '56px',
-                     fontWeight: 700,
-                     color: 'rgb(212, 255, 0)'
-                   }}>
-                500+
-              </div>
-              <div className="font-gotham font-bold uppercase tracking-wide"
-                   style={{
-                     fontSize: '12px',
-                     fontWeight: 700,
-                     color: 'rgb(255, 255, 255)'
-                   }}>
-                Active Members
-              </div>
-            </div>
-            
-            <div className="text-center">
-              <div className="font-oswald font-bold mb-2"
-                   style={{
-                     fontSize: '48px',
-                     lineHeight: '56px',
-                     fontWeight: 700,
-                     color: 'rgb(212, 255, 0)'
-                   }}>
-                15+
-              </div>
-              <div className="font-gotham font-bold uppercase tracking-wide"
-                   style={{
-                     fontSize: '12px',
-                     fontWeight: 700,
-                     color: 'rgb(255, 255, 255)'
-                   }}>
-                Certified Trainers
-              </div>
-            </div>
-
-            <div className="text-center">
-              <div className="font-oswald font-bold mb-2"
-                   style={{
-                     fontSize: '48px',
-                     lineHeight: '56px',
-                     fontWeight: 700,
-                     color: 'rgb(212, 255, 0)'
-                   }}>
-                24/7
-              </div>
-              <div className="font-gotham font-bold uppercase tracking-wide"
-                   style={{
-                     fontSize: '12px',
-                     fontWeight: 700,
-                     color: 'rgb(255, 255, 255)'
-                   }}>
-                Open Access
-              </div>
             </div>
           </div>
         </div>

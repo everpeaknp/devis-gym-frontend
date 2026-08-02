@@ -102,6 +102,6 @@ export const aboutStats = [
   {
     id: "s4",
     value: "24/7",
-    label: "Member Access",
+    label: "Open Access",
   },
 ];
