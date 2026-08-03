@@ -125,7 +125,7 @@ export default function TrainingSection() {
 
   return (
     <section ref={sectionRef} className="bg-background-elevated overflow-hidden">
-      <div className="container-edge pt-8 md:pt-12 pb-24 md:pb-32">
+      <div className="container-edge pt-8 md:pt-12 pb-16 md:pb-20">
         {/* Centered Heading with Animation */}
         <div className="text-center mb-14">
           <h2 className="font-oswald uppercase text-white">

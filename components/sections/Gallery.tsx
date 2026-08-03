@@ -47,7 +47,7 @@ export default function Gallery() {
 
   return (
     <section className="bg-background relative z-20">
-      <div className="container-edge pt-0 pb-8 -mb-24 -mt-72 sm:py-12 sm:mb-0 sm:mt-0 md:pt-0 md:pb-16 md:-mt-[30rem]">
+      <div className="container-edge pt-16 pb-16 sm:pt-20 sm:pb-20 md:pt-24 md:pb-24">
         <SectionHeading eyebrow="Gallery" title="A look inside" />
 
         <div className="mt-6 sm:mt-8 md:mt-10 flex flex-wrap gap-2">

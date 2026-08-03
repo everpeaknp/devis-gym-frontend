@@ -11,6 +11,7 @@ import FinalCTASection from "@/components/sections/FinalCTASection";
 import SocialSection from "@/components/sections/SocialSection";
 import LocationSection from "@/components/sections/LocationSection";
 import ContactSection from "@/components/sections/ContactSection";
+import NetworkSection from "@/components/sections/NetworkSection";
 import { ZoomParallax } from "@/components/ui/zoom-parallax";
 
 export default function Home() {
@@ -60,13 +61,7 @@ export default function Home() {
         </section>
         <GymIntroSection />
         <TrainingSection />
-        
-        {/* ZoomParallax Section - No Title */}
-        <section className="relative">
-          {/* ZoomParallax Component */}
-          <ZoomParallax images={gymInsideImages} />
-        </section>
-        
+        {/* <NetworkSection /> */}
         <Gallery />
         <LocationSection />
         <MembershipSection />

@@ -37,6 +37,7 @@ const ScrollExpandMedia = ({
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [showContent, setShowContent] = useState<boolean>(false);
   const [mediaFullyExpanded, setMediaFullyExpanded] = useState<boolean>(false);
+  const [horizontalExpansionComplete, setHorizontalExpansionComplete] = useState<boolean>(false);
   const [touchStartY, setTouchStartY] = useState<number>(0);
   const [isMobileState, setIsMobileState] = useState<boolean>(false);
   const [windowDimensions, setWindowDimensions] = useState({ width: 1200, height: 800 });
@@ -46,7 +47,32 @@ const ScrollExpandMedia = ({
     setScrollProgress(0);
     setShowContent(false);
     setMediaFullyExpanded(false);
+    setHorizontalExpansionComplete(false);
   }, [mediaType]);
+
+  // Prevent body scroll during horizontal expansion
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    if (!horizontalExpansionComplete) {
+      // Lock body scroll during expansion
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      // Restore body scroll after expansion
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+
+    return () => {
+      // Cleanup on unmount
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [horizontalExpansionComplete]);
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
@@ -55,23 +81,30 @@ const ScrollExpandMedia = ({
       if (mediaFullyExpanded && e.deltaY < 0 && window.scrollY <= 5) {
         setMediaFullyExpanded(false);
         setShowContent(false);
+        setHorizontalExpansionComplete(false);
         e.preventDefault();
-      } else if (!mediaFullyExpanded) {
+      } else if (!horizontalExpansionComplete) {
+        // Phase 1: Horizontal expansion ONLY - prevent ALL scrolling
         e.preventDefault();
-        const scrollDelta = e.deltaY * 0.002; // Increased sensitivity for better response
+        e.stopPropagation();
+        
+        const scrollDelta = e.deltaY * 0.002;
         const newProgress = Math.min(
           Math.max(scrollProgress + scrollDelta, 0),
           1
         );
         setScrollProgress(newProgress);
 
-        if (newProgress >= 0.7) { // Changed from 1 to 0.7 so content appears earlier
-          setMediaFullyExpanded(true);
+        if (newProgress >= 1) {
+          setHorizontalExpansionComplete(true);
           setShowContent(true);
-        } else {
-          setShowContent(false);
+          // Small delay to ensure smooth transition to scroll phase
+          setTimeout(() => {
+            setMediaFullyExpanded(true);
+          }, 100);
         }
       }
+      // Phase 2: Natural scrolling is allowed after horizontalExpansionComplete && mediaFullyExpanded
     };
 
     const handleTouchStart = (e: TouchEvent) => {
@@ -86,11 +119,15 @@ const ScrollExpandMedia = ({
 
       if (mediaFullyExpanded && deltaY < -20 && window.scrollY <= 5) {
         setMediaFullyExpanded(false);
+        setHorizontalExpansionComplete(false);
+        setShowContent(false);
         e.preventDefault();
-      } else if (!mediaFullyExpanded) {
+      } else if (!horizontalExpansionComplete) {
+        // Phase 1: Horizontal expansion ONLY - prevent ALL scrolling
         e.preventDefault();
-        // Increase sensitivity for mobile, especially when scrolling back
-        const scrollFactor = deltaY < 0 ? 0.008 : 0.005; // Higher sensitivity for scrolling back
+        e.stopPropagation();
+        
+        const scrollFactor = deltaY < 0 ? 0.008 : 0.005;
         const scrollDelta = deltaY * scrollFactor;
         const newProgress = Math.min(
           Math.max(scrollProgress + scrollDelta, 0),
@@ -98,15 +135,18 @@ const ScrollExpandMedia = ({
         );
         setScrollProgress(newProgress);
 
-        if (newProgress >= 0.7) { // Changed from 1 to 0.7 so content appears earlier
-          setMediaFullyExpanded(true);
+        if (newProgress >= 1) {
+          setHorizontalExpansionComplete(true);
           setShowContent(true);
-        } else {
-          setShowContent(false);
+          // Small delay to ensure smooth transition to scroll phase
+          setTimeout(() => {
+            setMediaFullyExpanded(true);
+          }, 100);
         }
 
         setTouchStartY(touchY);
       }
+      // Phase 2: Natural scrolling is allowed after horizontalExpansionComplete && mediaFullyExpanded
     };
 
     const handleTouchEnd = (): void => {
@@ -114,9 +154,11 @@ const ScrollExpandMedia = ({
     };
 
     const handleScroll = (): void => {
+      // Body scroll is already locked during expansion phase
+      // This is just a fallback
       if (typeof window === 'undefined') return;
       
-      if (!mediaFullyExpanded && scrollProgress < 1) {
+      if (!horizontalExpansionComplete && window.scrollY > 0) {
         window.scrollTo(0, 0);
       }
     };
@@ -157,7 +199,7 @@ const ScrollExpandMedia = ({
       );
       window.removeEventListener('touchend', handleTouchEnd as EventListener);
     };
-  }, [scrollProgress, mediaFullyExpanded, touchStartY]);
+  }, [scrollProgress, mediaFullyExpanded, horizontalExpansionComplete, touchStartY]);
 
   useEffect(() => {
     const checkIfMobile = (): void => {
@@ -177,8 +219,12 @@ const ScrollExpandMedia = ({
     }
   }, []);
 
-  const mediaWidth = 300 + scrollProgress * (isMobileState ? windowDimensions.width - 300 : windowDimensions.width - 300);
-  const mediaHeight = 400 + scrollProgress * (isMobileState ? windowDimensions.height - 400 : windowDimensions.height - 400);
+  const mediaWidth = horizontalExpansionComplete 
+    ? (isMobileState ? windowDimensions.width : windowDimensions.width)
+    : 300 + scrollProgress * (isMobileState ? windowDimensions.width - 300 : windowDimensions.width - 300);
+  const mediaHeight = horizontalExpansionComplete
+    ? (isMobileState ? windowDimensions.height : windowDimensions.height)
+    : 400 + scrollProgress * (isMobileState ? windowDimensions.height - 400 : windowDimensions.height - 400);
   const textTranslateX = scrollProgress * (isMobileState ? 180 : 150);
 
   const firstWord = title ? title.split(' ')[0] : '';
@@ -219,8 +265,8 @@ const ScrollExpandMedia = ({
                 style={{
                   width: `${mediaWidth}px`,
                   height: `${mediaHeight}px`,
-                  maxWidth: scrollProgress >= 1 ? '100vw' : '95vw',
-                  maxHeight: scrollProgress >= 1 ? '100vh' : '85vh',
+                  maxWidth: horizontalExpansionComplete ? '100vw' : '95vw',
+                  maxHeight: horizontalExpansionComplete ? '100vh' : '85vh',
                   boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
                 }}
               >
@@ -239,7 +285,7 @@ const ScrollExpandMedia = ({
                               '?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&disablekb=1&modestbranding=1&playlist=' +
                               mediaSrc.split('v=')[1]
                         }
-                        className={`w-full h-full rounded-xl ${scrollProgress >= 1 ? 'rounded-none' : 'rounded-xl'}`}
+                        className={`w-full h-full rounded-xl ${horizontalExpansionComplete ? 'rounded-none' : 'rounded-xl'}`}
                         frameBorder='0'
                         allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
                         allowFullScreen
@@ -265,7 +311,7 @@ const ScrollExpandMedia = ({
                         loop
                         playsInline
                         preload='auto'
-                        className={`w-full h-full object-cover ${scrollProgress >= 1 ? 'rounded-none' : 'rounded-xl'}`}
+                        className={`w-full h-full object-cover ${horizontalExpansionComplete ? 'rounded-none' : 'rounded-xl'}`}
                         controls={false}
                         disablePictureInPicture
                         disableRemotePlayback
@@ -275,7 +321,7 @@ const ScrollExpandMedia = ({
                         style={{ pointerEvents: 'none' }}
                       ></div>
                       <motion.div
-                        className={`absolute inset-0 bg-black/30 ${scrollProgress >= 1 ? 'rounded-none' : 'rounded-xl'}`}
+                        className={`absolute inset-0 bg-black/30 ${horizontalExpansionComplete ? 'rounded-none' : 'rounded-xl'}`}
                         initial={{ opacity: 0.7 }}
                         animate={{ opacity: 0.5 - scrollProgress * 0.3 }}
                         transition={{ duration: 0.2 }}
@@ -289,10 +335,10 @@ const ScrollExpandMedia = ({
                       alt={title || 'Media content'}
                       width={1280}
                       height={720}
-                      className={`w-full h-full object-cover ${scrollProgress >= 1 ? 'rounded-none' : 'rounded-xl'}`}
+                      className={`w-full h-full object-cover ${horizontalExpansionComplete ? 'rounded-none' : 'rounded-xl'}`}
                     />
                     <motion.div
-                      className={`absolute inset-0 bg-black/50 ${scrollProgress >= 1 ? 'rounded-none' : 'rounded-xl'}`}
+                      className={`absolute inset-0 bg-black/50 ${horizontalExpansionComplete ? 'rounded-none' : 'rounded-xl'}`}
                       initial={{ opacity: 0.7 }}
                       animate={{ opacity: 0.7 - scrollProgress * 0.3 }}
                       transition={{ duration: 0.2 }}
