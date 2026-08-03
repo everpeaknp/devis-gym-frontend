@@ -102,6 +102,12 @@ const FlowArt: React.FC<FlowArtProps> = ({
         }
 
         if (i < sections.length - 1) {
+          const sectionFitsViewport = section.scrollHeight <= window.innerHeight * 1.05;
+
+          if (!sectionFitsViewport) {
+            return;
+          }
+
           triggers.push(
             ScrollTrigger.create({
               trigger: section,
