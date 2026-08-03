@@ -5,7 +5,7 @@ import { ArrowRight, ShieldCheck, ChevronLeft, ChevronRight } from "lucide-react
 import Image from "next/image";
 import { galleryImages } from "@/data/gallery";
 import Lightbox from "@/components/ui/Lightbox";
-import { EmbroideredWordPatches } from "@/components/ui/embroidered-word-patches";
+import { EmbroideredWordPatches } from "@/components/unused-components/ui/embroidered-word-patches";
 
 export default function GymIntroSection() {
   const sectionRef = useRef<HTMLElement>(null);

@@ -1,6 +1,6 @@
 "use client";
 
-import { ParallaxComponent } from "@/components/ui/parallax-scrolling";
+import { ParallaxComponent } from "@/components/unused-components/ui/parallax-scrolling";
 import MembershipSection from "@/components/sections/MembershipSection";
 import Footer from "@/components/layout/Footer";
 import Reveal from "@/components/ui/Reveal";

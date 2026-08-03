@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
 import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 import { services } from "@/data/services";
@@ -12,6 +13,7 @@ export default function TrainingSection() {
   const classesRef = useRef<HTMLSpanElement>(null);
   const forYouRef = useRef<HTMLSpanElement>(null);
   const scrollTextRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     // Register plugin on client only
@@ -51,6 +53,109 @@ export default function TrainingSection() {
       } else {
         // Show immediately if reduced motion
         gsap.set([classesRef.current, forYouRef.current], { opacity: 1 });
+      }
+
+      // 3D Flip Animation for Service Cards
+      if (!prefersReducedMotion) {
+        cardRefs.current.forEach((cardRef, index) => {
+          if (cardRef) {
+            // Set initial state
+            gsap.set(cardRef, {
+              transformStyle: "preserve-3d",
+              perspective: 1000,
+              rotationY: -15,
+              rotationX: 10,
+              scale: 0.9,
+              opacity: 0.8,
+            });
+
+            // Create scroll-triggered animation
+            ScrollTrigger.create({
+              trigger: cardRef,
+              start: "top 85%",
+              end: "bottom 20%",
+              scrub: 1,
+              animation: gsap.timeline()
+                .to(cardRef, {
+                  rotationY: 0,
+                  rotationX: 0,
+                  scale: 1,
+                  opacity: 1,
+                  duration: 1,
+                  ease: "power2.out",
+                })
+                .to(cardRef, {
+                  rotationY: 15,
+                  rotationX: -5,
+                  scale: 0.95,
+                  duration: 1,
+                  ease: "power2.inOut",
+                }, 0.5),
+              onToggle: (self) => {
+                // Add extra animation when card comes into view
+                if (self.isActive && !cardRef.classList.contains('flip-animated')) {
+                  cardRef.classList.add('flip-animated');
+                  
+                  gsap.timeline()
+                    .to(cardRef, {
+                      rotationY: 360,
+                      duration: 0.8,
+                      ease: "power2.inOut",
+                      delay: index * 0.1,
+                    })
+                    .set(cardRef, { rotationY: 0 });
+                }
+              }
+            });
+
+            // Hover effect with 3D tilt
+            const handleMouseEnter = (e: MouseEvent) => {
+              const rect = cardRef.getBoundingClientRect();
+              const centerX = rect.left + rect.width / 2;
+              const centerY = rect.top + rect.height / 2;
+              
+              gsap.to(cardRef, {
+                rotationY: (e.clientX - centerX) * 0.05,
+                rotationX: (centerY - e.clientY) * 0.05,
+                scale: 1.05,
+                z: 50,
+                duration: 0.3,
+                ease: "power2.out",
+              });
+            };
+
+            const handleMouseMove = (e: MouseEvent) => {
+              const rect = cardRef.getBoundingClientRect();
+              const centerX = rect.left + rect.width / 2;
+              const centerY = rect.top + rect.height / 2;
+              
+              gsap.to(cardRef, {
+                rotationY: (e.clientX - centerX) * 0.02,
+                rotationX: (centerY - e.clientY) * 0.02,
+                duration: 0.1,
+                ease: "none",
+              });
+            };
+
+            const handleMouseLeave = () => {
+              gsap.to(cardRef, {
+                rotationY: 0,
+                rotationX: 0,
+                scale: 1,
+                z: 0,
+                duration: 0.5,
+                ease: "power2.out",
+              });
+            };
+
+            cardRef.addEventListener('mouseenter', handleMouseEnter);
+            cardRef.addEventListener('mousemove', handleMouseMove);
+            cardRef.addEventListener('mouseleave', handleMouseLeave);
+
+            // Store cleanup functions
+            cardRef.setAttribute('data-cleanup', 'true');
+          }
+        });
       }
 
       // Infinite scroll animation for the scrolling text - Direct scroll listener
@@ -120,6 +225,16 @@ export default function TrainingSection() {
     return () => {
       clearTimeout(refreshTimer);
       ctx.revert();
+      
+      // Clean up card event listeners
+      cardRefs.current.forEach((cardRef) => {
+        if (cardRef && cardRef.getAttribute('data-cleanup')) {
+          const events = ['mouseenter', 'mousemove', 'mouseleave'];
+          events.forEach(event => {
+            cardRef.removeEventListener(event, () => {});
+          });
+        }
+      });
     };
   }, []);
 
@@ -166,49 +281,98 @@ export default function TrainingSection() {
         </div>
 
         <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((service, i) => (
-            <Reveal key={service.id} delay={i * 0.1}>
-              <div className="group">
-                {/* Background Image with Zoom on Hover */}
-                <div className="h-[300px] md:h-[450px] overflow-hidden relative">
-                  <Image
-                    src={service.image}
-                    alt={service.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 50vw"
-                    loading="lazy"
-                    quality={80}
-                  />
-                </div>
+          {services.map((service, i) => {
+            // Map service IDs to class paths
+            const getServicePath = (id: string) => {
+              switch(id) {
+                case 'outdoor': return '/classes/outdoor';
+                case 'personal-training': return '/classes/personal';
+                case 'group-training': return '/classes/group';
+                case 'digital-coaching': return '/classes/digital';
+                default: return '#';
+              }
+            };
 
-                {/* Text Below Image */}
-                <div className="bg-background-elevated py-6 relative">
-                  <h3 
-                    className="font-oswald uppercase text-white whitespace-pre-line pr-12"
-                    style={{ 
-                      fontWeight: 700,
-                      fontSize: '30px',
-                      lineHeight: '38px'
+            return (
+              <Reveal key={service.id} delay={i * 0.1}>
+                <Link href={getServicePath(service.id)} className="block">
+                  <div 
+                    ref={(el) => {
+                      cardRefs.current[i] = el;
+                    }}
+                    className="group flip-card-container cursor-pointer"
+                    style={{
+                      perspective: '1000px',
+                      transformStyle: 'preserve-3d',
                     }}
                   >
-                    {service.name}
-                  </h3>
-                  
-                  {/* Yellow Bold Hero Arrow Icon - Bottom Right */}
-                  <Image
-                    src="/icons/arrow-right.svg"
-                    alt=""
-                    width={36}
-                    height={36}
-                    className="absolute bottom-6 right-0 w-9 h-9 transition-transform group-hover:translate-x-1"
-                    style={{ filter: 'brightness(0) saturate(100%) invert(88%) sepia(85%) saturate(4447%) hue-rotate(358deg) brightness(102%) contrast(101%)' }}
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            </Reveal>
-          ))}
+                    {/* Card Inner Container for 3D Effect */}
+                    <div className="flip-card-inner relative w-full h-full">
+                      {/* Background Image with 3D Depth */}
+                      <div className="h-[300px] md:h-[450px] overflow-hidden relative rounded-lg shadow-2xl">
+                        <Image
+                          src={service.image}
+                          alt={service.name}
+                          fill
+                          className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 50vw"
+                          loading="lazy"
+                          quality={80}
+                        />
+                        
+                        {/* 3D Depth Layer */}
+                        <div 
+                          className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                          style={{
+                            transform: 'translateZ(10px)',
+                          }}
+                        />
+                        
+                        {/* Hover Overlay with 3D Effect */}
+                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </div>
+
+                      {/* Text Below Image with Enhanced 3D Styling */}
+                      <div className="bg-background-elevated py-6 relative rounded-b-lg shadow-xl group-hover:shadow-2xl transition-shadow duration-300">
+                        <h3 
+                          className="font-oswald uppercase text-white whitespace-pre-line pr-12 transition-all duration-300 group-hover:text-[#c7ff3d]"
+                          style={{ 
+                            fontWeight: 700,
+                            fontSize: '30px',
+                            lineHeight: '38px',
+                            textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                          }}
+                        >
+                          {service.name}
+                        </h3>
+                        
+                        {/* Enhanced Arrow Icon with 3D Transform */}
+                        <Image
+                          src="/icons/arrow-right.svg"
+                          alt=""
+                          width={36}
+                          height={36}
+                          className="absolute bottom-6 right-0 w-9 h-9 transition-all duration-300 group-hover:translate-x-2 group-hover:scale-110"
+                          style={{ 
+                            filter: 'brightness(0) saturate(100%) invert(88%) sepia(85%) saturate(4447%) hue-rotate(358deg) brightness(102%) contrast(101%)',
+                          }}
+                          loading="lazy"
+                        />
+                        
+                        {/* 3D Accent Line */}
+                        <div 
+                          className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-[#c7ff3d] to-transparent w-0 group-hover:w-full transition-all duration-500"
+                          style={{
+                            transform: 'translateZ(5px)',
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>

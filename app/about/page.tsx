@@ -10,8 +10,9 @@ import { galleryImages } from "@/data/gallery";
 import InstagramFeed from "@/components/ui/InstagramFeed";
 import Reveal from "@/components/ui/Reveal";
 import Footer from "@/components/layout/Footer";
-import ScrollExpandMedia from "@/components/ui/scroll-expansion-hero";
+import ScrollExpandMedia from "@/components/unused-components/ui/scroll-expansion-hero";
 import BackButton from "@/components/ui/BackButton";
+import { GymCTAGallery } from "@/components/ui/gym-cta-gallery";
 
 // Counter component with animation
 function StatCounter({ stat }: { stat: { id: string; value: string; label: string } }) {
@@ -157,6 +158,9 @@ const AboutContent = () => {
           </div>
         </div>
       </section>
+
+      {/* New CTA Gallery Section */}
+      <GymCTAGallery />
 
       {/* CTA Section - Full Width */}
       <section className="w-full bg-background-elevated">

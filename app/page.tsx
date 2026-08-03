@@ -11,8 +11,9 @@ import FinalCTASection from "@/components/sections/FinalCTASection";
 import SocialSection from "@/components/sections/SocialSection";
 import LocationSection from "@/components/sections/LocationSection";
 import ContactSection from "@/components/sections/ContactSection";
-import NetworkSection from "@/components/sections/NetworkSection";
 import { ZoomParallax } from "@/components/ui/zoom-parallax";
+import { GymCTASection } from "@/components/blocks/gym-cta-section";
+import ClassesSection from "@/components/sections/ClassesSection";
 
 export default function Home() {
   // Local gym equipment images for ZoomParallax
@@ -63,12 +64,14 @@ export default function Home() {
         <TrainingSection />
         {/* <NetworkSection /> */}
         <Gallery />
+        {/* <GymCTASection /> */}
         <LocationSection />
         <MembershipSection />
         <MotivationSection />
         <TestimonialsSection />
         <FinalCTASection />
         <ContactSection />
+        <ClassesSection />
       </main>
       <Footer />
     </>

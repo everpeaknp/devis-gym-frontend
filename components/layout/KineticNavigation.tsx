@@ -407,30 +407,36 @@ export default function KineticNavigation() {
                   </Link>
                 </li>
                 <li className="menu-list-item" data-shape="2">
+                  <Link href="/classes" className="nav-link cursor-pointer" onClick={closeMenu}>
+                    <p className="nav-link-text">Classes</p>
+                    <div className="nav-link-hover-bg"></div>
+                  </Link>
+                </li>
+                <li className="menu-list-item" data-shape="3">
                   <Link href="/gym" className="nav-link cursor-pointer" onClick={closeMenu}>
                     <p className="nav-link-text">Our Gym</p>
                     <div className="nav-link-hover-bg"></div>
                   </Link>
                 </li>
-                <li className="menu-list-item" data-shape="3">
+                <li className="menu-list-item" data-shape="4">
                   <Link href="/gallery" className="nav-link cursor-pointer" onClick={closeMenu}>
                     <p className="nav-link-text">Gallery</p>
                     <div className="nav-link-hover-bg"></div>
                   </Link>
                 </li>
-                <li className="menu-list-item" data-shape="4">
+                <li className="menu-list-item" data-shape="5">
                   <Link href="/about" className="nav-link cursor-pointer" onClick={closeMenu}>
                     <p className="nav-link-text">About Us</p>
                     <div className="nav-link-hover-bg"></div>
                   </Link>
                 </li>
-                <li className="menu-list-item" data-shape="5">
+                <li className="menu-list-item" data-shape="1">
                   <Link href="/contact" className="nav-link cursor-pointer" onClick={closeMenu}>
                     <p className="nav-link-text">Contact</p>
                     <div className="nav-link-hover-bg"></div>
                   </Link>
                 </li>
-                <li className="menu-list-item" data-shape="1">
+                <li className="menu-list-item" data-shape="2">
                   <Link href="/#membership" className="nav-link cursor-pointer" onClick={closeMenu}>
                     <p className="nav-link-text">Membership</p>
                     <div className="nav-link-hover-bg"></div>

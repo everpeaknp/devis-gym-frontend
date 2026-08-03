@@ -8,8 +8,8 @@ import {
   MapPin,
 } from "lucide-react";
 import { motion, useInView } from "framer-motion";
-import { FooterBackgroundGradient } from "@/components/ui/hover-footer";
-import { TextHoverEffect } from "@/components/ui/hover-footer";
+import { FooterBackgroundGradient } from "@/components/unused-components/ui/hover-footer";
+import { TextHoverEffect } from "@/components/unused-components/ui/hover-footer";
 import { InstagramIcon, FacebookIcon, TikTokIcon } from "@/components/ui/SocialIcons";
 import { businessData } from "@/data/business";
 import { navigation } from "@/data/navigation";

@@ -56,12 +56,17 @@ export default function LocationSection() {
               </div>
 
               <Button
-                href={businessData.location.mapsUrl}
-                external
-                variant="primary"
+                asChild
+                variant="default"
                 className="mt-10 w-fit"
               >
-                Get Directions
+                <a 
+                  href={businessData.location.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Get Directions
+                </a>
               </Button>
             </div>
           </Reveal>

@@ -8,7 +8,7 @@ import Image from "next/image";
 import { AnimatedLayerButton } from "@/components/ui/AnimatedLayerButton";
 import { businessData } from "@/data/business";
 import HeroScrollSequence from "./HeroScrollSequence";
-import HeroProgress from "@/components/ui/hero-progress";
+import HeroProgress from "@/components/unused-components/ui/hero-progress";
 
 // Hero media data - 2 videos first, then 1 image (3 slides total)
 const heroMedia = [

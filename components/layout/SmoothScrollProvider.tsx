@@ -13,6 +13,9 @@ export default function SmoothScrollProvider({
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
+    // TEMPORARILY DISABLED TO TEST CLICKING
+    return;
+    
     gsap.registerPlugin(ScrollTrigger);
 
     const prefersReducedMotion = window.matchMedia(

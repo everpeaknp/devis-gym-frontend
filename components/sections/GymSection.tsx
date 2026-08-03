@@ -85,8 +85,8 @@ export default function GymSection() {
               Full equipment list and facility breakdown coming soon. In the
               meantime, come see the space in person.
             </p>
-            <Button href="#location" variant="secondary">
-              Visit the Gym
+            <Button asChild variant="secondary">
+              <a href="#location">Visit the Gym</a>
             </Button>
           </div>
         </Reveal>
