@@ -57,17 +57,17 @@ export default function Footer() {
   // Contact info data
   const contactData = [
     {
-      icon: <Mail size={18} className="text-accent" />,
+      icon: <Mail size={18} className="text-white" />,
       text: contactInfo.email,
       href: `mailto:${contactInfo.email}`,
     },
     {
-      icon: <Phone size={18} className="text-accent" />,
+      icon: <Phone size={18} className="text-white" />,
       text: contactInfo.phone,
       href: `tel:${contactInfo.phone}`,
     },
     {
-      icon: <MapPin size={18} className="text-accent" />,
+      icon: <MapPin size={18} className="text-white" />,
       text: `${businessData.location.city}, ${businessData.location.country}`,
       href: businessData.location.mapsUrl,
     },

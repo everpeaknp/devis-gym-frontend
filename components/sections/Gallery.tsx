@@ -50,22 +50,24 @@ export default function Gallery() {
       <div className="container-edge pt-16 pb-16 sm:pt-20 sm:pb-20 md:pt-24 md:pb-24">
         <SectionHeading eyebrow="Gallery" title="A look inside" />
 
-        <div className="mt-6 sm:mt-8 md:mt-10 flex flex-wrap gap-2">
-          {["All", ...galleryCategories].map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => setActive(cat)}
-              className={clsx(
-                "rounded-full border px-3 py-1.5 sm:px-4 sm:py-2 text-xs font-semibold uppercase tracking-[0.1em] transition-colors duration-200 cursor-pointer",
-                active === cat
-                  ? "border-accent bg-accent text-[#0a0a0a]"
-                  : "border-border-strong text-muted hover:text-foreground"
-              )}
-            >
-              {cat}
-            </button>
-          ))}
+        <div className="mt-6 sm:mt-8 md:mt-10 overflow-x-auto scrollbar-hide">
+          <div className="flex gap-2 sm:gap-3 pb-2 min-w-max">
+            {["All", ...galleryCategories].map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setActive(cat)}
+                className={clsx(
+                  "rounded-full border px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-semibold uppercase tracking-[0.1em] transition-colors duration-200 cursor-pointer touch-manipulation min-h-[44px] flex items-center justify-center whitespace-nowrap flex-shrink-0",
+                  active === cat
+                    ? "border-accent bg-accent text-[#0a0a0a]"
+                    : "border-border-strong text-muted hover:text-foreground active:bg-accent/10"
+                )}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="mt-6 sm:mt-8 md:mt-10 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">

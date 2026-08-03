@@ -34,7 +34,7 @@ export function NotFoundPage() {
             </EmptyHeader>
             
             <EmptyContent className="max-w-md">
-              <div className="flex flex-col sm:flex-row gap-4 w-full mb-8">
+              <div className="flex flex-col sm:flex-row gap-4 w-full">
                 <ShadcnButton asChild size="lg" className="flex-1 bg-accent text-black hover:bg-accent/90 font-semibold">
                   <Link href="/">
                     <Home className="h-5 w-5 mr-2" />
@@ -47,36 +47,6 @@ export function NotFoundPage() {
                     Contact Us
                   </Link>
                 </ShadcnButton>
-              </div>
-              
-              {/* Quick Links */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                <Link href="/gym" className="p-4 rounded-lg bg-background-elevated hover:bg-accent/5 transition-colors group">
-                  <Dumbbell className="h-6 w-6 text-accent mx-auto mb-2 group-hover:scale-110 transition-transform" />
-                  <div className="font-medium text-foreground">Gym Info</div>
-                  <div className="text-xs text-muted-foreground">Learn about our facilities</div>
-                </Link>
-                
-                <Link href="/membership" className="p-4 rounded-lg bg-background-elevated hover:bg-accent/5 transition-colors group">
-                  <Home className="h-6 w-6 text-accent mx-auto mb-2 group-hover:scale-110 transition-transform" />
-                  <div className="font-medium text-foreground">Membership</div>
-                  <div className="text-xs text-muted-foreground">Join Devi's Gym</div>
-                </Link>
-                
-                <Link href="/contact" className="p-4 rounded-lg bg-background-elevated hover:bg-accent/5 transition-colors group">
-                  <MapPin className="h-6 w-6 text-accent mx-auto mb-2 group-hover:scale-110 transition-transform" />
-                  <div className="font-medium text-foreground">Location</div>
-                  <div className="text-xs text-muted-foreground">Find us in Pokhara</div>
-                </Link>
-              </div>
-
-              <div className="text-center mt-8 pt-6 border-t border-border">
-                <p className="text-sm text-muted-foreground mb-2">
-                  Error 404 - Page not found
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Still lost? <Link href="/contact" className="text-accent hover:underline">Get in touch with us</Link>
-                </p>
               </div>
             </EmptyContent>
           </Empty>

@@ -48,7 +48,13 @@ export default function Hero() {
         video.addEventListener('canplaythrough', () => {
           if (index === currentMediaIndex && video.paused) {
             video.currentTime = 0;
-            video.play().catch(console.warn);
+            // Better error handling for autoplay
+            video.play().catch((error) => {
+              // Handle AbortError and other autoplay issues silently
+              if (error.name !== 'AbortError') {
+                console.warn('Video autoplay prevented:', error);
+              }
+            });
           }
         });
       }
@@ -67,7 +73,12 @@ export default function Hero() {
             video.pause();
           } else {
             video.currentTime = 0;
-            video.play().catch(console.warn);
+            video.play().catch((error) => {
+              // Handle AbortError and other autoplay issues silently
+              if (error.name !== 'AbortError') {
+                console.warn('Video play failed:', error);
+              }
+            });
           }
         } else {
           // Pause other videos
@@ -215,7 +226,12 @@ export default function Hero() {
       if (newPausedState) {
         currentVideo.pause();
       } else {
-        currentVideo.play().catch(console.warn);
+        currentVideo.play().catch((error) => {
+          // Handle AbortError and other autoplay issues silently
+          if (error.name !== 'AbortError') {
+            console.warn('Video play failed on click:', error);
+          }
+        });
       }
     }
   };

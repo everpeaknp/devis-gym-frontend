@@ -11,6 +11,7 @@ import InstagramFeed from "@/components/ui/InstagramFeed";
 import Reveal from "@/components/ui/Reveal";
 import Footer from "@/components/layout/Footer";
 import ScrollExpandMedia from "@/components/ui/scroll-expansion-hero";
+import BackButton from "@/components/ui/BackButton";
 
 // Counter component with animation
 function StatCounter({ stat }: { stat: { id: string; value: string; label: string } }) {
@@ -222,6 +223,7 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <BackButton />
       <ScrollExpandMedia
         mediaType="video"
         mediaSrc="/hero/293079_medium.mp4"

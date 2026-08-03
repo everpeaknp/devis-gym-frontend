@@ -37,7 +37,10 @@ export default function SoundManager() {
             console.log("✓ Background music started");
           })
           .catch((error) => {
-            console.log("Music autoplay prevented:", error);
+            // Handle AbortError and other autoplay issues silently
+            if (error.name !== 'AbortError') {
+              console.log("Music autoplay prevented:", error);
+            }
           });
       }
     };

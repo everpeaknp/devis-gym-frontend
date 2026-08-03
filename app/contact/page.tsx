@@ -8,6 +8,7 @@ import SocialSection from "@/components/sections/SocialSection";
 import LocationSection from "@/components/sections/LocationSection";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import VelocityText from "@/components/ui/VelocityText";
+import BackButton from "@/components/ui/BackButton";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -36,6 +37,7 @@ export default function ContactPage() {
 
   return (
     <>
+      <BackButton />
       {/* Breadcrumb right after navigation */}
       <Breadcrumb 
         items={[{ label: "Home", href: "/" }]}

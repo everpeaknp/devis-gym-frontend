@@ -641,22 +641,53 @@ body.loading-screen-active .site-header-wrapper {
   height: 100%;
 }
 
-/* Hamburger to X animation */
-.hamburger-line {
-  transition: all 0.3s ease;
-  transform-origin: center;
+/* Menu Button Icons */
+.menu-button-icon {
+  width: 100%;
+  height: 100%;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.menu-button-icon.open .hamburger-top {
-  transform: translateY(6px) rotate(45deg);
+.menu-button-icon.cross-icon {
+  color: var(--accent) !important;
+  transform: scale(1.2) !important;
 }
 
-.menu-button-icon.open .hamburger-middle {
-  opacity: 0;
+.menu-button-icon.hamburger-icon {
+  color: var(--foreground);
+  transform: scale(1);
 }
 
-.menu-button-icon.open .hamburger-bottom {
-  transform: translateY(-6px) rotate(-45deg);
+.menu-button-icon.cross-icon line {
+  stroke: var(--accent) !important;
+  stroke-width: 3 !important;
+}
+
+.menu-button-icon.hamburger-icon line {
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+/* Force cross icon visibility */
+.nav-close-btn[data-menu-state="open"] .menu-button-icon {
+  color: var(--accent) !important;
+  transform: scale(1.2) !important;
+}
+
+.nav-close-btn[data-menu-state="open"] .menu-button-icon line {
+  stroke: var(--accent) !important;
+  stroke-width: 3 !important;
+}
+
+/* Better visibility for cross icon */
+.nav-close-btn:hover .menu-button-icon.cross-icon {
+  color: var(--accent);
+  transform: scale(1.3);
+}
+
+.nav-close-btn:hover .menu-button-icon.hamburger-icon {
+  color: var(--accent);
+  transform: scale(1.1);
 }
 
 /* Theme Toggle Button */
@@ -1191,6 +1222,16 @@ body.loading-screen-active .site-header-wrapper {
 /* Video layer specific styling */
 video[data-parallax-layer="2"] {
   z-index: 1;
+}
+
+/* Scrollbar utilities */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
 }
 
 /* Mobile responsiveness for parallax */

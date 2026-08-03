@@ -211,22 +211,42 @@ export function Component() {
                   style={{ pointerEvents: 'auto' }}
                 >
                   <div className="icon-wrap">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className={`menu-button-icon ${isMenuOpen ? 'open' : ''}`}
-                    >
-                      <line x1="3" y1="6" x2="21" y2="6" className="hamburger-line hamburger-top" />
-                      <line x1="3" y1="12" x2="21" y2="12" className="hamburger-line hamburger-middle" />
-                      <line x1="3" y1="18" x2="21" y2="18" className="hamburger-line hamburger-bottom" />
-                    </svg>
+                    {isMenuOpen ? (
+                      // Cross/X icon when menu is open
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="menu-button-icon cross-icon"
+                      >
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                      </svg>
+                    ) : (
+                      // Hamburger icon when menu is closed
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="menu-button-icon hamburger-icon"
+                      >
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                      </svg>
+                    )}
                   </div>
                 </button>
 

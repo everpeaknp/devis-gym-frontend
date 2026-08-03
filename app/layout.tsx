@@ -86,6 +86,18 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Handle unhandled promise rejections for video AbortError
+              window.addEventListener('unhandledrejection', function(event) {
+                if (event.reason && event.reason.name === 'AbortError') {
+                  event.preventDefault();
+                }
+              });
+            `,
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <LoadingScreen />

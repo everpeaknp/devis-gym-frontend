@@ -116,9 +116,6 @@ export default function KineticNavigation() {
         if (menuButtonTexts && menuButtonTexts.length > 0) {
           tl.fromTo(menuButtonTexts, { yPercent: 0 }, { yPercent: -100, stagger: 0.2 });
         }
-        if (menuButtonIcon) {
-          tl.fromTo(menuButtonIcon, { rotate: 0 }, { rotate: 315 }, "<");
-        }
           
         tl.fromTo(overlay, { autoAlpha: 0 }, { autoAlpha: 1 }, "<")
           .fromTo(bgPanels, { xPercent: 101 }, { xPercent: 0, stagger: 0.12, duration: 0.575 }, "<")
@@ -135,9 +132,6 @@ export default function KineticNavigation() {
           
         if (menuButtonTexts && menuButtonTexts.length > 0) {
           tl.to(menuButtonTexts, { yPercent: 0 }, "<");
-        }
-        if (menuButtonIcon) {
-          tl.to(menuButtonIcon, { rotate: 0 }, "<");
         }
         
         tl.set(navWrap, { display: "none" });
@@ -184,28 +178,30 @@ export default function KineticNavigation() {
                   role="button" 
                   className="nav-close-btn flex flex-col items-center gap-1 cursor-pointer" 
                   onClick={toggleMenu} 
-                  style={{ pointerEvents: 'auto', opacity: menuOpacity }}
+                  style={{ pointerEvents: 'auto', opacity: isMenuOpen ? 1 : menuOpacity }}
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
+                  data-menu-state={isMenuOpen ? "open" : "closed"}
                 >
+                  {/* Debug text */}
+                  <div className="text-xs text-accent mb-1">{isMenuOpen ? "CLOSE" : "MENU"}</div>
+                  
                   <div className="icon-wrap">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="menu-button-icon"
-                    >
-                      <line x1="3" y1="6" x2="21" y2="6" className="hamburger-line hamburger-top" />
-                      <line x1="3" y1="12" x2="21" y2="12" className="hamburger-line hamburger-middle" />
-                      <line x1="3" y1="18" x2="21" y2="18" className="hamburger-line hamburger-bottom" />
-                    </svg>
+                    {isMenuOpen ? (
+                      // Cross icon when menu is open
+                      <div className="w-6 h-6 relative flex items-center justify-center">
+                        <div className="absolute w-6 h-0.5 bg-accent rotate-45"></div>
+                        <div className="absolute w-6 h-0.5 bg-accent -rotate-45"></div>
+                      </div>
+                    ) : (
+                      // Hamburger icon when menu is closed
+                      <div className="w-6 h-6 flex flex-col justify-center gap-1">
+                        <div className="w-6 h-0.5 bg-white"></div>
+                        <div className="w-6 h-0.5 bg-white"></div>
+                        <div className="w-6 h-0.5 bg-white"></div>
+                      </div>
+                    )}
                   </div>
                 </motion.button>
                 
@@ -378,6 +374,31 @@ export default function KineticNavigation() {
             </div>
 
             <div className="menu-content-wrapper">
+              {/* Close button at top of menu */}
+              <div className="absolute top-6 right-6 z-10">
+                <button 
+                  onClick={closeMenu}
+                  className="w-12 h-12 flex items-center justify-center bg-black/20 rounded-full backdrop-blur-sm hover:bg-accent hover:text-black transition-all duration-300"
+                  aria-label="Close menu"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="w-6 h-6"
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </div>
+
               <ul className="menu-list">
                 <li className="menu-list-item" data-shape="1">
                   <Link href="/" className="nav-link cursor-pointer" onClick={closeMenu}>

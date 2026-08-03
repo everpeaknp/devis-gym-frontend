@@ -4,10 +4,12 @@ import { ParallaxComponent } from "@/components/ui/parallax-scrolling";
 import MembershipSection from "@/components/sections/MembershipSection";
 import Footer from "@/components/layout/Footer";
 import Reveal from "@/components/ui/Reveal";
+import BackButton from "@/components/ui/BackButton";
 
 export default function MembershipPage() {
   return (
     <>
+      <BackButton />
       {/* Parallax Section */}
       <ParallaxComponent />
 

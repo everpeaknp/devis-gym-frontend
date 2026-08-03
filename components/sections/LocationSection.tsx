@@ -17,8 +17,8 @@ export default function LocationSection() {
           <Reveal>
             <div className="flex h-full flex-col justify-between border border-border p-8">
               <div>
-                <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-                  <MapPin size={14} />
+                <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">
+                  <MapPin size={14} className="text-white" />
                   {businessData.location.city}, {businessData.location.country}
                 </p>
                 <p className="font-display mt-4 text-3xl font-extrabold uppercase leading-tight">
@@ -34,8 +34,8 @@ export default function LocationSection() {
 
                 {/* Opening Hours */}
                 <div className="mt-6">
-                  <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent mb-2">
-                    <Clock size={14} />
+                  <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-white mb-2">
+                    <Clock size={14} className="text-white" />
                     Opening Hours
                   </p>
                   <p className="text-sm text-muted leading-relaxed">
@@ -45,8 +45,8 @@ export default function LocationSection() {
 
                 {/* Parking */}
                 <div className="mt-4">
-                  <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent mb-2">
-                    <Car size={14} />
+                  <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-white mb-2">
+                    <Car size={14} className="text-white" />
                     Parking
                   </p>
                   <p className="text-sm text-muted leading-relaxed">

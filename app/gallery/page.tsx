@@ -3,10 +3,12 @@
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Gallery from "@/components/sections/Gallery";
 import Footer from "@/components/layout/Footer";
+import BackButton from "@/components/ui/BackButton";
 
 export default function GalleryPage() {
   return (
     <>
+      <BackButton />
       {/* Hero Breadcrumb Section - matches gym page style */}
       <Breadcrumb 
         items={[{ label: "Home", href: "/" }]}
@@ -15,9 +17,7 @@ export default function GalleryPage() {
       />
 
       {/* Interactive Gallery Section - shows ALL images with filters */}
-      <div className="md:pt-[30rem]">
-        <Gallery />
-      </div>
+      <Gallery />
 
       {/* Footer */}
       <Footer />

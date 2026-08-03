@@ -14,10 +14,11 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
   const sectionRef = useRef<HTMLDivElement>(null);
   const [currentDay, setCurrentDay] = useState(1);
 
-  // Define day values for each frame
+  // Define day values for each frame - 365 days total over 31 frames
   const getDayValue = (frameIndex: number) => {
     if (frameIndex === 0) return 1; // First frame = Day 1
-    return frameIndex * 30; // 2nd frame = 30, 3rd = 60, 4th = 90, etc.
+    // Distribute 365 days across 31 frames: approximately 12 days per frame
+    return Math.min(Math.round((frameIndex * 365) / 30), 365);
   };
 
   useEffect(() => {
@@ -64,9 +65,9 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
     const st = ScrollTrigger.create({
       trigger: section,
       start: "top top",
-      end: "+=4000", // Increased scroll distance for 31 frames
+      end: "+=1200", // Very fast transitions
       pin: true,
-      scrub: 1.5, // Smoother scrub with more lag
+      scrub: 0.2, // Ultra responsive
       pinSpacing: true, // Proper spacing to prevent overlap
       anticipatePin: 1, // Better mobile performance
       refreshPriority: -1, // Refresh after other elements

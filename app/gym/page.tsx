@@ -4,10 +4,12 @@ import Footer from "@/components/layout/Footer";
 import FlowArt, { FlowSection } from "@/components/ui/FlowArt";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import HoverRevealCards from "@/components/ui/cards";
+import BackButton from "@/components/ui/BackButton";
 
 export default function GymPage() {
   return (
     <>
+      <BackButton />
       <Breadcrumb 
         items={[{ label: "Home", href: "/" }]}
         currentPage="The Gym"
