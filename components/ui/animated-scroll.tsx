@@ -1,7 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 
-const pages = [
+interface ScrollPageContent {
+  heading: string;
+  description: string;
+}
+
+interface ScrollPage {
+  leftBgImage: string | null;
+  rightBgImage: string | null;
+  leftContent: ScrollPageContent | null;
+  rightContent: ScrollPageContent | null;
+}
+
+const pages: ScrollPage[] = [
   {
     leftBgImage: '/gym/gym-interior-1.webp',
     rightBgImage: null,
