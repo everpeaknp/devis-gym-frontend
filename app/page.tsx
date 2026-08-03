@@ -71,7 +71,7 @@ export default function Home() {
         <TestimonialsSection />
         <FinalCTASection />
         <ContactSection />
-        {/* <ClassesSection /> */}
+      
       </main>
       <Footer />
     </>
