@@ -154,8 +154,7 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
                 alt=""
                 width={800}
                 height={600}
-                priority={i === 0}
-                loading={i === 0 ? "eager" : "lazy"}
+                loading="lazy"
                 className="hero-frame absolute inset-0 w-full h-full object-contain"
                 style={{ 
                   zIndex: 1,

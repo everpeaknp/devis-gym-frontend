@@ -226,7 +226,7 @@ export default function Lightbox({
           }}
           sizes="90vw"
           quality={85}
-          priority
+          loading="lazy"
         />
       </div>
     </div>

@@ -4,6 +4,7 @@ import { useRef, useLayoutEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Gauge } from "@/components/unused-components/ui/gauge-1";
+import Image from "next/image";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -255,38 +256,50 @@ export default function ProgressSection() {
         {/* Left Side Equipment */}
         <div className="absolute left-[10%] top-1/2 -translate-y-1/2 flex flex-col items-center space-y-8">
           {/* Weight Plate */}
-          <img
+          <Image
             ref={weightPlateRef}
             src="/equipment/1.webp"
             alt="Weight Plate"
+            width={128}
+            height={128}
             className="w-20 h-20 md:w-32 md:h-32 object-contain"
+            loading="lazy"
           />
           
           {/* Extra Plate */}
-          <img
+          <Image
             ref={extraPlateRef}
             src="/equipment/2.webp"
             alt="Extra Weight Plate"
+            width={96}
+            height={96}
             className="w-16 h-16 md:w-24 md:h-24 object-contain"
+            loading="lazy"
           />
         </div>
 
         {/* Right Side Equipment */}
         <div className="absolute right-[10%] top-1/2 -translate-y-1/2 flex flex-col items-center space-y-8">
           {/* Dumbbell */}
-          <img
+          <Image
             ref={dumbbellRef}
             src="/equipment/3.png"
             alt="Dumbbell"
+            width={144}
+            height={144}
             className="w-24 h-24 md:w-36 md:h-36 object-contain"
+            loading="lazy"
           />
           
           {/* Barbell */}
-          <img
+          <Image
             ref={barbellRef}
             src="/equipment/4.png"
             alt="Barbell"
+            width={160}
+            height={160}
             className="w-28 h-28 md:w-40 md:h-40 object-contain"
+            loading="lazy"
           />
         </div>
 
@@ -353,29 +366,38 @@ export default function ProgressSection() {
         {/* Central Athlete */}
         <div ref={athleteContainerRef} className="relative flex items-center justify-center">
           {/* Skinny Athlete (placeholder - you'll need to replace with actual transformation images) */}
-          <img
+          <Image
             ref={skinnyAthleteRef}
             src="/hero/training-person.webp"
             alt="Skinny Athlete"
+            width={256}
+            height={320}
             className="absolute w-48 h-64 md:w-64 md:h-80 object-contain"
+            loading="lazy"
           />
           
           {/* Athletic Athlete (placeholder - you'll need to replace with actual transformation images) */}
-          <img
+          <Image
             ref={athleticAthleteRef}
             src="/hero/training-person.webp"
             alt="Athletic Athlete"
+            width={256}
+            height={320}
             className="absolute w-48 h-64 md:w-64 md:h-80 object-contain"
             style={{ filter: 'contrast(1.2) saturate(1.1)' }}
+            loading="lazy"
           />
           
           {/* Muscular Athlete (placeholder - you'll need to replace with actual transformation images) */}
-          <img
+          <Image
             ref={muscularAthleteRef}
             src="/hero/training-person.webp"
             alt="Muscular Athlete"
+            width={256}
+            height={320}
             className="absolute w-48 h-64 md:w-64 md:h-80 object-contain"
             style={{ filter: 'contrast(1.4) saturate(1.3) brightness(1.1)' }}
+            loading="lazy"
           />
         </div>
 

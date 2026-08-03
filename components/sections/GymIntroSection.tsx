@@ -142,13 +142,19 @@ export default function GymIntroSection() {
     <section
       ref={sectionRef}
       className="bg-background overflow-hidden relative"
-      style={{
-        backgroundImage: 'url(/wallbg.webp)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
     >
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/wallbg.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+          loading="lazy"
+          quality={80}
+        />
+      </div>
       {/* Black opacity overlay */}
       <div className="absolute inset-0 bg-black/50 z-0"></div>
 

@@ -46,7 +46,7 @@ export default function NetworkSection() {
           fill
           className="object-cover opacity-10"
           quality={80}
-          priority={false}
+          loading="lazy"
         />
         <div className="absolute inset-0 bg-background/80" />
       </div>

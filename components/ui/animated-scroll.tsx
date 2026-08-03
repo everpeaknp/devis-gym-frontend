@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 const pages = [
   {
@@ -99,14 +100,35 @@ export default function ScrollAdventure() {
           <div key={idx} className="absolute inset-0">
             {/* Left Half */}
             <div
-              className="absolute top-0 left-0 w-1/2 h-full transition-transform duration-[1000ms]"
+              className="absolute top-0 left-0 w-1/2 h-full transition-transform duration-[1000ms] overflow-hidden"
               style={{ transform: leftTrans }}
             >
-              <div
-                className="w-full h-full bg-cover bg-center bg-no-repeat bg-gray-900"
-                style={{ backgroundImage: page.leftBgImage ? `url(${page.leftBgImage})` : undefined }}
-              >
-                <div className="flex flex-col items-center justify-center h-full text-white p-8 bg-black/40">
+              {page.leftBgImage ? (
+                <div className="relative w-full h-full">
+                  <Image
+                    src={page.leftBgImage}
+                    alt=""
+                    fill
+                    sizes="50vw"
+                    className="object-cover"
+                    loading="lazy"
+                    quality={85}
+                  />
+                  <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white p-8">
+                    {page.leftContent && (
+                      <>
+                        <h2 className="font-oswald text-3xl md:text-4xl lg:text-5xl uppercase mb-6 text-center font-bold tracking-tight">
+                          {page.leftContent.heading}
+                        </h2>
+                        <p className="text-base md:text-lg lg:text-xl text-center max-w-md leading-relaxed">
+                          {page.leftContent.description}
+                        </p>
+                      </>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="w-full h-full bg-gray-900 flex flex-col items-center justify-center text-white p-8">
                   {page.leftContent && (
                     <>
                       <h2 className="font-oswald text-3xl md:text-4xl lg:text-5xl uppercase mb-6 text-center font-bold tracking-tight">
@@ -118,19 +140,46 @@ export default function ScrollAdventure() {
                     </>
                   )}
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Right Half */}
             <div
-              className="absolute top-0 left-1/2 w-1/2 h-full transition-transform duration-[1000ms]"
+              className="absolute top-0 left-1/2 w-1/2 h-full transition-transform duration-[1000ms] overflow-hidden"
               style={{ transform: rightTrans }}
             >
-              <div
-                className="w-full h-full bg-cover bg-center bg-no-repeat bg-gray-900"
-                style={{ backgroundImage: page.rightBgImage ? `url(${page.rightBgImage})` : undefined }}
-              >
-                <div className="flex flex-col items-center justify-center h-full text-white p-8 bg-black/40">
+              {page.rightBgImage ? (
+                <div className="relative w-full h-full">
+                  <Image
+                    src={page.rightBgImage}
+                    alt=""
+                    fill
+                    sizes="50vw"
+                    className="object-cover"
+                    loading="lazy"
+                    quality={85}
+                  />
+                  <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white p-8">
+                    {page.rightContent && (
+                      <>
+                        <h2 className="font-oswald text-3xl md:text-4xl lg:text-5xl uppercase mb-6 text-center font-bold tracking-tight">
+                          {page.rightContent.heading}
+                        </h2>
+                        {typeof page.rightContent.description === 'string' ? (
+                          <p className="text-base md:text-lg lg:text-xl text-center max-w-md leading-relaxed">
+                            {page.rightContent.description}
+                          </p>
+                        ) : (
+                          <div className="text-base md:text-lg lg:text-xl text-center max-w-md leading-relaxed">
+                            {page.rightContent.description}
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="w-full h-full bg-gray-900 flex flex-col items-center justify-center text-white p-8">
                   {page.rightContent && (
                     <>
                       <h2 className="font-oswald text-3xl md:text-4xl lg:text-5xl uppercase mb-6 text-center font-bold tracking-tight">
@@ -148,7 +197,7 @@ export default function ScrollAdventure() {
                     </>
                   )}
                 </div>
-              </div>
+              )}
             </div>
           </div>
         );

@@ -5,13 +5,14 @@ import {
   GalleryGridCell,
 } from "@/components/ui/cta-section-with-gallery"
 import Button from "@/components/ui/Button" 
+import Image from "next/image"
 
-// Gym-themed images from Unsplash
+// Gym-themed images from local gallery
 const IMAGES = [
-  "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3", // Modern gym equipment
-  "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3", // Gym workout session  
-  "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3", // Personal training
-  "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3", // Gym interior space
+  "/gallery/gallery-1.jpeg", // Modern gym equipment
+  "/gallery/gallery-2.jpeg", // Gym workout session  
+  "/gallery/gallery-3.jpeg", // Personal training
+  "/gallery/gallery-4.jpeg", // Gym interior space
 ]
 
 export const GymCTADemo = () => {
@@ -52,13 +53,14 @@ export const GymCTADemo = () => {
         <GalleryGrid className="min-h-[400px] md:min-h-[500px]">
           {IMAGES.map((imageUrl, index) => (
             <GalleryGridCell index={index} key={index}>
-              <img
-                className="size-full object-cover object-center hover:scale-110 transition-transform duration-700"
-                width="100%"
-                height="100%"
+              <Image
                 src={imageUrl}
                 alt={`Devis Gym - Training ${index + 1}`}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                className="object-cover object-center hover:scale-110 transition-transform duration-700"
                 loading="lazy"
+                quality={85}
               />
               {/* Overlay gradient for better visual depth */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />

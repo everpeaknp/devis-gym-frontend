@@ -24,9 +24,9 @@ interface MediaContentCollection {
 
 const sampleMediaContent: MediaContentCollection = {
   video: {
-    src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1920&auto=format&fit=crop',
-    poster: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1920&auto=format&fit=crop',
-    background: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1920&auto=format&fit=crop',
+    src: '/gallery/gym-1.jpeg',
+    poster: '/gallery/gym-1.jpeg',
+    background: '/gallery/gym-2.jpeg',
     title: 'Devi\'s Fitness Journey',
     date: 'Transform Your Body',
     scrollToExpand: 'Scroll to Expand Demo',
@@ -38,8 +38,8 @@ const sampleMediaContent: MediaContentCollection = {
     },
   },
   image: {
-    src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1280&auto=format&fit=crop',
-    background: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1920&auto=format&fit=crop',
+    src: '/gallery/gym-3.jpeg',
+    background: '/gallery/training-1.jpeg',
     title: 'Dynamic Gym Showcase',
     date: 'Fitness Excellence',
     scrollToExpand: 'Scroll to Expand Demo',

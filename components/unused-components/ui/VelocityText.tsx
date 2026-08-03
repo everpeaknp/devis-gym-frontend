@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useSpring, useTransform, useVelocity } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 export default function VelocityText() {
   const containerRef = useRef(null);
@@ -115,10 +116,14 @@ const Title = () => (
       "mr-6 h-24 w-24 bg-muted rounded-sm overflow-hidden",
       "transition-colors duration-300"
     )}>
-      <img
+      <Image
         src="/gym/gym-interior-1.webp"
         alt="Gym equipment"
-        className="h-full w-full object-cover"
+        width={96}
+        height={96}
+        className="object-cover"
+        loading="lazy"
+        quality={85}
       />
     </div>
     <h1 className="text-3xl font-bold sm:text-5xl md:text-7xl font-oswald">

@@ -2,6 +2,7 @@ import BackButton from "@/components/ui/BackButton";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
 import Button from "@/components/ui/Button";
+import Image from "next/image";
 
 const classes = [
   {
@@ -9,28 +10,28 @@ const classes = [
     title: 'Outdoor Classes',
     description: 'Train in the fresh air with our outdoor fitness programs. Perfect for those who love nature and want to break free from traditional gym walls.',
     features: ['Morning Boot Camps', 'Trail Running Groups', 'Outdoor Yoga Sessions', 'Park Workouts'],
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3'
+    image: '/gallery/gym-1.jpeg'
   },
   {
     id: 'personal',
     title: 'Personal Training',
     description: 'One-on-one sessions with certified trainers tailored to your specific fitness goals and needs.',
     features: ['Customized Workout Plans', 'Nutrition Guidance', 'Progress Tracking', 'Flexible Scheduling'],
-    image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3'
+    image: '/gallery/training-1.jpeg'
   },
   {
     id: 'group',
     title: 'Group Training',
     description: 'Join our energetic group classes and train with others who share your fitness passion.',
     features: ['HIIT Classes', 'Strength Training', 'Cardio Sessions', 'Functional Fitness'],
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3'
+    image: '/gallery/gym-2.jpeg'
   },
   {
     id: 'digital',
     title: 'Digital Coaching',
     description: 'Get professional guidance from anywhere with our online coaching programs and virtual sessions.',
     features: ['Virtual Personal Training', 'Online Nutrition Plans', 'Progress Monitoring App', '24/7 Support'],
-    image: 'https://images.unsplash.com/photo-1549060279-7e168fcee0c2?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3'
+    image: '/gallery/training-2.jpeg'
   }
 ];
 
@@ -60,10 +61,15 @@ export default function ClassesPage() {
             <Reveal key={classType.id} delay={index * 0.1}>
               <article className="group bg-background-elevated border border-border rounded-lg overflow-hidden hover:border-accent/50 transition-colors duration-300">
                 <div className="aspect-[16/9] overflow-hidden">
-                  <img
+                  <Image
                     src={classType.image}
                     alt={classType.title}
+                    width={800}
+                    height={450}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    loading="lazy"
+                    quality={85}
                   />
                 </div>
                 

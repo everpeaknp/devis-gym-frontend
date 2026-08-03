@@ -4,6 +4,7 @@ import { useRef } from "react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 const classTypes = [
   {
@@ -11,28 +12,28 @@ const classTypes = [
     title: 'Outdoor Classes',
     description: 'Train in fresh air with boot camps, trail running, and outdoor yoga sessions.',
     icon: '🌳',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3'
+    image: '/gallery/gym-1.jpeg'
   },
   {
     id: 'personal',
     title: 'Personal Training',
     description: 'One-on-one sessions with certified trainers tailored to your goals.',
     icon: '🎯',
-    image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3'
+    image: '/gallery/training-1.jpeg'
   },
   {
     id: 'group',
     title: 'Group Training',
     description: 'High-energy group classes including HIIT, strength, and functional fitness.',
     icon: '👥',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3'
+    image: '/gallery/gym-2.jpeg'
   },
   {
     id: 'digital',
     title: 'Digital Coaching',
     description: 'Virtual training sessions and online coaching programs from anywhere.',
     icon: '💻',
-    image: 'https://images.unsplash.com/photo-1549060279-7e168fcee0c2?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3'
+    image: '/gallery/training-2.jpeg'
   }
 ];
 
@@ -94,10 +95,14 @@ export default function ClassesSection() {
               }}
             >
               <div className="aspect-[4/3] overflow-hidden relative">
-                <img
+                <Image
                   src={classType.image}
                   alt={classType.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  loading="lazy"
+                  quality={85}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4">

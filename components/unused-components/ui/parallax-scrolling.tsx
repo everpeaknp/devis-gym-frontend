@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from '@studio-freight/lenis';
+import Image from 'next/image';
 
 export function ParallaxComponent() {
   const parallaxRef = useRef<HTMLDivElement>(null);
@@ -66,7 +67,15 @@ export function ParallaxComponent() {
         <div className="parallax__visuals">
           <div className="parallax__black-line-overflow"></div>
           <div data-parallax-layers className="parallax__layers">
-            <img src="/bg.jpg" loading="eager" width="800" data-parallax-layer="1" alt="" className="parallax__layer-img" />
+            <Image 
+              src="/bg.jpg" 
+              alt=""
+              width={800}
+              height={600}
+              data-parallax-layer="1" 
+              className="parallax__layer-img" 
+              loading="lazy"
+            />
             <video 
               src="/bg.mp4" 
               autoPlay 
@@ -87,7 +96,16 @@ export function ParallaxComponent() {
             <div data-parallax-layer="3" className="parallax__layer-title">
               <h2 className="parallax__title">Join Our Elite Membership</h2>
             </div>
-            <img src="/backgrounds/parallax-layer.webp" loading="eager" width="800" data-parallax-layer="4" alt="" className="parallax__layer-img" />
+            <Image 
+              src="/backgrounds/parallax-layer.webp" 
+              alt=""
+              width={800}
+              height={600}
+              data-parallax-layer="4" 
+              className="parallax__layer-img" 
+              loading="lazy"
+              quality={85}
+            />
           </div>
           <div className="parallax__fade"></div>
         </div>

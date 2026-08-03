@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils'; // Assuming shadcn's utility for class names
+import Image from 'next/image';
 
 /**
  * @typedef CardItem
@@ -52,7 +53,7 @@ const HoverRevealCards: React.FC<HoverRevealCardsProps> = ({
           aria-label={`${item.title}, ${item.subtitle}`}
           tabIndex={0} // Makes the div focusable for keyboard navigation.
           className={cn(
-            'relative h-80 cursor-pointer overflow-hidden rounded-xl bg-cover bg-center shadow-lg transition-all duration-500 ease-in-out',
+            'relative h-80 cursor-pointer overflow-hidden rounded-xl shadow-lg transition-all duration-500 ease-in-out',
             // On parent hover, apply these styles to all children.
             'group-hover:scale-[0.97] group-hover:opacity-60 group-hover:blur-[2px]',
             // On child hover/focus, override parent hover styles to highlight the current item.
@@ -62,12 +63,21 @@ const HoverRevealCards: React.FC<HoverRevealCardsProps> = ({
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background',
             cardClassName
           )}
-          style={{ backgroundImage: `url(${item.imageUrl})` }}
         >
+          {/* Background Image using Next.js Image */}
+          <Image
+            src={item.imageUrl}
+            alt=""
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+            className="object-cover"
+            loading="lazy"
+            quality={85}
+          />
           {/* Gradient overlay for text contrast, a standard UI practice for text on images. */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
           {/* Card Content */}
-          <div className="absolute bottom-0 left-0 p-6 text-white">
+          <div className="absolute bottom-0 left-0 p-6 text-white z-10">
             <p className="text-sm font-light uppercase tracking-widest opacity-80">
               {item.subtitle}
             </p>

@@ -7,12 +7,13 @@ import {
   GalleryGridCell,
 } from "@/components/ui/cta-section-with-gallery"
 import Button from "@/components/ui/Button"
+import Image from "next/image"
 
 const IMAGES = [
-  "https://images.unsplash.com/photo-1455849318743-b2233052fcff?q=80&w=2338&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1733680958774-39a0e8a64a54?q=80&w=2487&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1548783307-f63adc3f200b?q=80&w=2487&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1703622377707-29bc9409aaf2?q=80&w=2400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "/gallery/gallery-1.jpeg",
+  "/gallery/gallery-2.jpeg", 
+  "/gallery/gallery-3.jpeg",
+  "/gallery/gallery-4.jpeg",
 ]
 
 export const AboutDemo = () => {
@@ -39,12 +40,14 @@ export const AboutDemo = () => {
         <GalleryGrid>
           {IMAGES.map((imageUrl, index) => (
             <GalleryGridCell index={index} key={index}>
-              <img
-                className="size-full object-cover object-center"
-                width="100%"
-                height="100%"
+              <Image
                 src={imageUrl}
                 alt={`Gallery image ${index + 1}`}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                className="object-cover object-center"
+                loading="lazy"
+                quality={85}
               />
             </GalleryGridCell>
           ))}

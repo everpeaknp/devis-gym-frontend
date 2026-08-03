@@ -5,6 +5,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { businessData } from "@/data/business";
 
+import Image from "next/image";
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Intro() {
@@ -105,10 +107,13 @@ export default function Intro() {
           <div ref={imagesRef} className="relative h-[600px] w-full overflow-visible cursor-grab active:cursor-grabbing">
             {/* Arrow SVG behind images on the right */}
             <div className="absolute right-[-15%] top-1/2 -translate-y-1/2 w-[60%] h-auto pointer-events-none -z-10">
-              <img
+              <Image
                 src="/icons/arrow-right.svg"
                 alt=""
+                width={400}
+                height={200}
                 className="w-full h-auto opacity-15"
+                loading="lazy"
               />
             </div>
 
@@ -122,10 +127,14 @@ export default function Intro() {
                   zIndex: 10 - index,
                 }}
               >
-                <img
+                <Image
                   src="/hero/training-person.webp"
                   alt="Training at Devi's Gym"
+                  width={480}
+                  height={600}
                   className="w-full h-full object-contain pointer-events-none"
+                  loading="lazy"
+                  quality={85}
                 />
               </div>
             ))}

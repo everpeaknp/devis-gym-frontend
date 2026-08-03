@@ -7,12 +7,13 @@ import {
   GalleryGridCell,
 } from "@/components/ui/cta-section-with-gallery"
 import Button from "@/components/ui/Button"
+import Image from "next/image"
 
 const GYM_IMAGES = [
-  "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Gym equipment
-  "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Workout session
-  "https://images.unsplash.com/photo-1590556409324-aa1d726e5c3c?q=80&w=2338&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Group fitness
-  "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?q=80&w=2487&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Modern gym interior
+  "/gallery/gallery-1.jpeg", // Gym equipment
+  "/gallery/gallery-2.jpeg", // Workout session
+  "/gallery/gallery-3.jpeg", // Group fitness
+  "/gallery/gallery-4.jpeg", // Modern gym interior
 ]
 
 export const GymCTAGallery = () => {
@@ -43,12 +44,14 @@ export const GymCTAGallery = () => {
         <GalleryGrid>
           {GYM_IMAGES.map((imageUrl, index) => (
             <GalleryGridCell index={index} key={index}>
-              <img
-                className="size-full object-cover object-center"
-                width="100%"
-                height="100%"
+              <Image
                 src={imageUrl}
                 alt={`Gym facility ${index + 1}`}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                className="object-cover object-center"
+                loading="lazy"
+                quality={85}
               />
             </GalleryGridCell>
           ))}

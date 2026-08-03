@@ -4,14 +4,15 @@ import {
   GalleryGrid,
   GalleryGridCell,
 } from "@/components/ui/cta-section-with-gallery"
-import Button from "@/components/ui/Button" 
+import Button from "@/components/ui/Button"
+import Image from "next/image"
 
-// Gym-themed images from Unsplash
+// Local gym images instead of external URLs
 const GYM_IMAGES = [
-  "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3", // Gym equipment
-  "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3", // Gym workout
-  "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3", // Personal training
-  "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3", // Gym interior
+  "/gallery/gym-1.jpeg", // Gym equipment
+  "/gallery/gym-2.jpeg", // Gym workout
+  "/gallery/training-1.jpeg", // Personal training
+  "/gallery/gym-3.jpeg", // Gym interior
 ]
 
 export const GymCTASection = () => {
@@ -52,13 +53,14 @@ export const GymCTASection = () => {
         <GalleryGrid className="min-h-[400px] md:min-h-[500px]">
           {GYM_IMAGES.map((imageUrl, index) => (
             <GalleryGridCell index={index} key={index}>
-              <img
+              <Image
                 className="size-full object-cover object-center hover:scale-110 transition-transform duration-700"
-                width="100%"
-                height="100%"
                 src={imageUrl}
                 alt={`Gym image ${index + 1}`}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 loading="lazy"
+                quality={85}
               />
               {/* Overlay gradient for better text contrast */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />

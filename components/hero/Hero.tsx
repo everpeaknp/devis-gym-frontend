@@ -354,7 +354,7 @@ export default function Hero() {
                   className="object-cover"
                   sizes="100vw"
                   quality={85}
-                  priority={index <= 2} // Preload first 3 images
+                  loading="lazy"
                 />
               )}
             </div>

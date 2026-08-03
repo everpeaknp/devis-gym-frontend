@@ -4,6 +4,7 @@ import Button from "@/components/ui/Button";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Footer from "@/components/layout/Footer";
 import { ArrowRight, Clock, Users, Zap, Calendar } from "lucide-react";
+import Image from "next/image";
 import {
   ContainerAnimated,
   ContainerStagger,
@@ -133,12 +134,14 @@ export default function GroupTrainingPage() {
             <GalleryGrid>
               {GROUP_IMAGES.map((imageUrl, index) => (
                 <GalleryGridCell index={index} key={index}>
-                  <img
+                  <Image
                     className="size-full object-cover object-center"
-                    width="100%"
-                    height="100%"
                     src={imageUrl}
                     alt={`Group training session ${index + 1}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    loading="lazy"
+                    quality={85}
                   />
                 </GalleryGridCell>
               ))}

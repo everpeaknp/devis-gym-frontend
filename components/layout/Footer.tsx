@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Mail,
   Phone,
@@ -175,10 +176,13 @@ export default function Footer() {
           <div className="flex flex-col space-y-4">
             <div className="flex items-center space-x-3">
               <div className="h-16 w-16 rounded-full bg-white flex items-center justify-center p-2">
-                <img 
+                <Image 
                   src="/logo.png" 
                   alt="Devi's Gym Logo" 
-                  className="h-full w-full object-contain"
+                  width={60}
+                  height={60}
+                  className="object-contain"
+                  loading="lazy"
                 />
               </div>
               <span className="text-white text-3xl font-bold font-oswald uppercase">

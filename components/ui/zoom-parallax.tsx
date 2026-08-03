@@ -83,8 +83,7 @@ export function ZoomParallax({ images }: ZoomParallaxProps) {
 									fill
 									className={`${index === 0 ? 'object-cover' : 'object-contain'}`}
 									sizes={index === 0 ? '100vw' : '25vw'}
-									loading={index === 0 ? 'eager' : 'lazy'}
-									priority={index === 0}
+									loading='lazy'
 									quality={index === 0 ? 85 : 75}
 									onError={(e) => {
 										console.log('Image failed to load:', src);

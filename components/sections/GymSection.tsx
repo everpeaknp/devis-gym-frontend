@@ -8,6 +8,7 @@ import ImageReveal from "@/components/ui/ImageReveal";
 import Reveal from "@/components/ui/Reveal";
 import Button from "@/components/ui/Button";
 import { gymFeatures, gymIntro } from "@/data/gym";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -61,10 +62,14 @@ export default function GymSection() {
             <Reveal key={feature.id} delay={i * 0.1}>
               <article className="group">
                 <ImageReveal className="aspect-[4/3] rounded-none relative">
-                  <img
+                  <Image
                     src={feature.image}
                     alt={feature.title}
-                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    loading="lazy"
+                    quality={85}
                   />
                   <div className="absolute inset-0 bg-black/30 transition-opacity duration-300 group-hover:bg-black/20" />
                 </ImageReveal>

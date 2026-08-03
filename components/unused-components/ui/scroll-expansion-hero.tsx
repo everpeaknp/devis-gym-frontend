@@ -253,7 +253,7 @@ const ScrollExpandMedia = ({
                 objectFit: 'cover',
                 objectPosition: 'center',
               }}
-              priority
+              loading='lazy'
             />
             <div className='absolute inset-0 bg-black/10' />
           </motion.div>
@@ -336,6 +336,7 @@ const ScrollExpandMedia = ({
                       width={1280}
                       height={720}
                       className={`w-full h-full object-cover ${horizontalExpansionComplete ? 'rounded-none' : 'rounded-xl'}`}
+                      loading='lazy'
                     />
                     <motion.div
                       className={`absolute inset-0 bg-black/50 ${horizontalExpansionComplete ? 'rounded-none' : 'rounded-xl'}`}
