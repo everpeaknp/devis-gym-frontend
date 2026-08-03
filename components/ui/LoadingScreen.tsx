@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import UniqueLoading from "./morph-loading"
+import UniqueLoading from "@/components/unused-components/ui/morph-loading"
 
 interface LoadingScreenProps {
   onComplete?: () => void
