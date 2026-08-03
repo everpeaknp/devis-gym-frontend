@@ -1,6 +1,6 @@
 "use client";
 
-import React, { forwardRef, useRef } from "react";
+import React, { forwardRef, useRef, RefObject } from "react";
 import { cn } from "@/lib/utils";
 import { AnimatedBeam } from "@/components/ui/animated-beam";
 import { 
@@ -78,42 +78,42 @@ export function AnimatedBeamDemo() {
       </div>
 
       <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={div1Ref}
-        toRef={div4Ref}
+        containerRef={containerRef as RefObject<HTMLElement>}
+        fromRef={div1Ref as RefObject<HTMLElement>}
+        toRef={div4Ref as RefObject<HTMLElement>}
         curvature={-75}
         endYOffset={-10}
       />
       <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={div2Ref}
-        toRef={div4Ref}
+        containerRef={containerRef as RefObject<HTMLElement>}
+        fromRef={div2Ref as RefObject<HTMLElement>}
+        toRef={div4Ref as RefObject<HTMLElement>}
       />
       <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={div3Ref}
-        toRef={div4Ref}
+        containerRef={containerRef as RefObject<HTMLElement>}
+        fromRef={div3Ref as RefObject<HTMLElement>}
+        toRef={div4Ref as RefObject<HTMLElement>}
         curvature={75}
         endYOffset={10}
       />
       <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={div5Ref}
-        toRef={div4Ref}
+        containerRef={containerRef as RefObject<HTMLElement>}
+        fromRef={div5Ref as RefObject<HTMLElement>}
+        toRef={div4Ref as RefObject<HTMLElement>}
         curvature={-75}
         endYOffset={-10}
         reverse
       />
       <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={div6Ref}
-        toRef={div4Ref}
+        containerRef={containerRef as RefObject<HTMLElement>}
+        fromRef={div6Ref as RefObject<HTMLElement>}
+        toRef={div4Ref as RefObject<HTMLElement>}
         reverse
       />
       <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={div7Ref}
-        toRef={div4Ref}
+        containerRef={containerRef as RefObject<HTMLElement>}
+        fromRef={div7Ref as RefObject<HTMLElement>}
+        toRef={div4Ref as RefObject<HTMLElement>}
         curvature={75}
         endYOffset={10}
         reverse
