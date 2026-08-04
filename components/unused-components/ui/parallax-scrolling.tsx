@@ -43,13 +43,32 @@ export function ParallaxComponent() {
       });
     }
 
-    const lenis = new Lenis();
+    // Only initialize Lenis on desktop (width > 1024px)
+    const isMobile = window.innerWidth <= 1024;
+    let lenis: Lenis | null = null;
 
-    lenis.on('scroll', ScrollTrigger.update);
-
-    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-
-    gsap.ticker.lagSmoothing(0);
+    if (!isMobile) {
+      lenis = new Lenis();
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => { 
+        if (lenis) {
+          lenis.raf(time * 1000); 
+        }
+      });
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      // On mobile, just use ScrollTrigger update on scroll
+      const handleScroll = () => ScrollTrigger.update();
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        ScrollTrigger.getAll().forEach(st => st.kill());
+        if (triggerElement) {
+          gsap.killTweensOf(triggerElement);
+        }
+      };
+    }
 
     return () => {
       // Clean up GSAP and ScrollTrigger instances
@@ -57,7 +76,9 @@ export function ParallaxComponent() {
       if (triggerElement) {
         gsap.killTweensOf(triggerElement);
       }
-      lenis.destroy();
+      if (lenis) {
+        lenis.destroy();
+      }
     };
   }, []);
 

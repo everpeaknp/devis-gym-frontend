@@ -102,15 +102,14 @@ export default function KineticNavigation() {
       
       const menuButton = containerRef.current!.querySelector(".nav-close-btn");
       const menuButtonTexts = menuButton?.querySelectorAll("p");
-      const menuButtonIcon = menuButton?.querySelector(".menu-button-icon");
       const tl = gsap.timeline();
       
       if (isMenuOpen) {
-        // OPEN
+        // OPEN - Sidebar from right on mobile
         if (navWrap) navWrap.setAttribute("data-nav", "open");
         
         tl.set(navWrap, { display: "block" })
-          .set(menu, { xPercent: 0 }, "<");
+          .set(menu, { xPercent: 100 });
           
         // Animate Button Text Swapping if it exists
         if (menuButtonTexts && menuButtonTexts.length > 0) {
@@ -118,17 +117,20 @@ export default function KineticNavigation() {
         }
           
         tl.fromTo(overlay, { autoAlpha: 0 }, { autoAlpha: 1 }, "<")
-          .fromTo(bgPanels, { xPercent: 101 }, { xPercent: 0, stagger: 0.12, duration: 0.575 }, "<")
+          .to(menu, { xPercent: 0, duration: 0.6, ease: "power3.out" }, "<")
+          .fromTo(bgPanels, { xPercent: 101 }, { xPercent: 0, stagger: 0.12, duration: 0.575 }, "<+=0.1")
           .fromTo(menuLinks, { yPercent: 140, rotate: 10 }, { yPercent: 0, rotate: 0, stagger: 0.05 }, "<+=0.35");
           
         if (fadeTargets.length) {
           tl.fromTo(fadeTargets, { autoAlpha: 0, yPercent: 50 }, { autoAlpha: 1, yPercent: 0, stagger: 0.04, clearProps: "all" }, "<+=0.2");
         }
       } else {
-        // CLOSE
+        // CLOSE - Sidebar slides out to right on mobile
         if (navWrap) navWrap.setAttribute("data-nav", "closed");
-        tl.to(overlay, { autoAlpha: 0 })
-          .to(menu, { xPercent: 120 }, "<");
+        
+        tl.to(menuLinks, { yPercent: 140, rotate: 10, stagger: 0.03, duration: 0.3 })
+          .to(overlay, { autoAlpha: 0, duration: 0.4 }, "<")
+          .to(menu, { xPercent: 100, duration: 0.5, ease: "power3.in" }, "<");
           
         if (menuButtonTexts && menuButtonTexts.length > 0) {
           tl.to(menuButtonTexts, { yPercent: 0 }, "<");
@@ -172,11 +174,37 @@ export default function KineticNavigation() {
               <Link href="/" aria-label="home" className="nav-logo-row cursor-pointer">
                 <span className="logo-text">DEVI'S GYM</span>
               </Link>
+
+              {/* Desktop Horizontal Navigation - Hidden on mobile/tablet */}
+              <div className="hidden xl:flex items-center gap-8 flex-1 justify-center">
+                <Link href="/" className="nav-desktop-link text-white hover:text-accent transition-colors duration-300 font-medium">
+                  Home
+                </Link>
+                <Link href="/classes" className="nav-desktop-link text-white hover:text-accent transition-colors duration-300 font-medium">
+                  Classes
+                </Link>
+                <Link href="/gym" className="nav-desktop-link text-white hover:text-accent transition-colors duration-300 font-medium">
+                  Our Gym
+                </Link>
+                <Link href="/gallery" className="nav-desktop-link text-white hover:text-accent transition-colors duration-300 font-medium">
+                  Gallery
+                </Link>
+                <Link href="/about" className="nav-desktop-link text-white hover:text-accent transition-colors duration-300 font-medium">
+                  About Us
+                </Link>
+                <Link href="/contact" className="nav-desktop-link text-white hover:text-accent transition-colors duration-300 font-medium">
+                  Contact
+                </Link>
+                <Link href="/#membership" className="nav-desktop-link text-white hover:text-accent transition-colors duration-300 font-medium">
+                  Membership
+                </Link>
+              </div>
+
               <div className="nav-row__right">
-                {/* Menu Button */}
+                {/* Menu Button - Visible on mobile/tablet, hidden on desktop */}
                 <motion.button 
                   role="button" 
-                  className="nav-close-btn flex flex-col items-center gap-1 cursor-pointer" 
+                  className="nav-close-btn xl:hidden flex flex-col items-center gap-1 cursor-pointer" 
                   onClick={toggleMenu} 
                   style={{ pointerEvents: 'auto', opacity: isMenuOpen ? 1 : menuOpacity }}
                   initial={{ opacity: 0, y: -20 }}
@@ -184,7 +212,6 @@ export default function KineticNavigation() {
                   transition={{ duration: 0.6, ease: "easeOut" }}
                   data-menu-state={isMenuOpen ? "open" : "closed"}
                 >
-                  {/* Debug text */}
                   <div className="text-xs text-accent mb-1">{isMenuOpen ? "CLOSE" : "MENU"}</div>
                   
                   <div className="icon-wrap">

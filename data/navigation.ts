@@ -5,11 +5,9 @@ export type NavItem = {
 
 export const navigation: NavItem[] = [
   { label: "Home", href: "/" },
-  { label: "Classes", href: "/classes" },
   { label: "Gym", href: "/gym" },
   { label: "Gallery", href: "/gallery" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
-  { label: "Membership", href: "/#membership" },
-  { label: "Embroidery Demo", href: "/embroidery-demo" },
+  { label: "Membership", href: "/membership" },
 ];

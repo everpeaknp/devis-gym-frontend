@@ -55,6 +55,18 @@ export default function Footer() {
     },
   ];
 
+  // Merged menu for mobile - combine all unique links
+  const mergedLinks = [
+    ...navigation.map((item) => ({
+      label: item.label,
+      href: item.href,
+    })),
+    { label: "Gallery", href: "/gallery" },
+  ].filter((link, index, self) => 
+    // Remove duplicates by href
+    index === self.findIndex((l) => l.href === link.href)
+  );
+
   // Contact info data
   const contactData = [
     {
@@ -171,9 +183,110 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto p-14 z-40 relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 lg:gap-16 pb-12">
+        {/* Mobile Layout */}
+        <div className="md:hidden space-y-8">
+          {/* Logo and Brand - Centered */}
+          <div className="flex flex-col items-center text-center space-y-4">
+            <div className="h-20 w-20 rounded-full bg-white flex items-center justify-center p-2">
+              <Image 
+                src="/logo.png" 
+                alt="Devi's Gym Logo" 
+                width={80}
+                height={80}
+                className="object-contain"
+                loading="lazy"
+              />
+            </div>
+            <span className="text-white text-3xl font-bold font-oswald uppercase">
+              Devi&apos;s Gym
+            </span>
+            <p className="text-sm leading-relaxed text-gray-400 max-w-sm">
+              {businessData.tagline}
+              <br />
+              A gym built for people who actually train.
+            </p>
+          </div>
+
+          {/* Contact Us */}
+          <div className="text-center">
+            <h4 className="text-white text-lg font-semibold mb-6 font-oswald uppercase tracking-wide">
+              Contact Us
+            </h4>
+            <ul className="space-y-4 inline-block text-left">
+              {contactData.map((item, i) => (
+                <li key={i} className="flex items-start space-x-3">
+                  <span className="mt-0.5 flex-shrink-0">{item.icon}</span>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      target={item.href.startsWith('http') ? "_blank" : undefined}
+                      rel={item.href.startsWith('http') ? "noopener noreferrer" : undefined}
+                      className="text-gray-400 hover:text-accent transition-colors text-sm cursor-pointer break-words"
+                    >
+                      {item.text}
+                    </a>
+                  ) : (
+                    <span className="text-gray-400 hover:text-accent transition-colors text-sm break-words">
+                      {item.text}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Quick Links */}
+          <div className="text-center">
+            <h4 className="text-white text-lg font-semibold mb-6 font-oswald uppercase tracking-wide">
+              Quick Links
+            </h4>
+            <ul className="grid grid-cols-3 gap-4">
+              {mergedLinks.map((link) => (
+                <li key={link.href} className="relative">
+                  <Link
+                    href={link.href}
+                    className="text-gray-400 hover:text-accent transition-colors cursor-pointer text-sm block text-center"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Social Media */}
+          <div className="text-center">
+            <h4 className="text-white text-lg font-semibold mb-4 font-oswald uppercase tracking-wide">
+              Follow Us
+            </h4>
+            <div className="flex justify-center space-x-6">
+              {socialLinks.map(({ icon, label, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="text-gray-400 hover:text-accent transition-colors cursor-pointer"
+                >
+                  {icon}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Copyright */}
+          <div className="text-center">
+            <p className="text-sm text-gray-400">
+              © {new Date().getFullYear()} {businessData.name}. All rights reserved.
+            </p>
+          </div>
+        </div>
+
+        {/* Desktop/Tablet Layout */}
+        <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 lg:gap-16 pb-12">
           {/* Brand section */}
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-4 col-span-1">
             <div className="flex items-center space-x-3">
               <div className="h-16 w-16 rounded-full bg-white flex items-center justify-center p-2">
                 <Image 
@@ -196,7 +309,7 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Footer link sections */}
+          {/* Quick Links and Information columns */}
           {footerSections.map((section) => (
             <div key={section.title}>
               <h4 className="text-white text-lg font-semibold mb-6 font-oswald uppercase tracking-wide">
@@ -207,7 +320,7 @@ export default function Footer() {
                   <li key={link.label} className="relative">
                     <Link
                       href={link.href}
-                      className="text-gray-400 hover:text-accent transition-colors cursor-pointer"
+                      className="text-gray-400 hover:text-accent transition-colors cursor-pointer text-sm"
                     >
                       {link.label}
                     </Link>
@@ -218,7 +331,7 @@ export default function Footer() {
           ))}
 
           {/* Contact section */}
-          <div>
+          <div className="col-span-1">
             <h4 className="text-white text-lg font-semibold mb-6 font-oswald uppercase tracking-wide">
               Contact Us
             </h4>
@@ -246,8 +359,8 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Footer bottom */}
-        <div className="flex flex-col md:flex-row justify-between items-start text-sm space-y-4 md:space-y-0 mt-8">
+        {/* Footer bottom - Social icons for desktop/tablet only */}
+        <div className="hidden md:flex flex-col md:flex-row justify-between items-start text-sm space-y-4 md:space-y-0 mt-8">
           {/* Social icons */}
           <div className="flex flex-col space-y-4 text-gray-400">
             {socialLinks.map(({ icon, label, href }) => (
@@ -264,8 +377,8 @@ export default function Footer() {
             ))}
           </div>
 
-          {/* Copyright - visible on mobile, hidden on large screens where it appears in DEVI'S */}
-          <p className="lg:hidden text-right text-gray-400">
+          {/* Copyright - visible on tablet, hidden on mobile and large screens */}
+          <p className="md:block lg:hidden text-right text-gray-400">
             © {new Date().getFullYear()} {businessData.name}. All rights reserved.
           </p>
         </div>

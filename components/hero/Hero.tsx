@@ -283,7 +283,7 @@ export default function Hero() {
     <section
       ref={heroSectionRef}
       id="home"
-      className="relative flex w-full flex-col justify-center bg-background pt-[60px] sm:pt-[80px] md:pt-[92px] select-none"
+      className="relative flex w-full flex-col justify-center bg-background select-none"
       style={{ 
         minHeight: '100dvh', // Dynamic viewport height for mobile
         overflow: 'hidden',
@@ -372,10 +372,10 @@ export default function Hero() {
       />
 
       {/* Content Container */}
-      <div className="container-edge relative flex flex-col justify-center min-h-[calc(100vh-60px)] sm:min-h-[calc(100vh-80px)] md:min-h-[calc(100vh-92px)]" style={{ zIndex: 30 }}>
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-16 items-center">
+      <div className="container-edge relative flex flex-col justify-center min-h-[calc(100vh-60px)] sm:min-h-[calc(100vh-80px)] md:min-h-[calc(100vh-92px)] px-4 sm:px-6 md:px-8" style={{ zIndex: 30 }}>
+        <div className="grid gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-16 items-center">
           {/* Left Column - Title and Buttons */}
-          <div className="flex flex-col justify-center text-center lg:text-left">
+          <div className="flex flex-col justify-center text-center lg:text-left space-y-3 sm:space-y-4">
             {/* Welcome text - Show for all slides with animation */}
             <div 
               className={`transition-all duration-500 ease-in-out ${
@@ -383,33 +383,33 @@ export default function Hero() {
               }`}
             >
               {currentMediaIndex === 0 && (
-                <p className="font-gotham text-white font-bold uppercase tracking-wider mb-1 lg:mb-1" 
+                <p className="font-gotham text-white font-bold uppercase tracking-wider mb-2 sm:mb-1 lg:mb-1" 
                    style={{ 
                      fontWeight: 700,
-                     fontSize: '17px',
-                     lineHeight: '24px',
+                     fontSize: 'clamp(14px, 3.5vw, 17px)',
+                     lineHeight: 'clamp(18px, 4.5vw, 24px)',
                      color: 'rgb(255, 255, 255)'
                    }}>
                   Experience The Devi's Difference
                 </p>
               )}
               {currentMediaIndex === 1 && (
-                <p className="font-gotham text-white font-bold uppercase tracking-wider mb-1 lg:mb-1" 
+                <p className="font-gotham text-white font-bold uppercase tracking-wider mb-2 sm:mb-1 lg:mb-1" 
                    style={{ 
                      fontWeight: 700,
-                     fontSize: '17px',
-                     lineHeight: '24px',
+                     fontSize: 'clamp(14px, 3.5vw, 17px)',
+                     lineHeight: 'clamp(18px, 4.5vw, 24px)',
                      color: 'rgb(255, 255, 255)'
                    }}>
                   More Than A Gym
                 </p>
               )}
               {currentMediaIndex === 2 && (
-                <p className="font-gotham text-white font-bold uppercase tracking-wider mb-1 lg:mb-1" 
+                <p className="font-gotham text-white font-bold uppercase tracking-wider mb-2 sm:mb-1 lg:mb-1" 
                    style={{ 
                      fontWeight: 700,
-                     fontSize: '17px',
-                     lineHeight: '24px',
+                     fontSize: 'clamp(14px, 3.5vw, 17px)',
+                     lineHeight: 'clamp(18px, 4.5vw, 24px)',
                      color: 'rgb(255, 255, 255)'
                    }}>
                   Built For Every Goal
@@ -423,10 +423,10 @@ export default function Hero() {
                 isTransitioning ? 'opacity-0 translate-y-8' : 'opacity-100 translate-y-0'
               }`}
             >
-              <h1 className="font-gotham-condensed flex flex-col font-bold uppercase leading-[0.9] tracking-tight relative mb-3 lg:mb-4"
+              <h1 className="font-gotham-condensed flex flex-col font-bold uppercase leading-[0.9] tracking-tight relative mb-3 sm:mb-3 lg:mb-4"
                   style={{ 
-                    fontSize: '81px',
-                    lineHeight: '81px',
+                    fontSize: 'clamp(48px, 12vw, 81px)',
+                    lineHeight: 'clamp(48px, 12vw, 81px)',
                     fontWeight: 700,
                     color: 'rgb(255, 255, 255)'
                   }}>
@@ -480,33 +480,33 @@ export default function Hero() {
               }`}
             >
               {currentMediaIndex === 0 && (
-                <p className="font-gotham text-white mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
+                <p className="font-gotham text-white mb-3 sm:mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
                    style={{ 
                      fontWeight: 500,
-                     fontSize: '13px',
-                     lineHeight: '19px',
+                     fontSize: 'clamp(12px, 2.8vw, 13px)',
+                     lineHeight: 'clamp(17px, 3.8vw, 19px)',
                      color: 'rgb(255, 255, 255)'
                    }}>
                   Devi's Training is group training with the effectiveness and attention of a certified personal trainer.
                 </p>
               )}
               {currentMediaIndex === 1 && (
-                <p className="font-gotham text-white mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
+                <p className="font-gotham text-white mb-3 sm:mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
                    style={{ 
                      fontWeight: 500,
-                     fontSize: '13px',
-                     lineHeight: '19px',
+                     fontSize: 'clamp(12px, 2.8vw, 13px)',
+                     lineHeight: 'clamp(17px, 3.8vw, 19px)',
                      color: 'rgb(255, 255, 255)'
                    }}>
                   Fitness is easier when you're surrounded by people who encourage you. At Devi's Gym, you'll train alongside a welcoming community, learn from experienced coaches, and celebrate every milestone, big or small, together.
                 </p>
               )}
               {currentMediaIndex === 2 && (
-                <p className="font-gotham text-white mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
+                <p className="font-gotham text-white mb-3 sm:mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
                    style={{ 
                      fontWeight: 500,
-                     fontSize: '13px',
-                     lineHeight: '19px',
+                     fontSize: 'clamp(12px, 2.8vw, 13px)',
+                     lineHeight: 'clamp(17px, 3.8vw, 19px)',
                      color: 'rgb(255, 255, 255)'
                    }}>
                   Whether your goal is to lose weight, build muscle, improve your fitness, or simply feel healthier, Devi's Gym gives you the right environment to keep moving forward. Progress doesn't happen overnight, but every workout brings you one step closer.
@@ -516,14 +516,14 @@ export default function Hero() {
 
             {/* Hero Buttons with animation */}
             <div 
-              className={`flex flex-col sm:flex-row gap-2 justify-center lg:justify-start relative z-10 transition-all duration-500 ease-in-out ${
+              className={`flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center lg:justify-start relative z-10 transition-all duration-500 ease-in-out ${
                 isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
               }`}
             >
               <span className="hero-cta">
                 <a 
                   href={currentMediaIndex === 0 ? '/membership' : currentMediaIndex === 1 ? '/gym' : '/contact'}
-                  className="bg-accent text-black px-6 py-3 text-sm font-semibold uppercase tracking-wide hover:bg-accent/90 transition-colors rounded-full w-full sm:w-auto inline-block text-center"
+                  className="bg-accent text-black px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold uppercase tracking-wide hover:bg-accent/90 transition-colors rounded-full w-full sm:w-auto inline-block text-center"
                   style={{ 
                     fontFamily: 'Gotham, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', 
                     fontWeight: 700
@@ -537,7 +537,7 @@ export default function Hero() {
                 <span className="hero-cta">
                   <a 
                     href="/gym"
-                    className="bg-transparent border border-white text-white px-6 py-3 text-sm font-semibold uppercase tracking-wide hover:bg-white hover:text-black transition-colors rounded-full w-full sm:w-auto inline-block text-center"
+                    className="bg-transparent border border-white text-white px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold uppercase tracking-wide hover:bg-white hover:text-black transition-colors rounded-full w-full sm:w-auto inline-block text-center"
                     style={{ 
                       fontFamily: 'Gotham, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', 
                       fontWeight: 700

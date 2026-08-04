@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { navigation } from "@/data/navigation";
 
 // Register GSAP Plugins safely
 if (typeof window !== "undefined") {
@@ -11,6 +13,7 @@ if (typeof window !== "undefined") {
 }
 
 export function Component() {
+  const pathname = usePathname();
   // We need a ref for the parent container to scope GSAP
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -200,58 +203,36 @@ export function Component() {
         <header className="header">
           <div className="container is--full">
             <nav className="nav-row">
-              <Link href="/" aria-label="home" className="nav-logo-row w-inline-block">
+              <Link href="/" aria-label="home" className="nav-logo-row w-inline-block xl:block hidden">
+                <div className="logo-container">
+                  <img src="/logo.png" alt="Devi's Gym Logo" className="logo-image" />
+                  <span className="logo-text">DEVI'S GYM</span>
+                </div>
               </Link>
-              <div className="nav-row__right">
-                {/* Menu Button */}
-                <button 
-                  role="button" 
-                  className={`nav-close-btn cursor-pointer ${isScrolled ? 'scrolled' : ''}`}
-                  onClick={toggleMenu} 
-                  style={{ pointerEvents: 'auto' }}
-                >
-                  <div className="icon-wrap">
-                    {isMenuOpen ? (
-                      // Cross/X icon when menu is open
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="menu-button-icon cross-icon"
-                      >
-                        <line x1="18" y1="6" x2="6" y2="18" />
-                        <line x1="6" y1="6" x2="18" y2="18" />
-                      </svg>
-                    ) : (
-                      // Hamburger icon when menu is closed
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="menu-button-icon hamburger-icon"
-                      >
-                        <line x1="3" y1="6" x2="21" y2="6" />
-                        <line x1="3" y1="12" x2="21" y2="12" />
-                        <line x1="3" y1="18" x2="21" y2="18" />
-                      </svg>
-                    )}
-                  </div>
-                </button>
 
-                {/* Sound Controls - Below Menu */}
-                <div className="sound-controls-wrapper">
+              {/* Spacer for mobile to push hamburger to right */}
+              <div className="xl:hidden flex-1"></div>
+
+              {/* Desktop Horizontal Navigation */}
+              <div className="desktop-nav hidden xl:flex">
+                <ul className="desktop-nav-list">
+                  {navigation.filter(item => item.href !== '/embroidery-demo').map((item) => {
+                    const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+                    return (
+                      <li key={item.href} className="desktop-nav-item">
+                        <Link 
+                          href={item.href} 
+                          className={`desktop-nav-link ${isActive ? 'active' : ''}`}
+                        >
+                          {item.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                {/* Desktop Sound Controls */}
+                <div className="desktop-sound-controls">
                   {/* Music Control */}
                   <button 
                     role="button" 
@@ -328,12 +309,63 @@ export function Component() {
                   </button>
                 </div>
               </div>
+
+              {/* Mobile Navigation Controls - Show on mobile and tablet */}
+              <div className="nav-row__right xl:hidden">
+                {/* Menu Button */}
+                <button 
+                  role="button" 
+                  className={`nav-close-btn cursor-pointer ${isScrolled ? 'scrolled' : ''}`}
+                  onClick={toggleMenu} 
+                  style={{ pointerEvents: 'auto' }}
+                >
+                  <div className="icon-wrap">
+                    {isMenuOpen ? (
+                      // Cross/X icon when menu is open
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="menu-button-icon cross-icon"
+                      >
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                      </svg>
+                    ) : (
+                      // Hamburger icon when menu is closed
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="menu-button-icon hamburger-icon"
+                      >
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                      </svg>
+                    )}
+                  </div>
+                </button>
+              </div>
             </nav>
           </div>
         </header>
       </div>
 
-      <section className="fullscreen-menu-container">
+      {/* Mobile Fullscreen Menu - Show on mobile and tablet, hide only on desktop */}
+      <section className="fullscreen-menu-container xl:hidden">
         <div data-nav="closed" className="nav-overlay-wrapper">
           <div className="overlay" onClick={closeMenu}></div>
           <nav className="menu-content">
@@ -412,38 +444,113 @@ export function Component() {
             </div>
 
             <div className="menu-content-wrapper">
+              {/* Logo at top of sidebar */}
+              <div className="sidebar-logo-container">
+                <Link href="/" onClick={closeMenu} className="sidebar-logo-link">
+                  <div className="sidebar-logo-content">
+                    <img src="/logo.png" alt="Devi's Gym Logo" className="sidebar-logo-image" />
+                    <span className="sidebar-logo-text">DEVI'S GYM</span>
+                  </div>
+                </Link>
+              </div>
+
               <ul className="menu-list">
-                <li className="menu-list-item" data-shape="1">
-                  <Link href="/" className="nav-link w-inline-block" onClick={closeMenu}>
-                    <p className="nav-link-text">Home</p>
-                    <div className="nav-link-hover-bg"></div>
-                  </Link>
-                </li>
-                <li className="menu-list-item" data-shape="2">
-                  <Link href="/gym" className="nav-link w-inline-block" onClick={closeMenu}>
-                    <p className="nav-link-text">Our Gym</p>
-                    <div className="nav-link-hover-bg"></div>
-                  </Link>
-                </li>
-                <li className="menu-list-item" data-shape="3">
-                  <Link href="/about" className="nav-link w-inline-block" onClick={closeMenu}>
-                    <p className="nav-link-text">About Us</p>
-                    <div className="nav-link-hover-bg"></div>
-                  </Link>
-                </li>
-                <li className="menu-list-item" data-shape="4">
-                  <Link href="/contact" className="nav-link w-inline-block" onClick={closeMenu}>
-                    <p className="nav-link-text" data-menu-fade>Contact</p>
-                    <div className="nav-link-hover-bg"></div>
-                  </Link>
-                </li>
-                <li className="menu-list-item" data-shape="5">
-                  <Link href="/membership" className="nav-link w-inline-block" onClick={closeMenu}>
-                    <p className="nav-link-text">Membership</p>
-                    <div className="nav-link-hover-bg"></div>
-                  </Link>
-                </li>
+                {navigation.filter(item => item.href !== '/embroidery-demo').map((item, index) => {
+                  const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+                  return (
+                    <li key={item.href} className="menu-list-item" data-shape={index + 1}>
+                      <Link href={item.href} className={`nav-link w-inline-block ${isActive ? 'active' : ''}`} onClick={closeMenu}>
+                        <p className="nav-link-text">{item.label}</p>
+                        <div className="nav-link-hover-bg"></div>
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
+
+              {/* Sound Controls at bottom of sidebar */}
+              <div className="sidebar-sound-controls">
+                {/* Music Control */}
+                <button 
+                  role="button" 
+                  className={`sidebar-sound-btn cursor-pointer ${isMusicMuted ? 'muted' : ''}`}
+                  onClick={toggleMusic}
+                  aria-label="Toggle music"
+                  title={isMusicMuted ? "Unmute background music" : "Mute background music"}
+                >
+                  <div className="sidebar-sound-icon-wrap">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      {isMusicMuted ? (
+                        <>
+                          <path d="M9 18V5l12-2v13"></path>
+                          <circle cx="6" cy="18" r="3"></circle>
+                          <circle cx="18" cy="16" r="3"></circle>
+                          <line x1="2" y1="2" x2="22" y2="22"></line>
+                        </>
+                      ) : (
+                        <>
+                          <path d="M9 18V5l12-2v13"></path>
+                          <circle cx="6" cy="18" r="3"></circle>
+                          <circle cx="18" cy="16" r="3"></circle>
+                        </>
+                      )}
+                    </svg>
+                  </div>
+                  <span className="sidebar-sound-label">
+                    {isMusicMuted ? "Music Off" : "Music On"}
+                  </span>
+                </button>
+
+                {/* Sound Effects Control */}
+                <button 
+                  role="button" 
+                  className={`sidebar-sound-btn cursor-pointer ${isSoundMuted ? 'muted' : ''}`}
+                  onClick={toggleSound}
+                  aria-label="Toggle sound effects"
+                  title={isSoundMuted ? "Unmute click sounds" : "Mute click sounds"}
+                >
+                  <div className="sidebar-sound-icon-wrap">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      {isSoundMuted ? (
+                        <>
+                          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                          <line x1="23" y1="9" x2="17" y2="15"></line>
+                          <line x1="17" y1="9" x2="23" y2="15"></line>
+                        </>
+                      ) : (
+                        <>
+                          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                        </>
+                      )}
+                    </svg>
+                  </div>
+                  <span className="sidebar-sound-label">
+                    {isSoundMuted ? "Sound Off" : "Sound On"}
+                  </span>
+                </button>
+              </div>
             </div>
           </nav>
         </div>
