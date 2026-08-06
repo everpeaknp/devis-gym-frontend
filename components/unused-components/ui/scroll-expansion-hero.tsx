@@ -18,6 +18,7 @@ interface ScrollExpandMediaProps {
   bgImageSrc: string;
   title?: string;
   date?: string;
+  subtitle?: string;
   scrollToExpand?: string;
   textBlend?: boolean;
   children?: ReactNode;
@@ -30,6 +31,7 @@ const ScrollExpandMedia = ({
   bgImageSrc,
   title,
   date,
+  subtitle,
   scrollToExpand,
   textBlend,
   children,
@@ -360,6 +362,20 @@ const ScrollExpandMedia = ({
                       }}
                     >
                       {date}
+                    </p>
+                  )}
+                  {subtitle && (
+                    <p
+                      className='font-gotham text-white font-medium uppercase tracking-wider mt-1'
+                      style={{ 
+                        transform: `translateX(-${textTranslateX}vw)`,
+                        fontWeight: 500,
+                        fontSize: '13px',
+                        lineHeight: '19px',
+                        color: 'rgb(255, 255, 255)'
+                      }}
+                    >
+                      {subtitle}
                     </p>
                   )}
                   {scrollToExpand && (

@@ -66,7 +66,7 @@ export default function OutdoorClassesPage() {
       <Breadcrumb 
         items={[
           { label: "Home", href: "/" },
-          { label: "Classes", href: "/#classes" }
+          { label: "Classes", href: "/classes" }
         ]}
         currentPage="Outdoor Classes"
         eyebrow="Nature Training"

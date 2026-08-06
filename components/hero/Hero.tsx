@@ -14,7 +14,7 @@ import HeroProgress from "@/components/unused-components/ui/hero-progress";
 const heroMedia = [
   { type: 'video', src: '/hero/135161-761273563_medium.mp4' },
   { type: 'video', src: '/hero/293079_medium.mp4' },
-  { type: 'image', src: '/hero/Untitled-design-2026-04-02T110712.060.jpg' },
+  { type: 'image', src: '/devis/IMG_7364.JPG.jpeg' },
 ];
 
 export default function Hero() {

@@ -7,16 +7,15 @@ export type GymFeature = {
 };
 
 /**
- * No verified equipment/facility inventory exists yet. Rather than invent
- * machine lists, square footage, or zone counts, we present the space at a
- * high level and mark it clearly as pending an on-site content update.
+ * Verified gym features and facilities at Devi's Gym.
+ * Established in 2018, offering comprehensive training facilities.
  */
 export const gymFeatures: GymFeature[] = [
   {
     id: "the-floor",
     title: "The Training Floor",
     description:
-      "The main workout space at Devi's Gym in Pokhara. A full facility walkthrough and equipment list will be added here soon.",
+      "A complete training facility equipped for weightlifting, cardio, CrossFit, and aerobics. Our gym provides all the equipment you need for a comprehensive workout.",
     image: "/gym/training-floor.jpeg",
     verified: true,
   },
@@ -24,7 +23,7 @@ export const gymFeatures: GymFeature[] = [
     id: "the-space",
     title: "Explore the Space",
     description:
-      "From free weights to machines, the gym is set up for a real training session, not a photo op. Detailed facility info is coming soon.",
+      "From free weights to machines, cardio equipment to CrossFit zones, Devi's Gym is designed for serious training. Open daily (except Saturday) from 5:00 AM to 9:00 PM.",
     image: "/gym/space.jpeg",
     verified: true,
   },
@@ -34,5 +33,5 @@ export const gymIntro = {
   eyebrow: "The Gym",
   heading: "A place built to train in.",
   body:
-    "Devi's Gym is a working gym in Pokhara — this section will be updated with a full facility overview, equipment breakdown, and training zones as soon as that information is confirmed.",
+    "Established in 2018, Devi's Gym is a comprehensive fitness facility in Pokhara offering weightlifting, cardio, CrossFit, aerobics, and Zumba classes. Certified trainers are available to guide you through your fitness journey.",
 };

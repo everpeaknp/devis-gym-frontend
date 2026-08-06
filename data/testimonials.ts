@@ -15,7 +15,7 @@ export const testimonials: Testimonial[] = [
     role: "Member",
     memberSince: "2024",
     rating: 5,
-    quote: "The community is what keeps me coming back. Everyone supports each other. It's more than a gym — it's a family.",
+    quote: "The community is what keeps me coming back. Everyone supports each other. It's more than a gym - it's a family.",
     image: "/Testimonials/bohemian-man-with-his-arms-crossed.jpg",
   },
   {
@@ -42,7 +42,7 @@ export const testimonials: Testimonial[] = [
     role: "Member",
     memberSince: "2022",
     rating: 5,
-    quote: "Clean facility, great vibe, and real people who are serious about training. This isn't a flashy Instagram gym — it's a place to actually work.",
+    quote: "Clean facility, great vibe, and real people who are serious about training. This isn't a flashy Instagram gym - it's a place to actually work.",
     image: "/Testimonials/pexels-man-1845259_1920.jpg",
   },
 ];

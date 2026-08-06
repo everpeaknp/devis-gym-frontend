@@ -7,38 +7,57 @@ export type Service = {
 };
 
 /**
- * No specific service (strength / cardio / personal training / classes) has
- * been publicly confirmed yet for Devi's Gym. Rather than list services
- * that may not exist, every entry is flagged `available: false` until
- * verified — the UI renders this as an honest "to be confirmed" state.
+ * Services and programs available at Devi's Gym.
+ * All programs are verified and actively available.
  */
 export const services: Service[] = [
   {
-    id: "outdoor",
-    name: "Outdoor\nClasses",
-    description: "Details to be confirmed with the gym.",
-    image: "/gallery/lifestyle-1.jpeg",
-    available: false,
+    id: "gym-training",
+    name: "Gym\nTraining",
+    description: "Comprehensive gym training including weightlifting, cardio, and CrossFit. Certified trainers available to guide you.",
+    image: "/classes/GymTraining.jpg",
+    available: true,
   },
   {
-    id: "personal-training",
-    name: "Personal\nTraining",
-    description: "Details to be confirmed with the gym.",
-    image: "/gallery/training-1.jpeg",
-    available: false,
+    id: "weightlifting",
+    name: "Weight\nlifting",
+    description: "Professional weightlifting training with certified trainers. Build strength with proper form and technique.",
+    image: "/classes/weightlifting.jpg",
+    available: true,
   },
   {
-    id: "group-training",
-    name: "Group\nTraining",
-    description: "Details to be confirmed with the gym.",
-    image: "/gallery/training-2.jpeg",
-    available: false,
+    id: "cardio",
+    name: "Cardio",
+    description: "Daily morning cardio sessions from 6:00 AM to 7:00 AM. Perfect way to start your day.",
+    image: "/classes/cardio.jpg",
+    available: true,
   },
   {
-    id: "digital-coaching",
-    name: "Digital\nCoaching",
-    description: "Details to be confirmed with the gym.",
-    image: "/gallery/people-1.jpeg",
-    available: false,
+    id: "crossfit",
+    name: "Cross\nFit",
+    description: "High-intensity CrossFit training for functional fitness and athletic performance.",
+    image: "/classes/crossfit.jpg",
+    available: true,
+  },
+  {
+    id: "aerobics",
+    name: "Aerobics",
+    description: "Energetic aerobics classes throughout the week. Fun group fitness sessions.",
+    image: "/classes/airobics.jpg",
+    available: true,
+  },
+  {
+    id: "zumba",
+    name: "Zumba",
+    description: "High-energy Zumba classes on Tuesday & Friday at 6:00 AM with certified Zumba trainer Barsha Grg.",
+    image: "/classes/zumba.jpg",
+    available: true,
+  },
+  {
+    id: "outdoor-activities",
+    name: "Outdoor\nActivities",
+    description: "Take your training outside with our outdoor activity programs and sessions.",
+    image: "/classes/OutdoorActivities.jpg",
+    available: true,
   },
 ];

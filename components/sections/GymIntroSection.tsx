@@ -200,7 +200,7 @@ export default function GymIntroSection() {
           {/* Mission Image */}
           <div className="xl:col-span-4 card-mission order-2">
             <Image
-              src="/gym/mission.jpeg"
+              src="/devis/IMG_7358.JPG.jpeg"
               alt="Mission"
               width={400}
               height={460}
@@ -224,7 +224,7 @@ export default function GymIntroSection() {
           {/* Story Image */}
           <div className="xl:col-span-4 card-story order-4 md:order-3">
             <Image
-              src="/gym/story.jpeg"
+              src="/devis/IMG_7375.JPG.jpeg"
               alt="Story"
               width={400}
               height={460}
@@ -340,7 +340,7 @@ export default function GymIntroSection() {
           {/* Approach Image */}
           <div className="xl:col-span-4 card-approach">
             <Image
-              src="/gym/approach.jpeg"
+              src="/devis/IMG_7374.JPG.jpeg"
               alt="Approach"
               width={400}
               height={460}

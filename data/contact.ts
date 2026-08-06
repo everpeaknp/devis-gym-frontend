@@ -11,9 +11,9 @@ export const contactInfo = {
   email: "devisgym@gmail.com",
   mapUrl: "https://maps.app.goo.gl/X1WJEYrXmdEHGc4K7",
   hours: {
-    weekdays: "5:00 AM - 10:00 PM",
-    saturday: "6:00 AM - 9:00 PM",
-    sunday: "7:00 AM - 8:00 PM",
+    weekdays: "5:00 AM - 9:00 PM",
+    saturday: "Closed",
+    sunday: "5:00 AM - 9:00 PM",
   },
   coordinates: {
     lat: 28.2096,

@@ -11,7 +11,7 @@ import {
 import { motion, useInView } from "framer-motion";
 import { FooterBackgroundGradient } from "@/components/unused-components/ui/hover-footer";
 import { TextHoverEffect } from "@/components/unused-components/ui/hover-footer";
-import { InstagramIcon, FacebookIcon, TikTokIcon } from "@/components/ui/SocialIcons";
+import { InstagramIcon, FacebookIcon, TikTokIcon, WhatsAppIcon } from "@/components/ui/SocialIcons";
 import { businessData } from "@/data/business";
 import { navigation } from "@/data/navigation";
 import { socialLinks as socialData } from "@/data/social";
@@ -49,7 +49,7 @@ export default function Footer() {
       links: [
         { label: "About Us", href: "/about" },
         { label: "Membership Plans", href: "/#membership" },
-        { label: "Training Programs", href: "/gym" },
+        { label: "Training Programs", href: "/classes" },
         { label: "Gallery", href: "/gallery" },
       ],
     },
@@ -102,6 +102,11 @@ export default function Footer() {
       icon: <TikTokIcon size={20} />,
       label: "TikTok",
       href: socialData[1].url,
+    },
+    {
+      icon: <WhatsAppIcon size={20} />,
+      label: "WhatsApp",
+      href: "https://wa.me/9779806641537",
     },
   ];
 
@@ -200,6 +205,9 @@ export default function Footer() {
             <span className="text-white text-3xl font-bold font-oswald uppercase">
               Devi&apos;s Gym
             </span>
+            <p className="text-xs text-white font-semibold tracking-wider uppercase mb-1">
+              Since 2018
+            </p>
             <p className="text-sm leading-relaxed text-gray-400 max-w-sm">
               {businessData.tagline}
               <br />
@@ -302,6 +310,9 @@ export default function Footer() {
                 Devi&apos;s Gym
               </span>
             </div>
+            <p className="text-xs text-white font-semibold tracking-wider uppercase mb-1">
+              Since 2018
+            </p>
             <p className="text-sm leading-relaxed text-gray-400">
               {businessData.tagline}
               <br />

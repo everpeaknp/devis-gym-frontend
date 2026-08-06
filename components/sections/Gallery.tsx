@@ -16,8 +16,8 @@ export default function Gallery() {
 
   const filtered =
     active === "All"
-      ? galleryImages
-      : galleryImages.filter((img) => img.category === active);
+      ? galleryImages.slice(0, 9) // Show only first 9 images (3x3 grid)
+      : galleryImages.filter((img) => img.category === active).slice(0, 9);
 
   // Only available images for lightbox
   const availableImages = filtered.filter((img) => img.available);

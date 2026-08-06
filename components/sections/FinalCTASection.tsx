@@ -40,7 +40,7 @@ export default function FinalCTASection() {
             </h2>
             <p className="text-muted text-base leading-relaxed mb-8">
               Join our community and experience what real training feels like.
-              No commitments, no pressure—just results.
+              No commitments, no pressure - just results.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a

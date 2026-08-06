@@ -285,11 +285,14 @@ export default function TrainingSection() {
             // Map service IDs to class paths
             const getServicePath = (id: string) => {
               switch(id) {
-                case 'outdoor': return '/classes/outdoor';
-                case 'personal-training': return '/classes/personal';
-                case 'group-training': return '/classes/group';
-                case 'digital-coaching': return '/classes/digital';
-                default: return '#';
+                case 'gym-training': return '/classes/gym-training';
+                case 'weightlifting': return '/classes/weightlifting';
+                case 'cardio': return '/classes/cardio';
+                case 'crossfit': return '/classes/crossfit';
+                case 'aerobics': return '/classes/aerobics';
+                case 'zumba': return '/classes/zumba';
+                case 'outdoor-activities': return '/classes/outdoor';
+                default: return '/classes';
               }
             };
 

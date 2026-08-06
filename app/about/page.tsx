@@ -106,12 +106,12 @@ const AboutContent = () => {
             </div>
           </Reveal>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto">
-            {aboutTeam.members.filter(member => member.id !== "tm1").map((member, index) => (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5 max-w-7xl mx-auto">
+            {aboutTeam.members.map((member, index) => (
               <Reveal key={member.id} delay={index * 0.1}>
                 <div className={`group ${index % 2 === 1 ? 'lg:mt-12' : ''}`}>
                   {/* Photo with Hover Effect */}
-                  <div className="relative h-[480px] w-full max-w-[285px] mx-auto overflow-hidden bg-background-elevated">
+                  <div className="relative h-[360px] w-full max-w-[285px] mx-auto overflow-hidden bg-background-elevated">
                     <Image
                       src="/about/background.jpg"
                       alt={member.name}
@@ -170,7 +170,7 @@ const AboutContent = () => {
               </h2>
               <p className="text-muted text-base leading-relaxed mb-8">
                 Join our community and experience what real training feels like.
-                No commitments, no pressure—just results.
+                No commitments, no pressure - just results.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
@@ -228,11 +228,12 @@ export default function AboutPage() {
       <BackButton />
       <ScrollExpandMedia
         mediaType="video"
-        mediaSrc="/hero/293079_medium.mp4"
-        posterSrc="/hero/Untitled-design-2026-04-02T110712.060.jpg"
-        bgImageSrc="/hero/Untitled-design-2026-04-02T110712.060.jpg"
+        mediaSrc="/hero/135161-761273563_medium.mp4"
+        posterSrc="/devis/IMG_7361.JPG.jpeg"
+        bgImageSrc="/devis/IMG_7361.JPG.jpeg"
         title="Devi's Gym Experience"
-        date="Pokhara Fitness"
+        date="In Pokhara since 2018"
+       
         scrollToExpand="Scroll to Explore Our Gym"
         textBlend
       >

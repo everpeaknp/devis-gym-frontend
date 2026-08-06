@@ -60,26 +60,34 @@ export default function GymSection() {
         <div className="mt-16 grid gap-6 md:grid-cols-2">
           {gymFeatures.map((feature, i) => (
             <Reveal key={feature.id} delay={i * 0.1}>
-              <article className="group">
-                <ImageReveal className="aspect-[4/3] rounded-none relative">
-                  <Image
-                    src={feature.image}
-                    alt={feature.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                    loading="lazy"
-                    quality={85}
-                  />
-                  <div className="absolute inset-0 bg-black/30 transition-opacity duration-300 group-hover:bg-black/20" />
-                </ImageReveal>
-                <h3 className="font-display mt-6 text-xl font-bold uppercase tracking-tight">
-                  {feature.title}
-                </h3>
-                <p className="mt-2 max-w-md text-sm leading-relaxed text-muted">
-                  {feature.description}
-                </p>
-              </article>
+              <a href="/classes" className="block group">
+                <article>
+                  <ImageReveal className="aspect-[4/3] rounded-none relative">
+                    <Image
+                      src={feature.image}
+                      alt={feature.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      loading="lazy"
+                      quality={85}
+                    />
+                    <div className="absolute inset-0 bg-black/30 transition-opacity duration-300 group-hover:bg-black/20" />
+                  </ImageReveal>
+                  <h3 className="font-display mt-6 text-xl font-bold uppercase tracking-tight">
+                    {feature.title}
+                  </h3>
+                  <p className="mt-2 max-w-md text-sm leading-relaxed text-muted">
+                    {feature.description}
+                  </p>
+                  <div className="mt-4 flex items-center gap-2 text-[rgb(225,255,0)] transition-transform group-hover:translate-x-1">
+                    <span className="font-oswald uppercase text-xs tracking-wider">Explore Classes</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </div>
+                </article>
+              </a>
             </Reveal>
           ))}
         </div>

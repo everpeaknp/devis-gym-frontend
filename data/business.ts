@@ -31,18 +31,18 @@ export const businessData = {
   contact: {
     phone: verified("9806641537"),
     email: verified("devisgym@gmail.com"),
-    whatsapp: unverified<string>(),
+    whatsapp: verified("9806641537"),
   },
 
   hours: verified({
-    monday: "6:00 AM - 9:00 PM",
-    tuesday: "6:00 AM - 9:00 PM", 
-    wednesday: "6:00 AM - 9:00 PM",
-    thursday: "6:00 AM - 9:00 PM",
-    friday: "6:00 AM - 9:00 PM",
-    saturday: "7:00 AM - 8:00 PM",
-    sunday: "7:00 AM - 8:00 PM",
-    display: "Mon-Fri: 6:00 AM - 9:00 PM | Sat-Sun: 7:00 AM - 8:00 PM"
+    monday: "5:00 AM - 9:00 PM",
+    tuesday: "5:00 AM - 9:00 PM", 
+    wednesday: "5:00 AM - 9:00 PM",
+    thursday: "5:00 AM - 9:00 PM",
+    friday: "5:00 AM - 9:00 PM",
+    saturday: "Closed",
+    sunday: "5:00 AM - 9:00 PM",
+    display: "Mon-Fri, Sun: 5:00 AM - 9:00 PM | Sat: Closed"
   }),
 
   parking: verified({
@@ -55,7 +55,7 @@ export const businessData = {
 
   tagline: "TRAIN. FUEL. REPEAT.",
 
-  establishedYear: unverified<number>(),
+  establishedYear: verified(2018),
 } as const;
 
 export { verified, unverified };

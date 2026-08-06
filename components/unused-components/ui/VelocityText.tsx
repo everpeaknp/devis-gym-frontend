@@ -117,7 +117,7 @@ const Title = () => (
       "transition-colors duration-300"
     )}>
       <Image
-        src="/gym/gym-interior-1.webp"
+        src="/devis/IMG_7374.JPG.jpeg"
         alt="Gym equipment"
         width={96}
         height={96}
