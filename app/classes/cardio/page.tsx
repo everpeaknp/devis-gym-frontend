@@ -77,30 +77,42 @@ export default function CardioPage() {
           </div>
         </section>
 
-        {/* Schedule Section */}
+        {/* Schedule Information */}
         <section className="mb-20">
-          <div className="mx-auto max-w-4xl px-8">
-            <h2 className="font-gotham-condensed text-4xl md:text-5xl font-bold uppercase mb-8 text-center">Class Schedule</h2>
-            <div className="bg-zinc-900/50 rounded-lg p-8 border border-zinc-800">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="text-accent font-gotham font-bold text-sm uppercase tracking-wider mb-2">Activity</div>
-                  <div className="text-white font-gotham text-lg">Cardio</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-accent font-gotham font-bold text-sm uppercase tracking-wider mb-2">Time</div>
-                  <div className="text-white font-gotham text-lg">6:00 AM – 7:00 AM</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-accent font-gotham font-bold text-sm uppercase tracking-wider mb-2">Days</div>
-                  <div className="text-white font-gotham text-lg">Daily</div>
-                </div>
-              </div>
-              <div className="mt-6 pt-6 border-t border-zinc-800 text-center">
-                <p className="text-zinc-400 font-gotham text-sm">
-                  Note: Gym is closed on Saturday
-                </p>
-              </div>
+          <div className="mx-auto max-w-5xl px-8">
+            <h2 className="font-gotham-condensed text-4xl md:text-5xl font-bold uppercase mb-8 text-center">Gym Schedule</h2>
+            <div className="bg-zinc-900/50 rounded-lg overflow-hidden border border-zinc-800">
+              <table className="w-full">
+                <thead className="bg-zinc-800">
+                  <tr>
+                    <th className="px-6 py-4 text-left font-gotham text-accent font-bold text-sm uppercase tracking-wider">Activity</th>
+                    <th className="px-6 py-4 text-left font-gotham text-accent font-bold text-sm uppercase tracking-wider">Time</th>
+                    <th className="px-6 py-4 text-left font-gotham text-accent font-bold text-sm uppercase tracking-wider">Days</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-800">
+                  <tr>
+                    <td className="px-6 py-4 font-gotham text-white">Cardio</td>
+                    <td className="px-6 py-4 font-gotham text-white">6:00 AM – 7:00 AM</td>
+                    <td className="px-6 py-4 font-gotham text-white">Daily</td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 font-gotham text-white">Zumba</td>
+                    <td className="px-6 py-4 font-gotham text-white">6:00 AM – 7:00 AM</td>
+                    <td className="px-6 py-4 font-gotham text-white">Tuesday & Friday</td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 font-gotham text-white">Other Gym Activities</td>
+                    <td className="px-6 py-4 font-gotham text-white">Throughout the day</td>
+                    <td className="px-6 py-4 font-gotham text-white">Daily</td>
+                  </tr>
+                  <tr className="bg-zinc-800/50">
+                    <td className="px-6 py-4 font-gotham text-white font-bold">Closed</td>
+                    <td className="px-6 py-4 font-gotham text-white">—</td>
+                    <td className="px-6 py-4 font-gotham text-white">Saturday</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </section>

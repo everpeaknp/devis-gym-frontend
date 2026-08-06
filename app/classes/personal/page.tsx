@@ -126,6 +126,46 @@ export default function PersonalTrainingPage() {
           </div>
         </section>
 
+        {/* Schedule Information */}
+        <section className="mb-20">
+          <div className="mx-auto max-w-5xl px-8">
+            <h2 className="font-gotham-condensed text-4xl md:text-5xl font-bold uppercase mb-8 text-center">Gym Schedule</h2>
+            <div className="bg-zinc-900/50 rounded-lg overflow-hidden border border-zinc-800">
+              <table className="w-full">
+                <thead className="bg-zinc-800">
+                  <tr>
+                    <th className="px-6 py-4 text-left font-gotham text-accent font-bold text-sm uppercase tracking-wider">Activity</th>
+                    <th className="px-6 py-4 text-left font-gotham text-accent font-bold text-sm uppercase tracking-wider">Time</th>
+                    <th className="px-6 py-4 text-left font-gotham text-accent font-bold text-sm uppercase tracking-wider">Days</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-800">
+                  <tr>
+                    <td className="px-6 py-4 font-gotham text-white">Cardio</td>
+                    <td className="px-6 py-4 font-gotham text-white">6:00 AM – 7:00 AM</td>
+                    <td className="px-6 py-4 font-gotham text-white">Daily</td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 font-gotham text-white">Zumba</td>
+                    <td className="px-6 py-4 font-gotham text-white">6:00 AM – 7:00 AM</td>
+                    <td className="px-6 py-4 font-gotham text-white">Tuesday & Friday</td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 font-gotham text-white">Other Gym Activities</td>
+                    <td className="px-6 py-4 font-gotham text-white">Throughout the day</td>
+                    <td className="px-6 py-4 font-gotham text-white">Daily</td>
+                  </tr>
+                  <tr className="bg-zinc-800/50">
+                    <td className="px-6 py-4 font-gotham text-white font-bold">Closed</td>
+                    <td className="px-6 py-4 font-gotham text-white">—</td>
+                    <td className="px-6 py-4 font-gotham text-white">Saturday</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
        
       </div>
 
