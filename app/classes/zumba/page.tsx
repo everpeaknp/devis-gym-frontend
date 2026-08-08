@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/cta-section-with-gallery";
 
 const ZUMBA_IMAGES = [
-  "/classes/zumba.jpg",
-  "/gallery/people-1.jpeg",
-  "/gallery/lifestyle-1.jpeg",
-  "/gallery/gym-2.jpeg",
+  "/people/DSC07450.JPG",
+  "/people/DSC07483.JPG",
+  "/people/DSC07554.JPG",
+  "/people/DSC07534.JPG",
 ];
 
 export default function ZumbaPage() {

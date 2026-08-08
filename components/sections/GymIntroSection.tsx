@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ShieldCheck, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { galleryImages } from "@/data/gallery";
 import Lightbox from "@/components/ui/Lightbox";
 import { EmbroideredWordPatches } from "@/components/unused-components/ui/embroidered-word-patches";
@@ -200,7 +201,7 @@ export default function GymIntroSection() {
           {/* Mission Image */}
           <div className="xl:col-span-4 card-mission order-2">
             <Image
-              src="/devis/IMG_7358.JPG.jpeg"
+              src="/people/DSC07643-3.JPG"
               alt="Mission"
               width={400}
               height={460}
@@ -224,7 +225,7 @@ export default function GymIntroSection() {
           {/* Story Image */}
           <div className="xl:col-span-4 card-story order-4 md:order-3">
             <Image
-              src="/devis/IMG_7375.JPG.jpeg"
+              src="/people/DSC07586.JPG"
               alt="Story"
               width={400}
               height={460}
@@ -373,10 +374,13 @@ export default function GymIntroSection() {
             </p>
 
             {/* More About Us Button */}
-            <button className="group inline-flex items-center gap-2 text-[rgb(225,255,0)] transition-transform hover:translate-x-1 sm:hover:translate-x-2 cursor-pointer active:scale-95 py-2 -my-2">
+            <Link
+              href="/about"
+              className="group inline-flex items-center gap-2 text-[rgb(225,255,0)] transition-transform hover:translate-x-1 sm:hover:translate-x-2 cursor-pointer active:scale-95 py-2 -my-2"
+            >
               <ArrowRight size={16} className="sm:w-5 sm:h-5 md:w-6 md:h-6 transition-transform group-hover:translate-x-1 flex-shrink-0" />
               <span className="font-oswald uppercase text-xs sm:text-sm tracking-wider">More About Us</span>
-            </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/cta-section-with-gallery";
 
 const GYM_IMAGES = [
-  "/classes/GymTraining.jpg",
-  "/gallery/gym-1.jpeg",
-  "/gallery/gym-2.jpeg",
-  "/gallery/gym-3.jpeg",
+  "/people/DSC07641-3.JPG",
+  "/people/DSC07580.JPG",
+  "/people/DSC07720-2.JPG",
+  "/people/DSC07635-3.JPG",
 ];
 
 export default function GymTrainingPage() {

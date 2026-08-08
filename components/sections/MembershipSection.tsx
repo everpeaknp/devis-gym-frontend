@@ -2,13 +2,25 @@
 
 import Reveal from "@/components/ui/Reveal";
 import { membershipPlans } from "@/data/membership";
-import { Check, X } from "lucide-react";
+import { Check, X, ArrowRight } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
 
-export default function MembershipSection() {
+interface MembershipSectionProps {
+  maxPlans?: number;
+}
+
+export default function MembershipSection({ maxPlans }: MembershipSectionProps) {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Filter plans: if maxPlans is set, show 1-month, 3-months, 1-year
+  const filteredPlans = maxPlans 
+    ? membershipPlans.filter(plan => 
+        plan.id === "1-month" || plan.id === "3-months" || plan.id === "1-year"
+      )
+    : membershipPlans;
 
   useEffect(() => {
     // Register ScrollTrigger plugin
@@ -77,7 +89,7 @@ export default function MembershipSection() {
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, []);
+  }, [filteredPlans]);
 
   return (
     <section id="membership" className="bg-background">
@@ -102,7 +114,7 @@ export default function MembershipSection() {
 
         {/* Pricing Cards */}
         <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3 max-w-5xl mx-auto">
-          {membershipPlans.map((plan, i) => (
+          {filteredPlans.map((plan, i) => (
             <div
               key={plan.id}
               ref={(el) => {
@@ -187,18 +199,34 @@ export default function MembershipSection() {
               </ul>
 
               {/* Button */}
-              <button
-                className={`w-full py-4 font-oswald text-[14px] leading-[20px] font-bold uppercase tracking-tight transition-colors cursor-pointer mt-auto ${
+              <Link
+                href="/contact"
+                className={`w-full py-4 font-oswald text-[14px] leading-[20px] font-bold uppercase tracking-tight transition-colors cursor-pointer mt-auto text-center block ${
                   plan.popular
                     ? "bg-accent text-black hover:bg-accent-dim"
                     : "bg-transparent border border-zinc-700 text-white hover:border-zinc-500"
                 }`}
               >
                 Get Started
-              </button>
+              </Link>
             </div>
           ))}
         </div>
+
+        {/* See More Button - Only show when maxPlans is set */}
+        {maxPlans && (
+          <Reveal delay={0.3}>
+            <div className="text-center mt-12">
+              <Link
+                href="/membership"
+                className="inline-flex items-center gap-2 bg-transparent border-2 border-accent text-accent px-8 py-3 font-oswald text-[14px] leading-[20px] font-bold uppercase tracking-tight hover:bg-accent hover:text-black transition-all duration-300 group"
+              >
+                See More Plans
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </Reveal>
+        )}
       </div>
     </section>
   );

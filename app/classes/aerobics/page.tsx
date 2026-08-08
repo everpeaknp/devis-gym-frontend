@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/cta-section-with-gallery";
 
 const AEROBICS_IMAGES = [
-  "/classes/airobics.jpg",
-  "/gallery/people-1.jpeg",
-  "/gallery/gym-2.jpeg",
-  "/gallery/lifestyle-1.jpeg",
+  "/people/DSC07627-3.JPG",
+  "/people/DSC07567.JPG",
+  "/people/DSC07385.JPG",
+  "/people/DSC07563.JPG",
 ];
 
 export default function AerobicsPage() {

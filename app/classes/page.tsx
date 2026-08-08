@@ -14,42 +14,42 @@ const classesData = {
     slug: "gym-training",
     title: "Gym Training",
     description: "State-of-the-art equipment and facilities for all your training needs. From cardio to strength training, we have everything you need to reach your fitness goals.",
-    image: "/classes/GymTraining.jpg",
+    image: "/people/DSC07734.JPG",
     details: "Free weights, machines, cardio equipment, and dedicated training zones for every fitness level.",
   },
   weightlifting: {
     slug: "weightlifting",
     title: "Weightlifting",
     description: "Professional weightlifting programs with expert coaching. Build strength, power, and muscle with proper technique and progressive training.",
-    image: "/classes/weightlifting.jpg",
+    image: "/people/DSC07615-4.JPG",
     details: "Olympic lifting, powerlifting, and strength training with certified coaches.",
   },
   cardio: {
     slug: "cardio",
     title: "Cardio",
     description: "High-intensity cardio workouts to improve your cardiovascular health and endurance. Burn calories and boost your stamina.",
-    image: "/classes/cardio.jpg",
+    image: "/people/DSC07629-3.JPG",
     details: "Treadmills, bikes, rowing machines, and group cardio classes.",
   },
   crossfit: {
     slug: "crossfit",
     title: "CrossFit",
     description: "Functional fitness training that combines strength, cardio, and gymnastics. Push your limits with varied, high-intensity workouts.",
-    image: "/classes/crossfit.jpg",
+    image: "/people/DSC07636-3.JPG",
     details: "WODs, functional movements, and community-driven training sessions.",
   },
   aerobics: {
     slug: "aerobics",
     title: "Aerobics",
     description: "Fun and energetic group classes that improve cardiovascular fitness through rhythmic exercises and dance movements.",
-    image: "/classes/airobics.jpg",
+    image: "/people/DSC07385.JPG",
     details: "Step aerobics, dance fitness, and low-impact options for all fitness levels.",
   },
   zumba: {
     slug: "zumba",
     title: "Zumba",
     description: "Dance your way to fitness with high-energy Zumba classes led by Barsha Grg. Burn calories while having fun with Latin-inspired dance moves.",
-    image: "/classes/zumba.jpg",
+    image: "/people/DSC07541.JPG",
     details: "Latin dance, cardio party, and group fitness classes with certified Zumba instructor.",
   },
   outdoor: {
@@ -62,12 +62,12 @@ const classesData = {
 };
 
 const galleryImages = [
-  { src: "/classes/GymTraining.jpg", alt: "Gym Training" },
-  { src: "/classes/weightlifting.jpg", alt: "Weightlifting" },
-  { src: "/classes/cardio.jpg", alt: "Cardio Training" },
-  { src: "/classes/crossfit.jpg", alt: "CrossFit" },
-  { src: "/classes/airobics.jpg", alt: "Aerobics" },
-  { src: "/classes/zumba.jpg", alt: "Zumba" },
+  { src: "/people/DSC07734.JPG", alt: "Gym Training" },
+  { src: "/people/DSC07615-4.JPG", alt: "Weightlifting" },
+  { src: "/people/DSC07629-3.JPG", alt: "Cardio Training" },
+  { src: "/people/DSC07636-3.JPG", alt: "CrossFit" },
+  { src: "/people/DSC07385.JPG", alt: "Aerobics" },
+  { src: "/people/DSC07541.JPG", alt: "Zumba" },
   { src: "/classes/OutdoorActivities.jpg", alt: "Outdoor Activities" },
 ];
 

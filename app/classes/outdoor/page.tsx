@@ -13,10 +13,10 @@ import {
 } from "@/components/ui/cta-section-with-gallery";
 
 const OUTDOOR_IMAGES = [
-  "/gallery/lifestyle-1.jpeg",
-  "/gallery/gym-2.jpeg", 
-  "/gallery/training-1.jpeg",
-  "/gallery/gym-3.jpeg",
+  "/people/DSC07624-3.JPG",
+  "/people/DSC07720-2.JPG",
+  "/people/DSC07524.JPG",
+  "/people/DSC07541.JPG",
 ];
 
 const outdoorPrograms = [

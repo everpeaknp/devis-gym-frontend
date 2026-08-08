@@ -282,9 +282,10 @@ export default function TrainingSection() {
 
         <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service, i) => {
-            // Map service IDs to class paths
-            const getServicePath = (id: string) => {
-              switch(id) {
+            // Special handling for "View All Classes" card
+            const servicePath = service.isViewAll ? '/classes' : (() => {
+              // Map service IDs to class paths
+              switch(service.id) {
                 case 'gym-training': return '/classes/gym-training';
                 case 'weightlifting': return '/classes/weightlifting';
                 case 'cardio': return '/classes/cardio';
@@ -294,11 +295,11 @@ export default function TrainingSection() {
                 case 'outdoor-activities': return '/classes/outdoor';
                 default: return '/classes';
               }
-            };
+            })();
 
             return (
               <Reveal key={service.id} delay={i * 0.1}>
-                <Link href={getServicePath(service.id)} className="block">
+                <Link href={servicePath} className="block">
                   <div 
                     ref={(el) => {
                       cardRefs.current[i] = el;

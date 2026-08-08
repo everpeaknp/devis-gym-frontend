@@ -19,16 +19,16 @@ function StatCounter({ stat }: { stat: { id: string; value: string; label: strin
   const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  // Extract number from value (e.g., "5+" -> 5, "500+" -> 500, "24/7" -> 24)
+  // Extract number from value (e.g., "5+" -> 5, "500+" -> 500)
   const targetNumber = parseInt(stat.value.replace(/\D/g, '')) || 0;
   const suffix = stat.value.replace(/[0-9]/g, '');
   
-  // Skip animation for "24/7"
-  const shouldAnimate = !stat.value.includes('/');
+  // Check if the value contains any numbers - if not, it's a text-only stat
+  const isNumericStat = /\d/.test(stat.value);
 
   useEffect(() => {
-    if (!shouldAnimate) {
-      setCount(targetNumber);
+    if (!isNumericStat) {
+      // For non-numeric stats, don't animate
       return;
     }
 
@@ -63,12 +63,12 @@ function StatCounter({ stat }: { stat: { id: string; value: string; label: strin
     }
 
     return () => observer.disconnect();
-  }, [targetNumber, hasAnimated, shouldAnimate]);
+  }, [targetNumber, hasAnimated, isNumericStat]);
 
   return (
     <div ref={ref} className="text-center">
       <div className="font-oswald text-[48px] leading-[56px] md:text-[64px] md:leading-[72px] font-bold mb-2" style={{ color: '#c7ff3d', fontFamily: 'Oswald, Arial, sans-serif' }}>
-        {shouldAnimate ? `${count}${suffix}` : stat.value}
+        {isNumericStat ? `${count}${suffix}` : stat.value}
       </div>
       <div className="text-muted text-sm uppercase tracking-wide font-bold">
         {stat.label}
@@ -113,7 +113,7 @@ const AboutContent = () => {
                   {/* Photo with Hover Effect */}
                   <div className="relative h-[360px] w-full max-w-[285px] mx-auto overflow-hidden bg-background-elevated">
                     <Image
-                      src="/about/background.jpg"
+                      src={member.image || "/about/background.jpg"}
                       alt={member.name}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -269,7 +269,7 @@ export default function AboutPage() {
                  lineHeight: '19px',
                  color: 'rgb(255, 255, 255)'
                }}>
-              Devi&apos;s Gym provides a unique way to engage with our fitness community through interactive experiences. Located in the heart of Pokhara, we&apos;ve been transforming lives for over 5 years with our commitment to functional training and personalized fitness solutions. Our state-of-the-art facility combines modern equipment with expert guidance from 15+ certified trainers who are passionate about helping you achieve your goals. With 24/7 access and a supportive community of 500+ active members, we offer more than just a workout space - we provide a complete fitness ecosystem designed to unlock your true potential. Discover what makes our gym different with this innovative presentation of our facilities and services.
+              Devi&apos;s Gym provides a unique way to engage with our fitness community through interactive experiences. Located in the heart of Pokhara, we&apos;ve been transforming lives for over {new Date().getFullYear() - 2018} years with our commitment to functional training and personalized fitness solutions. Our state-of-the-art facility combines modern equipment with expert guidance from 6+ certified trainers who are passionate about helping you achieve your goals. Open Sunday through Friday from 5:00 AM to 10:00 PM, we offer flexible hours to fit your schedule. With a supportive community of 500+ active members, we offer more than just a workout space - we provide a complete fitness ecosystem designed to unlock your true potential. Discover what makes our gym different with this innovative presentation of our facilities and services.
             </p>
           </div>
 

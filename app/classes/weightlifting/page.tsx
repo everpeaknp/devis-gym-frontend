@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/cta-section-with-gallery";
 
 const WEIGHTLIFTING_IMAGES = [
-  "/classes/weightlifting.jpg",
-  "/gallery/training-1.jpeg",
-  "/gallery/gym-3.jpeg",
-  "/gallery/gym-1.jpeg",
+  "/people/DSC07608-3.JPG",
+  "/people/DSC07618-3.JPG",
+  "/people/DSC07614-3.JPG",
+  "/people/DSC07411.JPG",
 ];
 
 export default function WeightliftingPage() {

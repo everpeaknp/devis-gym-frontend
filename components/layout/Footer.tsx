@@ -18,7 +18,7 @@ import { socialLinks as socialData } from "@/data/social";
 import { contactInfo } from "@/data/contact";
 
 export default function Footer() {
-  const plateRef = useRef<SVGSVGElement>(null);
+  const plateRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(textRef, { once: false, amount: 0.2 });
 
@@ -114,70 +114,19 @@ export default function Footer() {
     <footer className="bg-[#0F0F11]/10 relative h-fit rounded-3xl overflow-hidden m-8">
       {/* Rotating Weight Plate Background */}
       <div className="absolute inset-0 flex items-end justify-center pb-0 opacity-10 pointer-events-none overflow-hidden -ml-8">
-        <svg 
+        <div
           ref={plateRef}
-          width="800" 
-          height="800" 
-          viewBox="0 0 500 500" 
-          xmlns="http://www.w3.org/2000/svg"
           className="transition-transform duration-75 ease-linear translate-y-48"
         >
-          <defs>
-            <radialGradient id="plate" cx="50%" cy="45%">
-              <stop offset="0%" stopColor="#555"/>
-              <stop offset="35%" stopColor="#333"/>
-              <stop offset="75%" stopColor="#1b1b1b"/>
-              <stop offset="100%" stopColor="#0d0d0d"/>
-            </radialGradient>
-            <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#666"/>
-              <stop offset="30%" stopColor="#ddd"/>
-              <stop offset="60%" stopColor="#999"/>
-              <stop offset="100%" stopColor="#444"/>
-            </linearGradient>
-          </defs>
-          {/* Outer Plate */}
-          <circle cx="250" cy="250" r="220"
-                  fill="url(#plate)"
-                  stroke="#444"
-                  strokeWidth="8"/>
-          {/* Ring */}
-          <circle cx="250" cy="250" r="185"
-                  fill="none"
-                  stroke="#2f2f2f"
-                  strokeWidth="22"/>
-          {/* Inner Ring */}
-          <circle cx="250" cy="250" r="120"
-                  fill="#181818"
-                  stroke="#444"
-                  strokeWidth="10"/>
-          {/* Center */}
-          <circle cx="250" cy="250" r="55"
-                  fill="#111"
-                  stroke="url(#chrome)"
-                  strokeWidth="8"/>
-          {/* Grip holes */}
-          <g fill="#101010" stroke="#444" strokeWidth="4">
-            <circle cx="250" cy="95" r="22"/>
-            <circle cx="250" cy="405" r="22"/>
-            <circle cx="95" cy="250" r="22"/>
-            <circle cx="405" cy="250" r="22"/>
-          </g>
-          {/* 20KG Labels */}
-          <g fill="#666"
-             fontSize="22"
-             fontFamily="Arial"
-             fontWeight="700">
-            <text x="250" y="55" textAnchor="middle">20KG</text>
-            <text x="250" y="470" textAnchor="middle">20KG</text>
-            <text x="55" y="255"
-                  transform="rotate(-90 55 255)"
-                  textAnchor="middle">Devi's GYM</text>
-            <text x="445" y="255"
-                  transform="rotate(90 445 255)"
-                  textAnchor="middle">20KG</text>
-          </g>
-        </svg>
+          <Image
+            src="/icons/weight-plate.svg"
+            alt="Weight Plate"
+            width={800}
+            height={800}
+            className="w-[800px] h-[800px]"
+            priority
+          />
+        </div>
       </div>
 
       {/* Copyright positioned absolutely at bottom right of entire footer */}

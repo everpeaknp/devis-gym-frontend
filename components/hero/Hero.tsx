@@ -10,11 +10,12 @@ import { businessData } from "@/data/business";
 import HeroScrollSequence from "./HeroScrollSequence";
 import HeroProgress from "@/components/unused-components/ui/hero-progress";
 
-// Hero media data - 2 videos first, then 1 image (3 slides total)
+// Hero media data - 2 videos first, then 2 images (4 slides total)
 const heroMedia = [
   { type: 'video', src: '/hero/135161-761273563_medium.mp4' },
   { type: 'video', src: '/hero/293079_medium.mp4' },
-  { type: 'image', src: '/devis/IMG_7364.JPG.jpeg' },
+  { type: 'image', src: '/people/DSC07536.JPG' },
+  { type: 'image', src: '/people/DSC07700-2.JPG' },
 ];
 
 export default function Hero() {
@@ -415,6 +416,17 @@ export default function Hero() {
                   Built For Every Goal
                 </p>
               )}
+              {currentMediaIndex === 3 && (
+                <p className="font-gotham text-white font-bold uppercase tracking-wider mb-2 sm:mb-1 lg:mb-1" 
+                   style={{ 
+                     fontWeight: 700,
+                     fontSize: 'clamp(14px, 3.5vw, 17px)',
+                     lineHeight: 'clamp(18px, 4.5vw, 24px)',
+                     color: 'rgb(255, 255, 255)'
+                   }}>
+                  Your Transformation Starts Here
+                </p>
+              )}
             </div>
 
             {/* Main heading - Changes based on slide with animation */}
@@ -456,7 +468,7 @@ export default function Hero() {
                       <span className="hero-line block text-white">Strength.</span>
                     </span>
                   </>
-                ) : (
+                ) : currentMediaIndex === 2 ? (
                   // Third slide content
                   <>
                     <span className="overflow-hidden">
@@ -467,6 +479,19 @@ export default function Hero() {
                     </span>
                     <span className="overflow-hidden">
                       <span className="hero-line block text-white">Every Day.</span>
+                    </span>
+                  </>
+                ) : (
+                  // Fourth slide content
+                  <>
+                    <span className="overflow-hidden">
+                      <span className="hero-line block text-white">Train</span>
+                    </span>
+                    <span className="overflow-hidden">
+                      <span className="hero-line block text-white">With</span>
+                    </span>
+                    <span className="overflow-hidden">
+                      <span className="hero-line block text-white">Purpose.</span>
                     </span>
                   </>
                 )}
@@ -512,6 +537,17 @@ export default function Hero() {
                   Whether your goal is to lose weight, build muscle, improve your fitness, or simply feel healthier, Devi's Gym gives you the right environment to keep moving forward. Progress doesn't happen overnight, but every workout brings you one step closer.
                 </p>
               )}
+              {currentMediaIndex === 3 && (
+                <p className="font-gotham text-white mb-3 sm:mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
+                   style={{ 
+                     fontWeight: 500,
+                     fontSize: 'clamp(12px, 2.8vw, 13px)',
+                     lineHeight: 'clamp(17px, 3.8vw, 19px)',
+                     color: 'rgb(255, 255, 255)'
+                   }}>
+                  Every rep, every session, every drop of sweat matters. At Devi's Gym, we believe in training with intention, not just going through the motions. Get expert guidance, structured programs, and the motivation you need to make real progress.
+                </p>
+              )}
             </div>
 
             {/* Hero Buttons with animation */}
@@ -522,7 +558,7 @@ export default function Hero() {
             >
               <span className="hero-cta">
                 <a 
-                  href={currentMediaIndex === 0 ? '/membership' : currentMediaIndex === 1 ? '/gym' : '/contact'}
+                  href={currentMediaIndex === 0 ? '/membership' : currentMediaIndex === 1 ? '/gym' : currentMediaIndex === 2 ? '/contact' : '/classes'}
                   className="bg-accent text-black px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold uppercase tracking-wide hover:bg-accent/90 transition-colors rounded-full w-full sm:w-auto inline-block text-center"
                   style={{ 
                     fontFamily: 'Gotham, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', 
@@ -530,7 +566,7 @@ export default function Hero() {
                   }}
                   onMouseDown={(e) => e.stopPropagation()}
                 >
-                  {currentMediaIndex === 0 ? 'Start A Trial' : currentMediaIndex === 1 ? 'Join Our Community' : 'Contact Us'}
+                  {currentMediaIndex === 0 ? 'Start A Trial' : currentMediaIndex === 1 ? 'Join Our Community' : currentMediaIndex === 2 ? 'Contact Us' : 'Explore Classes'}
                 </a>
               </span>
               {currentMediaIndex === 0 && (

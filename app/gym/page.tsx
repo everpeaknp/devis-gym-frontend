@@ -229,20 +229,20 @@ export default function GymPage() {
             <div className="mt-12">
               <div className="grid grid-cols-4 gap-6 mb-16">
                 <div className="text-center">
-                  <div className="font-oswald text-5xl font-bold text-accent mb-2">5+</div>
-                  <div className="text-muted text-sm uppercase tracking-wide">Years Open</div>
+                  <div className="font-oswald text-5xl font-bold text-accent mb-2">{new Date().getFullYear() - 2018}+</div>
+                  <div className="text-muted text-sm uppercase tracking-wide">Years Serving Pokhara</div>
                 </div>
                 <div className="text-center">
                   <div className="font-oswald text-5xl font-bold text-accent mb-2">500+</div>
                   <div className="text-muted text-sm uppercase tracking-wide">Active Members</div>
                 </div>
                 <div className="text-center">
-                  <div className="font-oswald text-5xl font-bold text-accent mb-2">15+</div>
-                  <div className="text-muted text-sm uppercase tracking-wide">Trainers</div>
+                  <div className="font-oswald text-5xl font-bold text-accent mb-2">6+</div>
+                  <div className="text-muted text-sm uppercase tracking-wide">Certified Trainers</div>
                 </div>
                 <div className="text-center">
-                  <div className="font-oswald text-5xl font-bold text-accent mb-2">24/7</div>
-                  <div className="text-muted text-sm uppercase tracking-wide">Access</div>
+                  <div className="font-oswald text-5xl font-bold text-accent mb-2">Sun-Fri</div>
+                  <div className="text-muted text-sm uppercase tracking-wide">5 AM - 10 PM</div>
                 </div>
               </div>
               

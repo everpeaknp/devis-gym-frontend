@@ -1,88 +1,42 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 
-interface InstagramPost {
-  id: string;
-  media_url: string;
-  permalink: string;
-  caption: string;
-  media_type: string;
-  timestamp: string;
-  likes: number;
-  comments: number;
-}
-
-interface InstagramFeedResponse {
-  success: boolean;
-  posts: InstagramPost[];
-  source: string;
-  message?: string;
-  error?: string;
-}
+// Static Instagram-style posts using images from public/people
+const instagramPosts = [
+  { id: "1", media_url: "/people/DSC07536.JPG", caption: "Training hard at Devi's Gym", likes: 142, comments: 8 },
+  { id: "2", media_url: "/people/DSC07700-2.JPG", caption: "Fitness community vibes", likes: 198, comments: 12 },
+  { id: "3", media_url: "/people/DSC07641-3.JPG", caption: "Morning workout session", likes: 156, comments: 9 },
+  { id: "4", media_url: "/people/DSC07732.JPG", caption: "Strength training goals", likes: 173, comments: 11 },
+  { id: "5", media_url: "/people/DSC07450.JPG", caption: "Zumba class energy", likes: 189, comments: 15 },
+  { id: "6", media_url: "/people/DSC07590-3.JPG", caption: "CrossFit intensity", likes: 167, comments: 10 },
+  { id: "7", media_url: "/people/DSC07624-3.JPG", caption: "Outdoor fitness lifestyle", likes: 145, comments: 7 },
+];
 
 export default function InstagramFeed() {
-  const [posts, setPosts] = useState<InstagramPost[]>([]);
-  const [loading, setLoading] = useState(true);
   const [hoveredPost, setHoveredPost] = useState<string | null>(null);
-  const [source, setSource] = useState<string>('');
-
-  useEffect(() => {
-    const fetchInstagramData = async () => {
-      try {
-        const response = await fetch('/api/instagram');
-        const data: InstagramFeedResponse = await response.json();
-        
-        if (data.success) {
-          setPosts(data.posts);
-          setSource(data.source);
-        }
-      } catch (error) {
-        console.error('Failed to fetch Instagram data:', error);
-        // Fallback to empty array - the API should handle errors gracefully
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchInstagramData();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex h-[300px]">
-        {[...Array(7)].map((_, i) => (
-          <div key={i} className="flex-1 min-w-0 bg-gray-200 animate-pulse" />
-        ))}
-      </div>
-    );
-  }
 
   return (
     <div className="flex h-[300px]">
-      {posts.map((post) => (
+      {instagramPosts.map((post) => (
         <div 
           key={post.id} 
           className="flex-1 min-w-0 relative group cursor-pointer"
           onMouseEnter={() => setHoveredPost(post.id)}
           onMouseLeave={() => setHoveredPost(null)}
           onClick={() => {
-            window.open(post.permalink, '_blank');
+            window.open('https://www.instagram.com/devisgym_pokhara/', '_blank');
           }}
         >
           <Image
             src={post.media_url}
-            alt={post.caption.substring(0, 100) + '...'}
+            alt={post.caption}
             width={400}
             height={300}
             className="w-full h-full object-cover transition-all duration-300 group-hover:brightness-90"
             loading="lazy"
             quality={75}
-            onError={(e) => {
-              // Fallback to placeholder if image fails to load
-              e.currentTarget.src = '/gallery/gym-1.jpeg';
-            }}
           />
           
           {/* Instagram Overlay on Hover */}
@@ -112,9 +66,7 @@ export default function InstagramFeed() {
                   </svg>
                 </div>
                 
-                <p className="text-sm opacity-90">
-                  {source === 'instagram_scrape' ? 'Real Instagram Data' : 'View on Instagram'}
-                </p>
+                <p className="text-sm opacity-90">View on Instagram</p>
               </div>
             </div>
           )}

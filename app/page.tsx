@@ -63,10 +63,10 @@ export default function Home() {
         <GymIntroSection />
         <TrainingSection />
         {/* <NetworkSection /> */}
-        <Gallery />
+        <Gallery maxImages={9} />
         {/* <GymCTASection /> */}
         <LocationSection />
-        <MembershipSection />
+        <MembershipSection maxPlans={3} />
         <MotivationSection />
         <TestimonialsSection />
         <FinalCTASection />

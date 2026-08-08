@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/cta-section-with-gallery";
 
 const CARDIO_IMAGES = [
-  "/classes/cardio.jpg",
-  "/gallery/gym-2.jpeg",
-  "/gallery/training-1.jpeg",
-  "/gallery/lifestyle-1.jpeg",
+  "/people/DSC07630-3.JPG",
+  "/people/DSC07628-3.JPG",
+  "/people/DSC07563.JPG",
+  "/people/DSC07439.JPG",
 ];
 
 export default function CardioPage() {

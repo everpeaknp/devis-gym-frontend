@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/cta-section-with-gallery";
 
 const CROSSFIT_IMAGES = [
-  "/classes/crossfit.jpg",
-  "/gallery/training-1.jpeg",
-  "/gallery/gym-3.jpeg",
-  "/gallery/people-1.jpeg",
+  "/people/DSC07590-3.JPG",
+  "/people/DSC07599-3.JPG",
+  "/people/DSC07626-3.JPG",
+  "/people/DSC07585.JPG",
 ];
 
 export default function CrossFitPage() {

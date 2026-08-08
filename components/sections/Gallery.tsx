@@ -9,15 +9,21 @@ import Reveal from "@/components/ui/Reveal";
 import Lightbox from "@/components/ui/Lightbox";
 import { galleryImages, galleryCategories } from "@/data/gallery";
 
-export default function Gallery() {
+interface GalleryProps {
+  maxImages?: number; // Maximum number of images to display (for homepage: 9)
+}
+
+export default function Gallery({ maxImages }: GalleryProps) {
   const [active, setActive] = useState<string>("All");
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const filtered =
     active === "All"
-      ? galleryImages.slice(0, 9) // Show only first 9 images (3x3 grid)
-      : galleryImages.filter((img) => img.category === active).slice(0, 9);
+      ? (maxImages ? galleryImages.slice(0, maxImages) : galleryImages)
+      : (maxImages 
+          ? galleryImages.filter((img) => img.category === active).slice(0, maxImages)
+          : galleryImages.filter((img) => img.category === active));
 
   // Only available images for lightbox
   const availableImages = filtered.filter((img) => img.available);
@@ -107,6 +113,26 @@ export default function Gallery() {
             </Reveal>
           ))}
         </div>
+
+        {/* See More Button - Only show when maxImages is set (homepage) */}
+        {maxImages && (
+          <div className="mt-8 sm:mt-10 md:mt-12 flex justify-center">
+            <a
+              href="/gallery"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-accent hover:bg-accent/90 text-black font-bold uppercase tracking-wide transition-all rounded-none group"
+            >
+              See More Photos
+              <svg 
+                className="w-4 h-4 transition-transform group-hover:translate-x-1" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        )}
       </div>
 
       {/* Lightbox */}
