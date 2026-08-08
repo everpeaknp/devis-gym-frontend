@@ -29,9 +29,9 @@ export const aboutTeam = {
   members: [
     {
       id: "trainer-1",
-      name: "Devi Prasad",
-      role: "Head Trainer & Founder",
-      image: "/people/trainer1.jpg",
+      name: "Anup Grg",
+      role: "Certified Trainer",
+      image: "/people/Trainers/AnupGrg.JPG",
       social: {
         facebook: "#",
         twitter: "#",
@@ -40,9 +40,9 @@ export const aboutTeam = {
     },
     {
       id: "trainer-2",
-      name: "Raj Kumar",
-      role: "Strength Coach",
-      image: "/people/trainer2.jpg",
+      name: "Aditya Grg",
+      role: "Certified Trainer",
+      image: "/people/Trainers/AdityaGrg.JPG",
       social: {
         facebook: "#",
         twitter: "#",
@@ -51,9 +51,9 @@ export const aboutTeam = {
     },
     {
       id: "trainer-3",
-      name: "Sita Sharma",
-      role: "Cardio Specialist",
-      image: "/people/trainer3.jpg",
+      name: "Abhishek Mishra",
+      role: "Certified Trainer",
+      image: "/people/Trainers/AbhishekMishra.JPG",
       social: {
         facebook: "#",
         twitter: "#",
@@ -62,9 +62,9 @@ export const aboutTeam = {
     },
     {
       id: "trainer-4",
-      name: "Anil Thapa",
-      role: "CrossFit Coach",
-      image: "/people/trainer4.jpg",
+      name: "Barsha Grg",
+      role: "Zumba Trainer",
+      image: "/people/Trainers/BarshaGrg.JPG",
       social: {
         facebook: "#",
         twitter: "#",
@@ -73,9 +73,9 @@ export const aboutTeam = {
     },
     {
       id: "trainer-5",
-      name: "Maya Gurung",
-      role: "Yoga Instructor",
-      image: "/people/trainer5.jpg",
+      name: "Bijay Grg",
+      role: "Certified Trainer",
+      image: "/people/Trainers/BijayGrg.JPG",
       social: {
         facebook: "#",
         twitter: "#",
