@@ -20,19 +20,19 @@ export default function Home() {
   // Local gym equipment images for ZoomParallax
   const gymInsideImages = [
     {
-      src: '/equipment/main.jpg',
+      src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268779/devis-gym/equipment/main.webp',
       alt: 'Main gym equipment view',
     },
     {
-      src: '/equipment/1.webp',
+      src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268749/devis-gym/equipment/1.webp',
       alt: 'Gym equipment 1',
     },
     {
-      src: '/equipment/2.webp', 
+      src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268751/devis-gym/equipment/2.webp', 
       alt: 'Gym equipment 2',
     },
     {
-      src: '/equipment/3.png',
+      src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268752/devis-gym/equipment/3.webp',
       alt: 'Gym equipment 3',
     },
     {
@@ -40,15 +40,15 @@ export default function Home() {
       alt: 'Gym equipment 4',
     },
     {
-      src: '/equipment/6.webp',
+      src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268758/devis-gym/equipment/6.webp',
       alt: 'Gym equipment 6',
     },
     {
-      src: '/equipment/7.webp',
+      src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268760/devis-gym/equipment/7.webp',
       alt: 'Gym equipment 7',
     },
     {
-      src: '/equipment/9.png',
+      src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268763/devis-gym/equipment/9.webp',
       alt: 'Gym equipment 9',
     },
   ];

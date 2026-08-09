@@ -39,37 +39,37 @@ export default function GymPage() {
                     id: 1,
                     title: 'Free Weights',
                     subtitle: 'STRENGTH',
-                    imageUrl: '/equipment/machines/1.png'
+                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268764/devis-gym/equipment/machines/1.webp'
                   },
                   {
                     id: 2,
                     title: 'Cardio Zone',
                     subtitle: 'ENDURANCE',
-                    imageUrl: '/equipment/machines/2.png'
+                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268768/devis-gym/equipment/machines/2.webp'
                   },
                   {
                     id: 3,
                     title: 'Power Racks',
                     subtitle: 'POWER',
-                    imageUrl: '/equipment/machines/3.webp'
+                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268770/devis-gym/equipment/machines/3.webp'
                   },
                   {
                     id: 4,
                     title: 'Functional',
                     subtitle: 'TRAINING',
-                    imageUrl: '/equipment/machines/4.webp'
+                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268771/devis-gym/equipment/machines/4.webp'
                   },
                   {
                     id: 5,
                     title: 'Olympic Lifts',
                     subtitle: 'TECHNIQUE',
-                    imageUrl: '/equipment/machines/5.png'
+                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268775/devis-gym/equipment/machines/5.webp'
                   },
                   {
                     id: 6,
                     title: 'Recovery Zone',
                     subtitle: 'MOBILITY',
-                    imageUrl: '/equipment/machines/6.png'
+                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268777/devis-gym/equipment/machines/6.webp'
                   }
                 ]}
                 className="grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 p-0 w-full max-w-none"
