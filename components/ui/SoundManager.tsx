@@ -18,7 +18,7 @@ export default function SoundManager() {
     isSoundMutedRef.current = !soundEnabled;
 
     // Create audio elements
-    const bgMusic = new Audio("/music.mp3");
+    const bgMusic = new Audio("https://res.cloudinary.com/ufiebboc/raw/upload/v1786271910/devis-gym/music.mp3");
     bgMusic.loop = true;
     bgMusic.volume = 0.3;
     bgMusic.muted = !musicEnabled;
