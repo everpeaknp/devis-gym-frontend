@@ -153,7 +153,7 @@ export default function GymIntroSection() {
           sizes="100vw"
           className="object-cover"
           loading="lazy"
-          quality={80}
+          quality={70}
         />
       </div>
       {/* Black opacity overlay */}
@@ -179,13 +179,14 @@ export default function GymIntroSection() {
                 ref={arrowRef}
                 className="absolute left-1/2 -translate-x-1/2 top-[20%] sm:top-[25%] md:top-[30%] w-[60%] sm:w-[70%] md:w-[80%] lg:w-[90%] xl:w-[100%] h-auto pointer-events-none -z-10 transition-all duration-500 group-hover:brightness-125 group-hover:drop-shadow-[0_0_15px_rgba(225,255,0,0.5)] group-hover:translate-y-2 sm:group-hover:translate-y-4 md:group-hover:translate-y-6 lg:group-hover:translate-y-10 rotate-90 hidden sm:block"
               >
-                <Image
+              <Image
                   src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268854/devis-gym/icons/arrow-right.svg"
                   alt=""
                   width={200}
                   height={50}
                   className="w-full h-auto"
                   loading="lazy"
+                  quality={90}
                 />
               </div>
 
@@ -206,8 +207,9 @@ export default function GymIntroSection() {
               width={400}
               height={460}
               className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] xl:h-[320px] object-cover rounded-sm"
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
               loading="lazy"
-              quality={80}
+              quality={75}
             />
           </div>
 
@@ -230,8 +232,9 @@ export default function GymIntroSection() {
               width={400}
               height={460}
               className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] xl:h-[320px] object-cover rounded-sm"
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
               loading="lazy"
-              quality={80}
+              quality={75}
             />
           </div>
         </div>
@@ -291,7 +294,7 @@ export default function GymIntroSection() {
                 }}
                 sizes="(max-width: 1280px) 100vw, 67vw"
                 loading="lazy"
-                quality={80}
+                quality={75}
               />
 
               {/* Navigation Arrows */}
@@ -348,7 +351,7 @@ export default function GymIntroSection() {
               className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] object-cover rounded-sm"
               sizes="(max-width: 1280px) 100vw, 33vw"
               loading="lazy"
-              quality={80}
+              quality={75}
             />
           </div>
         </div>

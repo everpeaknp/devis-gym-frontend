@@ -93,9 +93,9 @@ export default function Gallery({ maxImages }: GalleryProps) {
                     alt={img.alt}
                     fill
                     className="object-cover transition-all duration-300 group-hover:scale-105"
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 50vw"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
                     loading="lazy"
-                    quality={80}
+                    quality={75}
                     onError={(e) => {
                       console.error('Image failed to load:', img.src);
                       e.currentTarget.style.display = 'none';

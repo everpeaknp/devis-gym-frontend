@@ -57,7 +57,7 @@ export default function KickstartSection() {
   }, []);
 
   const textStyles = {
-    fontFamily: "Anton, Arial, sans-serif", // Changed from Trimpostercompressed to Anton
+    fontFamily: "Trimpostercompressed, Arial, sans-serif",
     fontStyle: "normal" as const,
     fontWeight: 900,
     fontSize: "clamp(60px, 12vw, 282px)",
@@ -114,6 +114,9 @@ export default function KickstartSection() {
                       maxWidth: "none",
                       transform: "scale(1.4)",
                     }}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    loading="lazy"
+                    quality={75}
                     aria-hidden="true"
                   />
                 </div>

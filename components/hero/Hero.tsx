@@ -354,8 +354,9 @@ export default function Hero() {
                   fill
                   className="object-cover"
                   sizes="100vw"
-                  quality={85}
-                  loading="lazy"
+                  quality={75}
+                  priority={index === 0}
+                  loading={index === 0 ? "eager" : "lazy"}
                 />
               )}
             </div>
