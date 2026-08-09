@@ -205,7 +205,7 @@ export function Component() {
             <nav className="nav-row">
               <Link href="/" aria-label="home" className="nav-logo-row w-inline-block xl:block hidden">
                 <div className="logo-container">
-                  <img src="/logo.png" alt="Devi's Gym Logo" className="logo-image" />
+                  <img src="/logo/logo.jpg" alt="Devi's Gym Logo" className="logo-image" />
                   <span className="logo-text">DEVI'S GYM</span>
                 </div>
               </Link>
@@ -448,7 +448,7 @@ export function Component() {
               <div className="sidebar-logo-container">
                 <Link href="/" onClick={closeMenu} className="sidebar-logo-link">
                   <div className="sidebar-logo-content">
-                    <img src="/logo.png" alt="Devi's Gym Logo" className="sidebar-logo-image" />
+                    <img src="/logo/logo.jpg" alt="Devi's Gym Logo" className="sidebar-logo-image" />
                     <span className="sidebar-logo-text">DEVI'S GYM</span>
                   </div>
                 </Link>

@@ -45,7 +45,7 @@ export function ZoomParallax({ images }: ZoomParallaxProps) {
 			<div className="sticky top-0 h-screen overflow-hidden bg-background flex items-center justify-center">
 				{images.map(({ src, alt }, index) => {
 					// Check if this is the logo image and use appropriate scale
-					const isLogo = src.includes('logo.png');
+					const isLogo = src.includes('logo.jpg');
 					const scale = isLogo ? scaleLogoOnly : scales[index % scales.length];
 					
 					// Different spreading patterns for each equipment image, but 4.png stays center
