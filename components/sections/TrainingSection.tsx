@@ -352,7 +352,7 @@ export default function TrainingSection() {
                         
                         {/* Enhanced Arrow Icon with 3D Transform */}
                         <Image
-                          src="/icons/arrow-right.svg"
+                          src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268854/devis-gym/icons/arrow-right.svg"
                           alt=""
                           width={36}
                           height={36}

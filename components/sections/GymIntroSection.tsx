@@ -180,7 +180,7 @@ export default function GymIntroSection() {
                 className="absolute left-1/2 -translate-x-1/2 top-[20%] sm:top-[25%] md:top-[30%] w-[60%] sm:w-[70%] md:w-[80%] lg:w-[90%] xl:w-[100%] h-auto pointer-events-none -z-10 transition-all duration-500 group-hover:brightness-125 group-hover:drop-shadow-[0_0_15px_rgba(225,255,0,0.5)] group-hover:translate-y-2 sm:group-hover:translate-y-4 md:group-hover:translate-y-6 lg:group-hover:translate-y-10 rotate-90 hidden sm:block"
               >
                 <Image
-                  src="/icons/arrow-right.svg"
+                  src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268854/devis-gym/icons/arrow-right.svg"
                   alt=""
                   width={200}
                   height={50}

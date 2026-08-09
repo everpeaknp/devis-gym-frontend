@@ -10,12 +10,12 @@ import { businessData } from "@/data/business";
 import HeroScrollSequence from "./HeroScrollSequence";
 import HeroProgress from "@/components/unused-components/ui/hero-progress";
 
-// Hero media data - 2 videos first, then 2 images (4 slides total)
+// Hero media data - 1 video + 3 images (4 slides total)
 const heroMedia = [
-  { type: 'video', src: '/hero/135161-761273563_medium.mp4' },
-  { type: 'video', src: '/hero/293079_medium.mp4' },
+  { type: 'video', src: 'https://res.cloudinary.com/ufiebboc/video/upload/v1786268848/devis-gym/hero/293079_medium.mp4' },
   { type: 'image', src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786269232/devis-gym/people/DSC07536.JPG.webp' },
-  { type: 'image', src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786269554/devis-gym/people/DSC07700-2.JPG.webp' },
+  { type: 'image', src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786269554/devis-gym/people/DSC07626-3.JPG.webp' },
+  { type: 'image', src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786269681/devis-gym/people/DSC07643-3.JPG.webp' },
 ];
 
 export default function Hero() {
