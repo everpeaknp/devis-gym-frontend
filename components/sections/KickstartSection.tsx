@@ -57,7 +57,7 @@ export default function KickstartSection() {
   }, []);
 
   const textStyles = {
-    fontFamily: "Trimpostercompressed, Arial, sans-serif",
+    fontFamily: "Anton, Arial, sans-serif", // Changed from Trimpostercompressed to Anton
     fontStyle: "normal" as const,
     fontWeight: 900,
     fontSize: "clamp(60px, 12vw, 282px)",
