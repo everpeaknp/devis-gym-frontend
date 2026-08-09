@@ -142,13 +142,10 @@ export default function Footer() {
           {/* Logo and Brand - Centered */}
           <div className="flex flex-col items-center text-center space-y-4">
             <div className="h-20 w-20 rounded-full bg-white flex items-center justify-center p-2">
-              <Image 
-                src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268859/devis-gym/logo.webp" 
+              <img 
+                src="/logo/logo.webp" 
                 alt="Devi's Gym Logo" 
-                width={80}
-                height={80}
-                className="object-contain"
-                loading="lazy"
+                className="w-full h-full object-contain"
               />
             </div>
             <span className="text-white text-3xl font-bold font-oswald uppercase">
@@ -246,13 +243,10 @@ export default function Footer() {
           <div className="flex flex-col space-y-4 col-span-1">
             <div className="flex items-center space-x-3">
               <div className="h-16 w-16 rounded-full bg-white flex items-center justify-center p-2">
-                <Image 
-                  src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268859/devis-gym/logo.webp" 
+                <img 
+                  src="/logo/logo.webp" 
                   alt="Devi's Gym Logo" 
-                  width={60}
-                  height={60}
-                  className="object-contain"
-                  loading="lazy"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <span className="text-white text-3xl font-bold font-oswald uppercase">

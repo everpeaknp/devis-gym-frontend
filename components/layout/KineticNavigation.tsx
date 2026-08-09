@@ -173,8 +173,12 @@ export default function KineticNavigation() {
           <div className="container is--full">
             <nav className="nav-row">
               <Link href="/" aria-label="home" className="nav-logo-row cursor-pointer flex items-center gap-2">
-                <div className="h-10 w-10 rounded-full bg-accent flex items-center justify-center">
-                  <span className="text-black font-bold text-lg">D</span>
+                <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center p-1.5 overflow-hidden">
+                  <img 
+                    src="/logo/logo.webp" 
+                    alt="Devi's Gym Logo" 
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <span className="logo-text">DEVI'S GYM</span>
               </Link>
