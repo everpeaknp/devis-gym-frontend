@@ -13,10 +13,10 @@ import {
 } from "@/components/ui/cta-section-with-gallery";
 
 const OUTDOOR_IMAGES = [
-  "/people/DSC07624-3.JPG",
-  "/people/DSC07720-2.JPG",
-  "/people/DSC07524.JPG",
-  "/people/DSC07541.JPG",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269532/devis-gym/people/DSC07624-3.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269561/devis-gym/people/DSC07720-2.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269181/devis-gym/people/DSC07524.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269241/devis-gym/people/DSC07541.JPG.webp",
 ];
 
 const outdoorPrograms = [

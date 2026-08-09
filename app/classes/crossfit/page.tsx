@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/cta-section-with-gallery";
 
 const CROSSFIT_IMAGES = [
-  "/people/DSC07590-3.JPG",
-  "/people/DSC07599-3.JPG",
-  "/people/DSC07626-3.JPG",
-  "/people/DSC07585.JPG",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269374/devis-gym/people/DSC07590-3.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269393/devis-gym/people/DSC07599-3.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269554/devis-gym/people/DSC07626-3.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269358/devis-gym/people/DSC07585.JPG.webp",
 ];
 
 export default function CrossFitPage() {

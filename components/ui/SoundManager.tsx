@@ -24,7 +24,7 @@ export default function SoundManager() {
     bgMusic.muted = !musicEnabled;
     bgMusicRef.current = bgMusic;
 
-    const clickSound = new Audio("/click.mp3");
+    const clickSound = new Audio("https://res.cloudinary.com/ufiebboc/raw/upload/v1786268708/devis-gym/click.mp3");
     clickSound.volume = 0.5;
     clickSoundRef.current = clickSound;
 

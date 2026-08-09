@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/cta-section-with-gallery";
 
 const GYM_IMAGES = [
-  "/people/DSC07641-3.JPG",
-  "/people/DSC07580.JPG",
-  "/people/DSC07720-2.JPG",
-  "/people/DSC07635-3.JPG",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269666/devis-gym/people/DSC07641-3.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269335/devis-gym/people/DSC07580.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269561/devis-gym/people/DSC07720-2.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269516/devis-gym/people/DSC07635-3.JPG.webp",
 ];
 
 export default function GymTrainingPage() {

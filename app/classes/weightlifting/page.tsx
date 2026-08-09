@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/cta-section-with-gallery";
 
 const WEIGHTLIFTING_IMAGES = [
-  "/people/DSC07608-3.JPG",
-  "/people/DSC07618-3.JPG",
-  "/people/DSC07614-3.JPG",
-  "/people/DSC07411.JPG",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269433/devis-gym/people/DSC07608-3.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269518/devis-gym/people/DSC07618-3.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269454/devis-gym/people/DSC07614-3.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269081/devis-gym/people/DSC07411.JPG.webp",
 ];
 
 export default function WeightliftingPage() {

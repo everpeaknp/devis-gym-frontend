@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/cta-section-with-gallery";
 
 const CARDIO_IMAGES = [
-  "/people/DSC07630-3.JPG",
-  "/people/DSC07628-3.JPG",
-  "/people/DSC07563.JPG",
-  "/people/DSC07439.JPG",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269608/devis-gym/people/DSC07630-3.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269580/devis-gym/people/DSC07628-3.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269260/devis-gym/people/DSC07563.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269104/devis-gym/people/DSC07439.JPG.webp",
 ];
 
 export default function CardioPage() {

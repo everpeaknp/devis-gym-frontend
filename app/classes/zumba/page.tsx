@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/cta-section-with-gallery";
 
 const ZUMBA_IMAGES = [
-  "/people/DSC07450.JPG",
-  "/people/DSC07483.JPG",
-  "/people/DSC07554.JPG",
-  "/people/DSC07534.JPG",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269120/devis-gym/people/DSC07450.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269176/devis-gym/people/DSC07483.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269256/devis-gym/people/DSC07554.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269203/devis-gym/people/DSC07534.JPG.webp",
 ];
 
 export default function ZumbaPage() {

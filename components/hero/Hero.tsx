@@ -14,8 +14,8 @@ import HeroProgress from "@/components/unused-components/ui/hero-progress";
 const heroMedia = [
   { type: 'video', src: '/hero/135161-761273563_medium.mp4' },
   { type: 'video', src: '/hero/293079_medium.mp4' },
-  { type: 'image', src: '/people/DSC07536.JPG' },
-  { type: 'image', src: '/people/DSC07700-2.JPG' },
+  { type: 'image', src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786269232/devis-gym/people/DSC07536.JPG.webp' },
+  { type: 'image', src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786269554/devis-gym/people/DSC07700-2.JPG.webp' },
 ];
 
 export default function Hero() {

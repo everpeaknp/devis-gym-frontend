@@ -31,7 +31,7 @@ export const aboutTeam = {
       id: "trainer-1",
       name: "Anup Grg",
       role: "Certified Trainer",
-      image: "/people/Trainers/AnupGrg.JPG",
+      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269624/devis-gym/people/Trainers/AnupGrg.JPG.webp",
       social: {
         facebook: "#",
         twitter: "#",
@@ -42,7 +42,7 @@ export const aboutTeam = {
       id: "trainer-2",
       name: "Aditya Grg",
       role: "Certified Trainer",
-      image: "/people/Trainers/AdityaGrg.JPG",
+      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269619/devis-gym/people/Trainers/AdityaGrg.JPG.webp",
       social: {
         facebook: "#",
         twitter: "#",
@@ -53,7 +53,7 @@ export const aboutTeam = {
       id: "trainer-3",
       name: "Abhishek Mishra",
       role: "Certified Trainer",
-      image: "/people/Trainers/AbhishekMishra.JPG",
+      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269614/devis-gym/people/Trainers/AbhishekMishra.JPG.webp",
       social: {
         facebook: "#",
         twitter: "#",
@@ -64,7 +64,7 @@ export const aboutTeam = {
       id: "trainer-4",
       name: "Barsha Grg",
       role: "Zumba Trainer",
-      image: "/people/Trainers/BarshaGrg.JPG",
+      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269630/devis-gym/people/Trainers/BarshaGrg.JPG.webp",
       social: {
         facebook: "#",
         twitter: "#",
@@ -75,7 +75,7 @@ export const aboutTeam = {
       id: "trainer-5",
       name: "Bijay Grg",
       role: "Certified Trainer",
-      image: "/people/Trainers/BijayGrg.JPG",
+      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269634/devis-gym/people/Trainers/BijayGrg.JPG.webp",
       social: {
         facebook: "#",
         twitter: "#",

@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/cta-section-with-gallery";
 
 const AEROBICS_IMAGES = [
-  "/people/DSC07627-3.JPG",
-  "/people/DSC07567.JPG",
-  "/people/DSC07385.JPG",
-  "/people/DSC07563.JPG",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269568/devis-gym/people/DSC07627-3.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269270/devis-gym/people/DSC07567.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786268875/devis-gym/people/DSC07385.JPG.webp",
+  "https://res.cloudinary.com/ufiebboc/image/upload/v1786269260/devis-gym/people/DSC07563.JPG.webp",
 ];
 
 export default function AerobicsPage() {
