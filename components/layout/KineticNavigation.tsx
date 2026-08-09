@@ -175,7 +175,7 @@ export default function KineticNavigation() {
               <Link href="/" aria-label="home" className="nav-logo-row cursor-pointer flex items-center gap-2">
                 <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center p-1.5 overflow-hidden">
                   <Image 
-                    src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268604/devis-gym/test/ffzvboz9b90lxqyye65o.png" 
+                    src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268859/devis-gym/logo.webp" 
                     alt="Devi's Gym Logo" 
                     width={40}
                     height={40}
