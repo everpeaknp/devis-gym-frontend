@@ -84,7 +84,7 @@ export function ZoomParallax({ images }: ZoomParallaxProps) {
 									className={`${index === 0 ? 'object-cover' : 'object-contain'}`}
 									sizes={index === 0 ? '100vw' : '25vw'}
 									loading='lazy'
-									quality={index === 0 ? 85 : 75}
+									quality={index === 0 ? 75 : 70}
 									onError={(e) => {
 										console.log('Image failed to load:', src);
 										e.currentTarget.src = '/placeholder.svg';

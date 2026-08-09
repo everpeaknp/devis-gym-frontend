@@ -60,7 +60,7 @@ export const GymCTASection = () => {
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 loading="lazy"
-                quality={85}
+                quality={75}
               />
               {/* Overlay gradient for better text contrast */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />

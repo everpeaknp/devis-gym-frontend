@@ -156,6 +156,7 @@ export default function TestimonialsSection() {
                         className="object-cover"
                         sizes="48px"
                         loading="lazy"
+                        quality={75}
                       />
                     ) : (
                       <span className="text-accent font-bold text-base sm:text-lg font-display">

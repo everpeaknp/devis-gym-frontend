@@ -102,7 +102,7 @@ export default function ClassesSection() {
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   loading="lazy"
-                  quality={85}
+                  quality={75}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4">
