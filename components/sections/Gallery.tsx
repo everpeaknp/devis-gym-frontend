@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import clsx from "clsx";
 import Image from "next/image";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -8,6 +8,7 @@ import PlaceholderImage from "@/components/ui/PlaceholderImage";
 import Reveal from "@/components/ui/Reveal";
 import Lightbox from "@/components/ui/Lightbox";
 import { galleryImages, galleryCategories } from "@/data/gallery";
+import { cldOptimize } from "@/lib/cloudinary";
 
 interface GalleryProps {
   maxImages?: number; // Maximum number of images to display (for homepage: 9)
@@ -18,12 +19,16 @@ export default function Gallery({ maxImages }: GalleryProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const filtered =
-    active === "All"
-      ? (maxImages ? galleryImages.slice(0, maxImages) : galleryImages)
-      : (maxImages 
-          ? galleryImages.filter((img) => img.category === active).slice(0, maxImages)
-          : galleryImages.filter((img) => img.category === active));
+  // Optimize: Only slice the data we need from the start
+  const displayImages = useMemo(() => {
+    return maxImages ? galleryImages.slice(0, maxImages) : galleryImages;
+  }, [maxImages]);
+
+  const filtered = useMemo(() => {
+    return active === "All"
+      ? displayImages
+      : displayImages.filter((img) => img.category === active);
+  }, [active, displayImages]);
 
   // Only available images for lightbox
   const availableImages = filtered.filter((img) => img.available);
@@ -89,13 +94,16 @@ export default function Gallery({ maxImages }: GalleryProps) {
                   onClick={() => openLightbox(img.id)}
                 >
                   <Image
-                    src={img.src}
+                    src={cldOptimize(img.src, 700)}
                     alt={img.alt}
                     fill
                     className="object-cover transition-all duration-300 group-hover:scale-105"
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
-                    loading="lazy"
+                    loading={i < 6 ? "eager" : "lazy"}
+                    priority={i < 3}
                     quality={75}
+                    placeholder="blur"
+                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCwABgA/9k="
                     onError={(e) => {
                       console.error('Image failed to load:', img.src);
                       e.currentTarget.style.display = 'none';

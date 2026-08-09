@@ -39,15 +39,22 @@ export default function ContactPage() {
     <>
       <BackButton />
       {/* Breadcrumb right after navigation */}
-      <Breadcrumb 
+      {/* <Breadcrumb 
         items={[{ label: "Home", href: "/" }]}
         currentPage="Contact"
         eyebrow="GET IN TOUCH"
-      />
+      /> */}
 
+
+      {/* Velocity Text Hero - Full Screen Scroll Effect */}
+      <div className="relative">
+        <VelocityText />
+
+      </div>
+ {/* Location Section */}
+      <LocationSection />
       <main className="relative bg-background">
-        {/* Social Section - Above */}
-        <SocialSection />
+     
 
       {/* Contact Content */}
       <section className="bg-background">
@@ -271,15 +278,10 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Location Section */}
-      <LocationSection />
+     
       </main>
-
-      {/* Velocity Text Hero - Full Screen Scroll Effect */}
-      <div className="relative">
-        <VelocityText />
-      </div>
-
+   {/* Social Section - Above */}
+        <SocialSection />
       <Footer />
     </>
   );

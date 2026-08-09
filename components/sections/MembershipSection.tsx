@@ -80,7 +80,7 @@ export default function MembershipSection({ maxPlans }: MembershipSectionProps) 
           scrollTrigger: {
             trigger: card,
             start: "top bottom-=100",
-            toggleActions: "play none none none",
+            toggleActions: "play none none reverse",
           },
         }
       );

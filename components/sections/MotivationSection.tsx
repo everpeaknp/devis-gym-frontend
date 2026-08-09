@@ -15,88 +15,25 @@ export default function MotivationSection() {
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    // Dual approach: ScrollTrigger + direct scroll listener
     const ctx = gsap.context(() => {
-      // ScrollTrigger animations
-      // Line 1 - moves from right to left on scroll
-      gsap.fromTo(
-        line1Ref.current,
-        { x: "30%" },
-        {
-          x: "-30%",
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-            refreshPriority: -1,
-          },
-        }
-      );
+      // Single shared ScrollTrigger driving all three lines in lockstep, no scrub lag
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+          refreshPriority: -1,
+        },
+      });
 
-      // Line 2 - moves from left to right on scroll
-      gsap.fromTo(
-        line2Ref.current,
-        { x: "-30%" },
-        {
-          x: "30%",
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-            refreshPriority: -1,
-          },
-        }
-      );
-
-      // Line 3 - moves from right to left on scroll
-      gsap.fromTo(
-        line3Ref.current,
-        { x: "30%" },
-        {
-          x: "-30%",
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-            refreshPriority: -1,
-          },
-        }
-      );
+      tl.fromTo(line1Ref.current, { x: "30%" }, { x: "-30%", ease: "none" }, 0)
+        .fromTo(line2Ref.current, { x: "-30%" }, { x: "30%", ease: "none" }, 0)
+        .fromTo(line3Ref.current, { x: "30%" }, { x: "-30%", ease: "none" }, 0);
     });
-
-    // Direct scroll listener as fallback
-    const handleScroll = () => {
-      if (!sectionRef.current || !line1Ref.current || !line2Ref.current || !line3Ref.current) return;
-
-      const rect = sectionRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      // Calculate scroll progress through the section
-      const sectionTop = rect.top;
-      const sectionHeight = rect.height;
-      const progress = Math.max(0, Math.min(1, (windowHeight - sectionTop) / (windowHeight + sectionHeight)));
-
-      // Apply transforms based on scroll progress
-      const line1Movement = 30 - (60 * progress); // 30% to -30% (moves left)
-      const line2Movement = -30 + (60 * progress); // -30% to 30% (moves right)
-      const line3Movement = 30 - (60 * progress); // 30% to -30% (moves left)
-
-      gsap.set(line1Ref.current, { x: `${line1Movement}%` });
-      gsap.set(line2Ref.current, { x: `${line2Movement}%` });
-      gsap.set(line3Ref.current, { x: `${line3Movement}%` });
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       ctx.revert();
-      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 

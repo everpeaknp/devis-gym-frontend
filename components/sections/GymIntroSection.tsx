@@ -7,6 +7,7 @@ import Link from "next/link";
 import { galleryImages } from "@/data/gallery";
 import Lightbox from "@/components/ui/Lightbox";
 import { EmbroideredWordPatches } from "@/components/unused-components/ui/embroidered-word-patches";
+import { cldOptimize } from "@/lib/cloudinary";
 
 export default function GymIntroSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -147,7 +148,7 @@ export default function GymIntroSection() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="https://res.cloudinary.com/ufiebboc/image/upload/v1786269693/devis-gym/wallbg.webp"
+          src={cldOptimize("https://res.cloudinary.com/ufiebboc/image/upload/v1786269693/devis-gym/wallbg.webp", 1600)}
           alt=""
           fill
           sizes="100vw"
@@ -202,7 +203,7 @@ export default function GymIntroSection() {
           {/* Mission Image */}
           <div className="xl:col-span-4 card-mission order-2">
             <Image
-              src="https://res.cloudinary.com/ufiebboc/image/upload/v1786269681/devis-gym/people/DSC07643-3.JPG.webp"
+              src={cldOptimize("https://res.cloudinary.com/ufiebboc/image/upload/v1786269681/devis-gym/people/DSC07643-3.JPG.webp", 700)}
               alt="Mission"
               width={400}
               height={460}
@@ -227,7 +228,7 @@ export default function GymIntroSection() {
           {/* Story Image */}
           <div className="xl:col-span-4 card-story order-4 md:order-3">
             <Image
-              src="https://res.cloudinary.com/ufiebboc/image/upload/v1786269362/devis-gym/people/DSC07586.JPG.webp"
+              src={cldOptimize("https://res.cloudinary.com/ufiebboc/image/upload/v1786269362/devis-gym/people/DSC07586.JPG.webp", 700)}
               alt="Story"
               width={400}
               height={460}
@@ -284,7 +285,7 @@ export default function GymIntroSection() {
             >
               <Image
                 key={currentImageIndex}
-                src={gymImages[currentImageIndex]?.src}
+                src={cldOptimize(gymImages[currentImageIndex]?.src ?? "", 1000)}
                 alt={gymImages[currentImageIndex]?.alt}
                 width={800}
                 height={460}
@@ -344,7 +345,7 @@ export default function GymIntroSection() {
           {/* Approach Image */}
           <div className="xl:col-span-4 card-approach">
             <Image
-              src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268742/devis-gym/devis/IMG_7374.JPG.jpg"
+              src={cldOptimize("https://res.cloudinary.com/ufiebboc/image/upload/v1786268742/devis-gym/devis/IMG_7374.JPG.jpg", 700)}
               alt="Approach"
               width={400}
               height={460}

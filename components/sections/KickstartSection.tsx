@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { cldOptimize } from "@/lib/cloudinary";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -103,7 +104,7 @@ export default function KickstartSection() {
                 {/* Full visible image */}
                 <div className="absolute inset-0 flex items-center justify-center pl-64 md:pl-80 lg:pl-96">
                   <Image
-                    src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268837/devis-gym/hero/man.webp"
+                    src={cldOptimize("https://res.cloudinary.com/ufiebboc/image/upload/v1786268837/devis-gym/hero/man.webp", 1400)}
                     alt=""
                     width={1600}
                     height={2400}

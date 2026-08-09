@@ -55,7 +55,24 @@ const ScrollExpandMedia = ({
   // Prevent body scroll during horizontal expansion
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    
+
+    // This component drives its own wheel-based expansion progress and manually
+    // locks body scroll during that phase. Lenis (the site-wide smooth-scroll
+    // driver) isn't aware of that lock and keeps processing the same wheel
+    // events, so the two fight over scroll input. Pausing Lenis for the
+    // duration of the hijacked phase — and only that phase — resolves the
+    // conflict without touching this component's own animation/design.
+    type LenisLike = { stop: () => void; start: () => void };
+    const getLenis = () => (window as unknown as { lenis?: LenisLike }).lenis;
+
+    const applyLenisState = () => {
+      if (!horizontalExpansionComplete) {
+        getLenis()?.stop();
+      } else {
+        getLenis()?.start();
+      }
+    };
+
     if (!horizontalExpansionComplete) {
       // Lock body scroll during expansion
       document.body.style.overflow = 'hidden';
@@ -67,12 +84,20 @@ const ScrollExpandMedia = ({
       document.body.style.position = '';
       document.body.style.width = '';
     }
+    applyLenisState();
+
+    // React runs child effects before parent effects, so on first mount Lenis
+    // (created by a provider higher up the tree) may not exist yet when this
+    // runs. Retry once it announces itself.
+    window.addEventListener('lenis:ready', applyLenisState);
 
     return () => {
       // Cleanup on unmount
       document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.width = '';
+      window.removeEventListener('lenis:ready', applyLenisState);
+      getLenis()?.start();
     };
   }, [horizontalExpansionComplete]);
 

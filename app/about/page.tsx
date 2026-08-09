@@ -175,13 +175,13 @@ const AboutContent = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
                   href="/contact"
-                  className="inline-block px-8 py-4 bg-accent hover:bg-accent-bright text-black font-bold uppercase tracking-wide transition-colors rounded-none"
+                  className="inline-block px-8 py-4 bg-accent text-black font-bold uppercase tracking-wide rounded-none"
                 >
                   Contact Us
                 </a>
                 <a
                   href="/#membership"
-                  className="inline-block px-8 py-4 bg-transparent border border-zinc-700 hover:bg-white hover:border-white text-white hover:text-black font-bold uppercase tracking-wide transition-all rounded-none"
+                  className="inline-block px-8 py-4 bg-transparent border border-zinc-700 text-white font-bold uppercase tracking-wide rounded-none"
                 >
                   View Membership
                 </a>
@@ -228,7 +228,7 @@ export default function AboutPage() {
       <BackButton />
       <ScrollExpandMedia
         mediaType="video"
-        mediaSrc="https://res.cloudinary.com/ufiebboc/video/upload/v1786268804/devis-gym/hero/293079_medium.mp4"
+        mediaSrc="https://res.cloudinary.com/ufiebboc/video/upload/f_auto,q_auto/hfjpk00y9fqeznekhrh9"
         posterSrc="https://res.cloudinary.com/ufiebboc/image/upload/v1786268716/devis-gym/devis/IMG_7361.JPG.jpg"
         bgImageSrc="https://res.cloudinary.com/ufiebboc/image/upload/v1786268716/devis-gym/devis/IMG_7361.JPG.jpg"
         title="Devi's Gym Experience"

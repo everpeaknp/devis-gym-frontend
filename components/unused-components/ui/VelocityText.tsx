@@ -61,52 +61,7 @@ export default function VelocityText() {
 
 const Header = () => (
   <div className="relative mb-1 flex w-full justify-between p-6">
-    <p className={cn(
-      "hidden text-xs md:block font-oswald",
-      "text-muted-foreground"
-    )}>
-      GET IN TOUCH
-      <br />
-    </p>
-    <Logo />
-    <nav className="flex gap-3 text-sm font-oswald uppercase tracking-tight">
-      <a 
-        href="/#membership" 
-        className={cn(
-          "transition-colors duration-200",
-          "text-muted-foreground hover:text-accent"
-        )}
-      >
-        Join
-      </a>
-      <a 
-        href="/gym" 
-        className={cn(
-          "transition-colors duration-200",
-          "text-muted-foreground hover:text-accent"
-        )}
-      >
-        Facility
-      </a>
-      <a 
-        href="/about" 
-        className={cn(
-          "transition-colors duration-200",
-          "text-muted-foreground hover:text-accent"
-        )}
-      >
-        About
-      </a>
-    </nav>
-  </div>
-);
-
-const Logo = () => (
-  <div className={cn(
-    "absolute right-4 top-1/2 h-fit -translate-y-1/2 translate-x-0 md:right-1/2 md:translate-x-1/2",
-    "text-accent font-oswald text-2xl font-bold"
-  )}>
-    DEVI'S GYM
+    {/* Header content removed */}
   </div>
 );
 

@@ -138,6 +138,7 @@ export default function ClassesPage() {
   };
 
   const onMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent text selection
     handleDragStart(e.clientX);
   };
 
@@ -157,27 +158,37 @@ export default function ClassesPage() {
 
   const onTouchStart = (e: React.TouchEvent) => {
     const touch = e.touches[0];
-    handleDragStart(touch.clientX);
     setTouchStartY(touch.clientY);
-    setIsHorizontalSwipe(false);
+    setStartX(touch.clientX);
+    // Don't set isDragging yet - wait to see if it's actually a swipe
   };
 
   const onTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging) return;
     const touch = e.touches[0];
-    const deltaX = touch.clientX - startX;
-    const deltaY = touch.clientY - touchStartY;
-    if (!isHorizontalSwipe && Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 8) {
-      setIsHorizontalSwipe(true);
-    }
-    if (isHorizontalSwipe) {
+    const deltaX = Math.abs(touch.clientX - startX);
+    const deltaY = Math.abs(touch.clientY - touchStartY);
+    
+    // Only interfere if this is CLEARLY a horizontal swipe
+    // Require significant horizontal movement AND more horizontal than vertical
+    if (deltaX > 30 && deltaX > deltaY * 2) {
+      // NOW we can start dragging
+      if (!isDragging) {
+        setIsDragging(true);
+        setIsHorizontalSwipe(true);
+      }
+      
+      // Only now prevent default to stop scroll
       e.preventDefault();
       handleDragMove(touch.clientX);
     }
+    // Otherwise, let the browser handle scrolling naturally
   };
 
   const onTouchEnd = () => {
-    handleDragEnd();
+    if (isDragging) {
+      handleDragEnd();
+    }
+    setIsDragging(false);
     setIsHorizontalSwipe(false);
   };
 
@@ -238,17 +249,15 @@ export default function ClassesPage() {
 
               {/* Gym Training Image */}
               <div className="xl:col-span-4 order-2">
-                <a href={`/classes/${classesData.gym.slug}`} className="block">
-                  <Image
-                    src={classesData.gym.image}
-                    alt={classesData.gym.title}
-                    width={400}
-                    height={460}
-                    className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] xl:h-[320px] object-cover rounded-sm transition-transform duration-300 hover:scale-105"
-                    loading="lazy"
-                    quality={80}
-                  />
-                </a>
+                <Image
+                  src={classesData.gym.image}
+                  alt={classesData.gym.title}
+                  width={400}
+                  height={460}
+                  className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] xl:h-[320px] object-cover rounded-sm"
+                  loading="lazy"
+                  quality={80}
+                />
               </div>
 
               {/* Gym Training Text - Mobile Only */}
@@ -268,17 +277,15 @@ export default function ClassesPage() {
 
               {/* Weightlifting Image */}
               <div className="xl:col-span-4 order-4 md:order-3">
-                <a href={`/classes/${classesData.weightlifting.slug}`} className="block">
-                  <Image
-                    src={classesData.weightlifting.image}
-                    alt={classesData.weightlifting.title}
-                    width={400}
-                    height={460}
-                    className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] xl:h-[320px] object-cover rounded-sm transition-transform duration-300 hover:scale-105"
-                    loading="lazy"
-                    quality={80}
-                  />
-                </a>
+                <Image
+                  src={classesData.weightlifting.image}
+                  alt={classesData.weightlifting.title}
+                  width={400}
+                  height={460}
+                  className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] xl:h-[320px] object-cover rounded-sm"
+                  loading="lazy"
+                  quality={80}
+                />
               </div>
             </div>
 
@@ -330,7 +337,7 @@ export default function ClassesPage() {
                     WebkitUserSelect: 'none',
                     msUserSelect: 'none',
                     WebkitTouchCallout: 'none',
-                    touchAction: 'pan-y',
+                    touchAction: 'pan-y', // Always allow vertical scroll
                   }}
                 >
                   <Image
@@ -386,18 +393,16 @@ export default function ClassesPage() {
 
               {/* Cardio Image */}
               <div className="xl:col-span-4">
-                <a href={`/classes/${classesData.cardio.slug}`} className="block">
-                  <Image
-                    src={classesData.cardio.image}
-                    alt={classesData.cardio.title}
-                    width={400}
-                    height={460}
-                    className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] object-cover rounded-sm transition-transform duration-300 hover:scale-105"
-                    sizes="(max-width: 1280px) 100vw, 33vw"
-                    loading="lazy"
-                    quality={80}
-                  />
-                </a>
+                <Image
+                  src={classesData.cardio.image}
+                  alt={classesData.cardio.title}
+                  width={400}
+                  height={460}
+                  className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] object-cover rounded-sm"
+                  sizes="(max-width: 1280px) 100vw, 33vw"
+                  loading="lazy"
+                  quality={80}
+                />
               </div>
             </div>
 
@@ -428,17 +433,15 @@ export default function ClassesPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6 md:mb-8">
               {/* CrossFit */}
               <div className="xl:col-span-4">
-                <a href={`/classes/${classesData.crossfit.slug}`} className="block">
-                  <Image
-                    src={classesData.crossfit.image}
-                    alt={classesData.crossfit.title}
-                    width={400}
-                    height={460}
-                    className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] xl:h-[320px] object-cover rounded-sm mb-3 sm:mb-4 transition-transform duration-300 hover:scale-105"
-                    loading="lazy"
-                    quality={80}
-                  />
-                </a>
+                <Image
+                  src={classesData.crossfit.image}
+                  alt={classesData.crossfit.title}
+                  width={400}
+                  height={460}
+                  className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] xl:h-[320px] object-cover rounded-sm mb-3 sm:mb-4"
+                  loading="lazy"
+                  quality={80}
+                />
                 <h3 className="font-oswald uppercase text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3 px-1 sm:px-0">{classesData.crossfit.title}</h3>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed px-1 sm:px-0 mb-3">
                   {classesData.crossfit.description}
@@ -451,17 +454,15 @@ export default function ClassesPage() {
 
               {/* Aerobics */}
               <div className="xl:col-span-4">
-                <a href={`/classes/${classesData.aerobics.slug}`} className="block">
-                  <Image
-                    src={classesData.aerobics.image}
-                    alt={classesData.aerobics.title}
-                    width={400}
-                    height={460}
-                    className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] xl:h-[320px] object-cover rounded-sm mb-3 sm:mb-4 transition-transform duration-300 hover:scale-105"
-                    loading="lazy"
-                    quality={80}
-                  />
-                </a>
+                <Image
+                  src={classesData.aerobics.image}
+                  alt={classesData.aerobics.title}
+                  width={400}
+                  height={460}
+                  className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] xl:h-[320px] object-cover rounded-sm mb-3 sm:mb-4"
+                  loading="lazy"
+                  quality={80}
+                />
                 <h3 className="font-oswald uppercase text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3 px-1 sm:px-0">{classesData.aerobics.title}</h3>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed px-1 sm:px-0 mb-3">
                   {classesData.aerobics.description}
@@ -474,17 +475,15 @@ export default function ClassesPage() {
 
               {/* Zumba */}
               <div className="xl:col-span-4">
-                <a href={`/classes/${classesData.zumba.slug}`} className="block">
-                  <Image
-                    src={classesData.zumba.image}
-                    alt={classesData.zumba.title}
-                    width={400}
-                    height={460}
-                    className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] xl:h-[320px] object-cover rounded-sm mb-3 sm:mb-4 transition-transform duration-300 hover:scale-105"
-                    loading="lazy"
-                    quality={80}
-                  />
-                </a>
+                <Image
+                  src={classesData.zumba.image}
+                  alt={classesData.zumba.title}
+                  width={400}
+                  height={460}
+                  className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] xl:h-[320px] object-cover rounded-sm mb-3 sm:mb-4"
+                  loading="lazy"
+                  quality={80}
+                />
                 <h3 className="font-oswald uppercase text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3 px-1 sm:px-0">{classesData.zumba.title}</h3>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed px-1 sm:px-0 mb-3">
                   {classesData.zumba.description}
@@ -499,17 +498,15 @@ export default function ClassesPage() {
             {/* Row 6: Outdoor Activities (Full Width) */}
             <div className="grid grid-cols-1 xl:grid-cols-12 gap-3 sm:gap-4 md:gap-6">
               <div className="xl:col-span-8">
-                <a href={`/classes/${classesData.outdoor.slug}`} className="block">
-                  <Image
-                    src={classesData.outdoor.image}
-                    alt={classesData.outdoor.title}
-                    width={800}
-                    height={460}
-                    className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] object-cover rounded-sm mb-3 sm:mb-4 transition-transform duration-300 hover:scale-105"
-                    loading="lazy"
-                    quality={80}
-                  />
-                </a>
+                <Image
+                  src={classesData.outdoor.image}
+                  alt={classesData.outdoor.title}
+                  width={800}
+                  height={460}
+                  className="w-full h-[280px] xs:h-[300px] sm:h-[350px] md:h-[400px] lg:h-[460px] object-cover rounded-sm mb-3 sm:mb-4"
+                  loading="lazy"
+                  quality={80}
+                />
                 <h3 className="font-oswald uppercase text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3 px-1 sm:px-0">{classesData.outdoor.title}</h3>
                 <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed mb-2 sm:mb-3 md:mb-4 px-1 sm:px-0">
                   {classesData.outdoor.description}

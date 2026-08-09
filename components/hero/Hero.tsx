@@ -9,13 +9,64 @@ import { AnimatedLayerButton } from "@/components/ui/AnimatedLayerButton";
 import { businessData } from "@/data/business";
 import HeroScrollSequence from "./HeroScrollSequence";
 import HeroProgress from "@/components/unused-components/ui/hero-progress";
+import { cldOptimize } from "@/lib/cloudinary";
 
-// Hero media data - 1 video + 3 images (4 slides total)
+// Direct Cloudinary video delivery URL (not the iframe Player embed) so the clip
+// can render in a plain <video> tag with object-cover — the Player embed's iframe
+// always letterboxes to preserve aspect ratio and can't be cropped cross-origin.
+function cldVideoUrl(publicId: string) {
+  return `https://res.cloudinary.com/ufiebboc/video/upload/f_auto,q_auto/${publicId}`;
+}
+
+// Hero media data - 5 slides, shown in this exact order.
+// (The 'hfjpk00y9fqeznekhrh9' clip moved to the About page hero instead.)
 const heroMedia = [
-  { type: 'video', src: 'https://res.cloudinary.com/ufiebboc/video/upload/v1786268848/devis-gym/hero/293079_medium.mp4' },
-  { type: 'image', src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786269232/devis-gym/people/DSC07536.JPG.webp' },
-  { type: 'image', src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786269561/devis-gym/people/DSC07720-2.JPG.webp' },
-  { type: 'image', src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786269681/devis-gym/people/DSC07643-3.JPG.webp' },
+  { type: 'video', src: cldVideoUrl('tekl0pzpwab9varn721q') },
+  { type: 'image', src: cldOptimize('https://res.cloudinary.com/ufiebboc/image/upload/v1786269232/devis-gym/people/DSC07536.JPG.webp', 1600) },
+  { type: 'image', src: cldOptimize('https://res.cloudinary.com/ufiebboc/image/upload/v1786269561/devis-gym/people/DSC07720-2.JPG.webp', 1600) },
+  { type: 'video', src: cldVideoUrl('alvwyjgac27zdnon18cu') },
+  { type: 'image', src: cldOptimize('https://res.cloudinary.com/ufiebboc/image/upload/v1786269681/devis-gym/people/DSC07643-3.JPG.webp', 1600) },
+];
+
+// Caption content, one entry per slide above, shown in the same order
+const slideContent: {
+  eyebrow: string;
+  heading: string[];
+  description: string;
+  cta: { href: string; label: string };
+  secondaryCta?: { href: string; label: string };
+}[] = [
+  {
+    eyebrow: "Experience The Devi's Difference",
+    heading: ["Start", "Your Fitness", "Journey."],
+    description: "Devi's Training is group training with the effectiveness and attention of a certified personal trainer.",
+    cta: { href: '/membership', label: 'Start A Trial' },
+    secondaryCta: { href: '/gym', label: 'Find The Gym' },
+  },
+  {
+    eyebrow: "More Than A Gym",
+    heading: ["Discover", "Your", "Strength."],
+    description: "Fitness is easier when you're surrounded by people who encourage you. At Devi's Gym, you'll train alongside a welcoming community, learn from experienced coaches, and celebrate every milestone, big or small, together.",
+    cta: { href: '/gym', label: 'Join Our Community' },
+  },
+  {
+    eyebrow: "Your Transformation Starts Here",
+    heading: ["Train", "With", "Purpose."],
+    description: "Every rep, every session, every drop of sweat matters. At Devi's Gym, we believe in training with intention, not just going through the motions. Get expert guidance, structured programs, and the motivation you need to make real progress.",
+    cta: { href: '/classes', label: 'Explore Classes' },
+  },
+  {
+    eyebrow: "See It In Motion",
+    heading: ["Watch", "Us", "Train."],
+    description: "From group classes to one on-one coaching, this is what a real session at Devi's Gym looks like  high energy, real effort, real results.",
+    cta: { href: '/classes', label: 'Watch Classes' },
+  },
+  {
+    eyebrow: "Real People. Real Results.",
+    heading: ["This", "Is", "Devi's Gym."],
+    description: "A community built around consistency, not perfection. Come see what makes Devi's Gym feel like home for everyone who walks through the door.",
+    cta: { href: '/about', label: 'Learn More' },
+  },
 ];
 
 export default function Hero() {
@@ -25,7 +76,11 @@ export default function Hero() {
   const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const [elapsedTime, setElapsedTime] = useState(0);
+  // Plain ref, not React state: the auto-advance tick needs to trigger a side
+  // effect (advancing the slide) exactly once per threshold crossing. A state
+  // updater function doing that would get Strict Mode's double-invoke-to-check-
+  // purity treatment in dev, firing the side effect twice and skipping a slide.
+  const elapsedRef = useRef(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -94,23 +149,20 @@ export default function Hero() {
     const slideInterval = 5000; // 5 seconds per slide
     
     const updateProgress = () => {
-      if (!isPaused) {
-        setElapsedTime(prev => {
-          const newElapsed = prev + 100; // Add 100ms
-          const newProgress = Math.min((newElapsed / slideInterval) * 100, 100);
-          setProgress(newProgress);
-          
-          if (newElapsed >= slideInterval) {
-            setIsTransitioning(true);
-            setTimeout(() => {
-              setCurrentMediaIndex((prevIndex) => (prevIndex + 1) % heroMedia.length);
-              setIsTransitioning(false);
-            }, 200); // Brief delay for smooth transition
-            return 0; // Reset elapsed time
-          }
-          
-          return newElapsed;
-        });
+      if (isPaused) return;
+
+      const newElapsed = elapsedRef.current + 100; // Add 100ms
+      setProgress(Math.min((newElapsed / slideInterval) * 100, 100));
+
+      if (newElapsed >= slideInterval) {
+        elapsedRef.current = 0;
+        setIsTransitioning(true);
+        setTimeout(() => {
+          setCurrentMediaIndex((prevIndex) => (prevIndex + 1) % heroMedia.length);
+          setIsTransitioning(false);
+        }, 200); // Brief delay for smooth transition
+      } else {
+        elapsedRef.current = newElapsed;
       }
     };
 
@@ -174,7 +226,7 @@ export default function Hero() {
         }
         setIsTransitioning(false);
         // Reset progress for new slide
-        setElapsedTime(0);
+        elapsedRef.current = 0;
         setProgress(0);
       }, 200);
     }
@@ -301,7 +353,8 @@ export default function Hero() {
           const isActive = index === currentMediaIndex;
           const isPrev = index === (currentMediaIndex - 1 + heroMedia.length) % heroMedia.length;
           const isNext = index === (currentMediaIndex + 1) % heroMedia.length;
-          
+          const isAdjacent = isActive || isPrev || isNext;
+
           // Calculate proper positioning based on relative position to current slide
           let positionClass = '';
           if (isActive) {
@@ -319,34 +372,47 @@ export default function Hero() {
               positionClass = 'translate-x-full z-0'; // Position to the right
             }
           }
-          
+
+          // Only the slide entering/exiting the viewport (prev/active/next) should
+          // ever animate. Far slides can flip which side they're parked on as the
+          // active index changes; without this guard they'd share the same
+          // transition and visibly sweep all the way across the hero.
+          const transitionClass = isAdjacent
+            ? 'transition-transform duration-[900ms] ease-[cubic-bezier(0.65,0.05,0.05,1)]'
+            : '';
+
           return (
             <div
               key={index}
-              className={`absolute inset-0 transition-transform duration-700 ease-in-out ${positionClass}`}
+              className={`absolute inset-0 ${transitionClass} ${positionClass}`}
               style={{
                 willChange: 'transform'
               }}
             >
               {media.type === 'video' ? (
-                <video
-                  ref={(el) => {
-                    if (el) videoRefs.current[index] = el;
-                  }}
-                  src={media.src}
-                  autoPlay={index === currentMediaIndex}
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover"
-                  preload="auto"
-                  style={{
-                    objectFit: 'cover',
-                    willChange: 'transform',
-                    backfaceVisibility: 'hidden',
-                    transform: 'translateZ(0)' // Hardware acceleration
-                  }}
-                />
+                // Only load the active slide (and its immediate neighbors, so the
+                // crossfade never shows a blank frame) instead of buffering all
+                // three background videos at once.
+                (isActive || isPrev || isNext) && (
+                  <video
+                    ref={(el) => {
+                      videoRefs.current[index] = el;
+                    }}
+                    src={media.src}
+                    autoPlay={isActive}
+                    muted
+                    loop
+                    playsInline
+                    className="w-full h-full object-cover"
+                    preload={isActive ? "auto" : "metadata"}
+                    style={{
+                      objectFit: 'cover',
+                      willChange: 'transform',
+                      backfaceVisibility: 'hidden',
+                      transform: 'translateZ(0)' // Hardware acceleration
+                    }}
+                  />
+                )
               ) : (
                 <Image
                   src={media.src}
@@ -379,209 +445,91 @@ export default function Hero() {
           {/* Left Column - Title and Buttons */}
           <div className="flex flex-col justify-center text-center lg:text-left space-y-3 sm:space-y-4">
             {/* Welcome text - Show for all slides with animation */}
-            <div 
+            <div
               className={`transition-all duration-500 ease-in-out ${
                 isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
               }`}
             >
-              {currentMediaIndex === 0 && (
-                <p className="font-gotham text-white font-bold uppercase tracking-wider mb-2 sm:mb-1 lg:mb-1" 
-                   style={{ 
-                     fontWeight: 700,
-                     fontSize: 'clamp(14px, 3.5vw, 17px)',
-                     lineHeight: 'clamp(18px, 4.5vw, 24px)',
-                     color: 'rgb(255, 255, 255)'
-                   }}>
-                  Experience The Devi's Difference
-                </p>
-              )}
-              {currentMediaIndex === 1 && (
-                <p className="font-gotham text-white font-bold uppercase tracking-wider mb-2 sm:mb-1 lg:mb-1" 
-                   style={{ 
-                     fontWeight: 700,
-                     fontSize: 'clamp(14px, 3.5vw, 17px)',
-                     lineHeight: 'clamp(18px, 4.5vw, 24px)',
-                     color: 'rgb(255, 255, 255)'
-                   }}>
-                  More Than A Gym
-                </p>
-              )}
-              {currentMediaIndex === 2 && (
-                <p className="font-gotham text-white font-bold uppercase tracking-wider mb-2 sm:mb-1 lg:mb-1" 
-                   style={{ 
-                     fontWeight: 700,
-                     fontSize: 'clamp(14px, 3.5vw, 17px)',
-                     lineHeight: 'clamp(18px, 4.5vw, 24px)',
-                     color: 'rgb(255, 255, 255)'
-                   }}>
-                  Built For Every Goal
-                </p>
-              )}
-              {currentMediaIndex === 3 && (
-                <p className="font-gotham text-white font-bold uppercase tracking-wider mb-2 sm:mb-1 lg:mb-1" 
-                   style={{ 
-                     fontWeight: 700,
-                     fontSize: 'clamp(14px, 3.5vw, 17px)',
-                     lineHeight: 'clamp(18px, 4.5vw, 24px)',
-                     color: 'rgb(255, 255, 255)'
-                   }}>
-                  Your Transformation Starts Here
-                </p>
-              )}
+              <p className="font-gotham text-white font-bold uppercase tracking-wider mb-2 sm:mb-1 lg:mb-1"
+                 style={{
+                   fontWeight: 700,
+                   fontSize: 'clamp(14px, 3.5vw, 17px)',
+                   lineHeight: 'clamp(18px, 4.5vw, 24px)',
+                   color: 'rgb(255, 255, 255)'
+                 }}>
+                {slideContent[currentMediaIndex].eyebrow}
+              </p>
             </div>
 
             {/* Main heading - Changes based on slide with animation */}
-            <div 
+            <div
               className={`transition-all duration-500 ease-in-out ${
                 isTransitioning ? 'opacity-0 translate-y-8' : 'opacity-100 translate-y-0'
               }`}
             >
               <h1 className="font-gotham-condensed flex flex-col font-bold uppercase leading-[0.9] tracking-tight relative mb-3 sm:mb-3 lg:mb-4"
-                  style={{ 
+                  style={{
                     fontSize: 'clamp(48px, 12vw, 81px)',
                     lineHeight: 'clamp(48px, 12vw, 81px)',
                     fontWeight: 700,
                     color: 'rgb(255, 255, 255)'
                   }}>
-                {currentMediaIndex === 0 ? (
-                  // First slide content
-                  <>
-                    <span className="overflow-hidden">
-                      <span className="hero-line block text-white">Start</span>
-                    </span>
-                    <span className="overflow-hidden">
-                      <span className="hero-line block text-white">Your Fitness</span>
-                    </span>
-                    <span className="overflow-hidden">
-                      <span className="hero-line block text-white">Journey.</span>
-                    </span>
-                  </>
-                ) : currentMediaIndex === 1 ? (
-                  // Second slide content
-                  <>
-                    <span className="overflow-hidden">
-                      <span className="hero-line block text-white">Discover</span>
-                    </span>
-                    <span className="overflow-hidden">
-                      <span className="hero-line block text-white">Your</span>
-                    </span>
-                    <span className="overflow-hidden">
-                      <span className="hero-line block text-white">Strength.</span>
-                    </span>
-                  </>
-                ) : currentMediaIndex === 2 ? (
-                  // Third slide content
-                  <>
-                    <span className="overflow-hidden">
-                      <span className="hero-line block text-white">Feel</span>
-                    </span>
-                    <span className="overflow-hidden">
-                      <span className="hero-line block text-white">Stronger.</span>
-                    </span>
-                    <span className="overflow-hidden">
-                      <span className="hero-line block text-white">Every Day.</span>
-                    </span>
-                  </>
-                ) : (
-                  // Fourth slide content
-                  <>
-                    <span className="overflow-hidden">
-                      <span className="hero-line block text-white">Train</span>
-                    </span>
-                    <span className="overflow-hidden">
-                      <span className="hero-line block text-white">With</span>
-                    </span>
-                    <span className="overflow-hidden">
-                      <span className="hero-line block text-white">Purpose.</span>
-                    </span>
-                  </>
-                )}
+                {slideContent[currentMediaIndex].heading.map((line, i) => (
+                  <span key={i} className="overflow-hidden">
+                    <span className="hero-line block text-white">{line}</span>
+                  </span>
+                ))}
               </h1>
             </div>
 
             {/* Description text - Show for all slides with animation */}
-            <div 
+            <div
               className={`transition-all duration-500 ease-in-out ${
                 isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
               }`}
             >
-              {currentMediaIndex === 0 && (
-                <p className="font-gotham text-white mb-3 sm:mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
-                   style={{ 
-                     fontWeight: 500,
-                     fontSize: 'clamp(12px, 2.8vw, 13px)',
-                     lineHeight: 'clamp(17px, 3.8vw, 19px)',
-                     color: 'rgb(255, 255, 255)'
-                   }}>
-                  Devi's Training is group training with the effectiveness and attention of a certified personal trainer.
-                </p>
-              )}
-              {currentMediaIndex === 1 && (
-                <p className="font-gotham text-white mb-3 sm:mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
-                   style={{ 
-                     fontWeight: 500,
-                     fontSize: 'clamp(12px, 2.8vw, 13px)',
-                     lineHeight: 'clamp(17px, 3.8vw, 19px)',
-                     color: 'rgb(255, 255, 255)'
-                   }}>
-                  Fitness is easier when you're surrounded by people who encourage you. At Devi's Gym, you'll train alongside a welcoming community, learn from experienced coaches, and celebrate every milestone, big or small, together.
-                </p>
-              )}
-              {currentMediaIndex === 2 && (
-                <p className="font-gotham text-white mb-3 sm:mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
-                   style={{ 
-                     fontWeight: 500,
-                     fontSize: 'clamp(12px, 2.8vw, 13px)',
-                     lineHeight: 'clamp(17px, 3.8vw, 19px)',
-                     color: 'rgb(255, 255, 255)'
-                   }}>
-                  Whether your goal is to lose weight, build muscle, improve your fitness, or simply feel healthier, Devi's Gym gives you the right environment to keep moving forward. Progress doesn't happen overnight, but every workout brings you one step closer.
-                </p>
-              )}
-              {currentMediaIndex === 3 && (
-                <p className="font-gotham text-white mb-3 sm:mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
-                   style={{ 
-                     fontWeight: 500,
-                     fontSize: 'clamp(12px, 2.8vw, 13px)',
-                     lineHeight: 'clamp(17px, 3.8vw, 19px)',
-                     color: 'rgb(255, 255, 255)'
-                   }}>
-                  Every rep, every session, every drop of sweat matters. At Devi's Gym, we believe in training with intention, not just going through the motions. Get expert guidance, structured programs, and the motivation you need to make real progress.
-                </p>
-              )}
+              <p className="font-gotham text-white mb-3 sm:mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
+                 style={{
+                   fontWeight: 500,
+                   fontSize: 'clamp(12px, 2.8vw, 13px)',
+                   lineHeight: 'clamp(17px, 3.8vw, 19px)',
+                   color: 'rgb(255, 255, 255)'
+                 }}>
+                {slideContent[currentMediaIndex].description}
+              </p>
             </div>
 
             {/* Hero Buttons with animation */}
-            <div 
+            <div
               className={`flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center lg:justify-start relative z-10 transition-all duration-500 ease-in-out ${
                 isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
               }`}
             >
               <span className="hero-cta">
-                <a 
-                  href={currentMediaIndex === 0 ? '/membership' : currentMediaIndex === 1 ? '/gym' : currentMediaIndex === 2 ? '/contact' : '/classes'}
+                <a
+                  href={slideContent[currentMediaIndex].cta.href}
                   className="bg-accent text-black px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold uppercase tracking-wide hover:bg-accent/90 transition-colors rounded-full w-full sm:w-auto inline-block text-center"
-                  style={{ 
-                    fontFamily: 'Gotham, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', 
+                  style={{
+                    fontFamily: 'Gotham, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
                     fontWeight: 700
                   }}
                   onMouseDown={(e) => e.stopPropagation()}
                 >
-                  {currentMediaIndex === 0 ? 'Start A Trial' : currentMediaIndex === 1 ? 'Join Our Community' : currentMediaIndex === 2 ? 'Contact Us' : 'Explore Classes'}
+                  {slideContent[currentMediaIndex].cta.label}
                 </a>
               </span>
-              {currentMediaIndex === 0 && (
+              {slideContent[currentMediaIndex].secondaryCta && (
                 <span className="hero-cta">
-                  <a 
-                    href="/gym"
+                  <a
+                    href={slideContent[currentMediaIndex].secondaryCta.href}
                     className="bg-transparent border border-white text-white px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold uppercase tracking-wide hover:bg-white hover:text-black transition-colors rounded-full w-full sm:w-auto inline-block text-center"
-                    style={{ 
-                      fontFamily: 'Gotham, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', 
+                    style={{
+                      fontFamily: 'Gotham, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
                       fontWeight: 700
                     }}
                     onMouseDown={(e) => e.stopPropagation()}
                   >
-                    Find The Gym
+                    {slideContent[currentMediaIndex].secondaryCta.label}
                   </a>
                 </span>
               )}

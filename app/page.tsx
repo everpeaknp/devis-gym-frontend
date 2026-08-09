@@ -1,4 +1,5 @@
 import Footer from "@/components/layout/Footer";
+import Reveal from "@/components/ui/Reveal";
 import Hero from "@/components/hero/Hero";
 import MotivationSection from "@/components/sections/MotivationSection";
 import HeroScrollSequence from "@/components/hero/HeroScrollSequence";
@@ -61,22 +62,20 @@ export default function Home() {
         <section id="frames" className="relative bg-background z-50" style={{ minHeight: '100vh' }}>
           <HeroScrollSequence />
         </section>
-        <GymIntroSection />
+        <Reveal><GymIntroSection /></Reveal>
         <TrainingSection />
-        
-        {/* <NetworkSection /> */}
-        <Gallery maxImages={9} />
-        
-        {/* <GymCTASection /> */}
+
         <LocationSection />
-         <MotivationSection />
+          <Gallery maxImages={9} />
+        <MotivationSection />
+
         <MembershipSection maxPlans={3} />
         <KickstartSection />
-      
+
         <TestimonialsSection />
         <FinalCTASection />
+      
         <ContactSection />
-       
       </main>
       <Footer />
     </>

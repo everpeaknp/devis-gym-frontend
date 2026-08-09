@@ -7,13 +7,13 @@ import Link from "next/link";
 import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 import { services } from "@/data/services";
+import { cldOptimize } from "@/lib/cloudinary";
 
 export default function TrainingSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const classesRef = useRef<HTMLSpanElement>(null);
   const forYouRef = useRef<HTMLSpanElement>(null);
   const scrollTextRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     // Register plugin on client only
@@ -25,129 +25,66 @@ export default function TrainingSection() {
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
+    let cleanupMarqueeResize: (() => void) | undefined;
+
     const ctx = gsap.context(() => {
-      // Title animation timeline
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-          toggleActions: "play none none reverse",
-          refreshPriority: -1,
-        }
-      });
-      
       if (!prefersReducedMotion) {
-        // First show "Classes Designed"
-        tl.fromTo(
+        // Simple title animation - combined in one timeline
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 70%",
+            once: true, // Only animate once for better performance
+          }
+        })
+        .fromTo(
           classesRef.current,
           { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
+          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
         )
-        // Then zoom in "For You" (from small to normal)
         .fromTo(
           forYouRef.current,
-          { opacity: 0, scale: 0.5 },
-          { opacity: 1, scale: 1, duration: 1, ease: "power3.out" },
-          "-=0.3" // Slight overlap
+          { opacity: 0, scale: 0.8 },
+          { opacity: 1, scale: 1, duration: 0.6, ease: "power2.out" },
+          "-=0.2"
         );
+
+        // Marquee tracks whole-page scroll direction: slides left as the page
+        // scrolls down, right as it scrolls up, looping seamlessly forever
+        // (not just while this element is passing through the viewport).
+        if (scrollTextRef.current) {
+          const scrollElement = scrollTextRef.current;
+          const speed = 0.5; // px of marquee travel per px of page scroll
+
+          // Measure once (and on resize) instead of on every scroll frame,
+          // so the scroll handler never forces a layout read.
+          let half = scrollElement.scrollWidth / 2;
+          const remeasure = () => { half = scrollElement.scrollWidth / 2; };
+          window.addEventListener("resize", remeasure);
+
+          ScrollTrigger.create({
+            start: 0,
+            end: "max",
+            onUpdate: (self) => {
+              if (!half) return;
+              let x = -((self.scroll() * speed) % half);
+              if (x > 0) x -= half;
+              scrollElement.style.transform = `translate3d(${x}px, 0, 0)`;
+            },
+            onRefresh: remeasure,
+            invalidateOnRefresh: true,
+          });
+
+          cleanupMarqueeResize = () => window.removeEventListener("resize", remeasure);
+        }
       } else {
         // Show immediately if reduced motion
         gsap.set([classesRef.current, forYouRef.current], { opacity: 1 });
       }
-
-      // Simple fade-in animation for Service Cards
-      if (!prefersReducedMotion) {
-        cardRefs.current.forEach((cardRef, index) => {
-          if (cardRef) {
-            gsap.fromTo(
-              cardRef,
-              {
-                opacity: 0,
-                y: 30,
-              },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power2.out",
-                scrollTrigger: {
-                  trigger: cardRef,
-                  start: "top 85%",
-                  toggleActions: "play none none none",
-                },
-                delay: index * 0.1,
-              }
-            );
-          }
-        });
-      }
-
-      // Infinite scroll animation for the scrolling text - Direct scroll listener
-      let scrollCleanup;
-      if (scrollTextRef.current && !prefersReducedMotion) {
-        
-        // Clear any existing animations on this element
-        gsap.killTweensOf(scrollTextRef.current);
-        
-        // Create scroll-based animation with different approach
-        const scrollElement = scrollTextRef.current;
-        
-        // Method 1: Direct ScrollTrigger with scrub
-        const scrollTrigger = ScrollTrigger.create({
-          trigger: scrollElement,
-          start: "top bottom",
-          end: "bottom top", 
-          scrub: true,
-          animation: gsap.fromTo(scrollElement, 
-            { x: "0%" },
-            { x: "-50%", ease: "none" }
-          ),
-          invalidateOnRefresh: true,
-        });
-        
-        // Method 2: Fallback - Direct scroll listener
-        const handleScroll = () => {
-          if (!scrollElement) return;
-          
-          const rect = scrollElement.getBoundingClientRect();
-          const windowHeight = window.innerHeight;
-          const elementTop = rect.top;
-          const elementHeight = rect.height;
-          
-          // Calculate progress (0 to 1) as element moves through viewport
-          const progress = Math.max(0, Math.min(1, 
-            (windowHeight - elementTop) / (windowHeight + elementHeight)
-          ));
-          
-          // Move from 0% to -50% based on scroll progress
-          const xValue = progress * -50;
-          gsap.set(scrollElement, { x: `${xValue}%` });
-        };
-        
-        // Add scroll listener as backup
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        
-        // Initial call
-        handleScroll();
-        
-        // Store cleanup function
-        scrollCleanup = () => {
-          scrollTrigger.kill();
-          window.removeEventListener('scroll', handleScroll);
-        };
-      }
-      
-      return scrollCleanup;
     }, sectionRef);
 
-    // Force ScrollTrigger refresh after mount
-    const refreshTimer = setTimeout(() => {
-      ScrollTrigger.refresh();
-      console.log("TrainingSection ScrollTrigger refreshed");
-    }, 100);
-
     return () => {
-      clearTimeout(refreshTimer);
+      cleanupMarqueeResize?.();
       ctx.revert();
     };
   }, []);
@@ -184,11 +121,12 @@ export default function TrainingSection() {
               fontSize: 'clamp(60px, 8vw, 95px)',
               lineHeight: '95px',
               color: 'rgb(206, 249, 82)',
-              transform: 'translate3d(0, 0, 0)', // Hardware acceleration
+              transform: 'translate3d(0, 0, 0)',
+              willChange: 'transform',
             }}
           >
-            {/* Repeat text many times for seamless infinite loop */}
-            {Array.from({ length: 40 }).map((_, i) => (
+            {/* Reduced from 40 to 10 for better performance */}
+            {Array.from({ length: 10 }).map((_, i) => (
               <span key={i} className="inline-block px-8">START FAST • FINISH FASTER • PUSH HARDER • GET STRONGER • NEVER QUIT • BREAK LIMITS</span>
             ))}
           </div>
@@ -214,21 +152,17 @@ export default function TrainingSection() {
             return (
               <Reveal key={service.id} delay={i * 0.1}>
                 <Link href={servicePath} className="block">
-                  <div 
-                    ref={(el) => {
-                      cardRefs.current[i] = el;
-                    }}
-                    className="group cursor-pointer"
-                  >
+                  <div className="group cursor-pointer">
                       {/* Background Image */}
                       <div className="h-[300px] md:h-[450px] overflow-hidden relative rounded-lg shadow-xl">
                         <Image
-                          src={service.image}
+                          src={cldOptimize(service.image, 700)}
                           alt={service.name}
                           fill
                           className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 50vw"
-                          loading="lazy"
+                          loading={i < 4 ? "eager" : "lazy"}
+                          priority={i < 2}
                           quality={80}
                         />
                         
