@@ -36,6 +36,11 @@ export const metadata: Metadata = {
     "fitness Pokhara Nepal",
     "gym near Phewa Lake",
   ],
+  icons: {
+    icon: "/logo/logo.webp",
+    shortcut: "/logo/logo.webp",
+    apple: "/logo/logo.webp",
+  },
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
