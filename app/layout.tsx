@@ -37,9 +37,9 @@ export const metadata: Metadata = {
     "gym near Phewa Lake",
   ],
   icons: {
-    icon: "/logo/logo.webp",
-    shortcut: "/logo/logo.webp",
-    apple: "/logo/logo.webp",
+    icon: "/logo/logo.jpg",
+    shortcut: "public/logo/logo.jpg",
+    apple: "/logo/logo.jpg",
   },
   alternates: { canonical: "/" },
   openGraph: {
