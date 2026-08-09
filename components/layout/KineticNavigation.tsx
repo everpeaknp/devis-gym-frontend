@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
 import Link from "next/link";
+import Image from "next/image";
 import SoundManager from "@/components/ui/SoundManager";
 import { motion, useScroll, useTransform } from "framer-motion";
 
@@ -171,7 +172,17 @@ export default function KineticNavigation() {
         <header className="header">
           <div className="container is--full">
             <nav className="nav-row">
-              <Link href="/" aria-label="home" className="nav-logo-row cursor-pointer">
+              <Link href="/" aria-label="home" className="nav-logo-row cursor-pointer flex items-center gap-2">
+                <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center p-1.5 overflow-hidden">
+                  <Image 
+                    src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268604/devis-gym/test/ffzvboz9b90lxqyye65o.png" 
+                    alt="Devi's Gym Logo" 
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-contain"
+                    unoptimized
+                  />
+                </div>
                 <span className="logo-text">DEVI'S GYM</span>
               </Link>
 

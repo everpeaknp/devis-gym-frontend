@@ -67,7 +67,7 @@ export async function GET() {
       posts: [
         {
           id: "1",
-          media_url: "/gallery/gym-1.jpeg",
+          media_url: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269532/devis-gym/people/DSC07624-3.JPG.webp",
           permalink: "https://www.instagram.com/devisgym_pokhara/",
           caption: "Welcome to Devi's Gym Pokhara!  #DevisGym #PokharaFitness",
           media_type: "IMAGE",
@@ -77,7 +77,7 @@ export async function GET() {
         },
         {
           id: "2",
-          media_url: "/gallery/gym-2.jpeg", 
+          media_url: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268875/devis-gym/people/DSC07385.JPG.webp", 
           permalink: "https://www.instagram.com/devisgym_pokhara/",
           caption: "State-of-the-art equipment for your fitness journey ",
           media_type: "IMAGE",
@@ -87,7 +87,7 @@ export async function GET() {
         },
         {
           id: "3",
-          media_url: "/gallery/gym-3.jpeg",
+          media_url: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269384/devis-gym/people/DSC07593-3.JPG.webp",
           permalink: "https://www.instagram.com/devisgym_pokhara/", 
           caption: "Personal training sessions available. Book yours today! ",
           media_type: "IMAGE",
@@ -97,7 +97,7 @@ export async function GET() {
         },
         {
           id: "4",
-          media_url: "/gallery/training-1.jpeg",
+          media_url: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269421/devis-gym/people/DSC07603-3.JPG.webp",
           permalink: "https://www.instagram.com/devisgym_pokhara/",
           caption: "Group fitness classes - energy and motivation combined! ",
           media_type: "IMAGE", 
@@ -107,7 +107,7 @@ export async function GET() {
         },
         {
           id: "5",
-          media_url: "/gallery/training-2.jpeg",
+          media_url: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269667/devis-gym/people/DSC07641-3.JPG.webp",
           permalink: "https://www.instagram.com/devisgym_pokhara/",
           caption: "Clean, modern facilities in the heart of Pokhara ",
           media_type: "IMAGE",
@@ -117,7 +117,7 @@ export async function GET() {
         },
         {
           id: "6", 
-          media_url: "/gallery/people-1.jpeg",
+          media_url: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269454/devis-gym/people/DSC07614-3.JPG.webp",
           permalink: "https://www.instagram.com/devisgym_pokhara/",
           caption: "Transform your body, transform your life. Join us! ",
           media_type: "IMAGE",
@@ -127,7 +127,7 @@ export async function GET() {
         },
         {
           id: "7", 
-          media_url: "/gallery/lifestyle-1.jpeg",
+          media_url: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269490/devis-gym/people/DSC07616-3.JPG.webp",
           permalink: "https://www.instagram.com/devisgym_pokhara/",
           caption: "Lifestyle transformation starts here. Be the best version of yourself!  #Transformation",
           media_type: "IMAGE",
@@ -149,7 +149,7 @@ export async function GET() {
       posts: [
         {
           id: "fallback-1",
-          media_url: "/gallery/gym-1.jpeg",
+          media_url: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269532/devis-gym/people/DSC07624-3.JPG.webp",
           permalink: "https://www.instagram.com/devisgym_pokhara/",
           caption: "Devi's Gym Pokhara - Your fitness destination! ",
           media_type: "IMAGE",

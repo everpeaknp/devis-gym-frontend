@@ -147,7 +147,7 @@ export default function GymIntroSection() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/wallbg.webp"
+          src="https://res.cloudinary.com/ufiebboc/image/upload/v1786269693/devis-gym/wallbg.webp"
           alt=""
           fill
           sizes="100vw"

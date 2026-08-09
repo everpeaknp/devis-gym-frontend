@@ -14,7 +14,7 @@ import HeroProgress from "@/components/unused-components/ui/hero-progress";
 const heroMedia = [
   { type: 'video', src: 'https://res.cloudinary.com/ufiebboc/video/upload/v1786268848/devis-gym/hero/293079_medium.mp4' },
   { type: 'image', src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786269232/devis-gym/people/DSC07536.JPG.webp' },
-  { type: 'image', src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786269554/devis-gym/people/DSC07626-3.JPG.webp' },
+  { type: 'image', src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786269561/devis-gym/people/DSC07720-2.JPG.webp' },
   { type: 'image', src: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786269681/devis-gym/people/DSC07643-3.JPG.webp' },
 ];
 

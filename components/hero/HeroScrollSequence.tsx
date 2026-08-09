@@ -150,7 +150,7 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
             {Array.from({ length: 31 }, (_, i) => (
               <Image
                 key={`frame-${i}`}
-                src={`/frame/frame_${String(i + 1).padStart(3, "0")}.png`}
+                src={`https://res.cloudinary.com/ufiebboc/image/upload/v${1786268786 + i * 2}/devis-gym/frame/frame_${String(i + 1).padStart(3, "0")}.webp`}
                 alt=""
                 width={800}
                 height={600}

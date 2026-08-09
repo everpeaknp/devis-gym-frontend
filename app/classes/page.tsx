@@ -56,7 +56,7 @@ const classesData = {
     slug: "outdoor",
     title: "Outdoor Activities",
     description: "Take your training outside with our outdoor fitness programs. Experience nature while achieving your fitness goals.",
-    image: "/classes/OutdoorActivities.jpg",
+    image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268706/devis-gym/classes/OutdoorActivities.webp",
     details: "Boot camps, trail running, outdoor yoga, and park workouts.",
   },
 };
@@ -68,7 +68,7 @@ const galleryImages = [
   { src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269637/devis-gym/people/DSC07636-3.JPG.webp", alt: "CrossFit" },
   { src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268875/devis-gym/people/DSC07385.JPG.webp", alt: "Aerobics" },
   { src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269241/devis-gym/people/DSC07541.JPG.webp", alt: "Zumba" },
-  { src: "/classes/OutdoorActivities.jpg", alt: "Outdoor Activities" },
+  { src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268706/devis-gym/classes/OutdoorActivities.webp", alt: "Outdoor Activities" },
 ];
 
 export default function ClassesPage() {
@@ -194,7 +194,7 @@ export default function ClassesPage() {
         <section className="bg-background overflow-hidden relative">
           <div className="absolute inset-0">
             <Image
-              src="/wallbg.webp"
+              src="https://res.cloudinary.com/ufiebboc/image/upload/v1786269693/devis-gym/wallbg.webp"
               alt=""
               fill
               sizes="100vw"

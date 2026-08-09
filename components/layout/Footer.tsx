@@ -119,7 +119,7 @@ export default function Footer() {
           className="transition-transform duration-75 ease-linear translate-y-48"
         >
           <Image
-            src="/icons/weight-plate.svg"
+            src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268856/devis-gym/icons/weight-plate.svg"
             alt="Weight Plate"
             width={800}
             height={800}
@@ -143,7 +143,7 @@ export default function Footer() {
           <div className="flex flex-col items-center text-center space-y-4">
             <div className="h-20 w-20 rounded-full bg-white flex items-center justify-center p-2">
               <Image 
-                src="/logo.png" 
+                src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268859/devis-gym/logo.webp" 
                 alt="Devi's Gym Logo" 
                 width={80}
                 height={80}
@@ -247,7 +247,7 @@ export default function Footer() {
             <div className="flex items-center space-x-3">
               <div className="h-16 w-16 rounded-full bg-white flex items-center justify-center p-2">
                 <Image 
-                  src="/logo.png" 
+                  src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268859/devis-gym/logo.webp" 
                   alt="Devi's Gym Logo" 
                   width={60}
                   height={60}

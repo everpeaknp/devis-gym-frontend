@@ -89,7 +89,7 @@ export function ParallaxComponent() {
           <div className="parallax__black-line-overflow"></div>
           <div data-parallax-layers className="parallax__layers">
             <Image 
-              src="/bg.jpg" 
+              src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268703/devis-gym/bg.jpg" 
               alt=""
               width={800}
               height={600}
@@ -98,7 +98,7 @@ export function ParallaxComponent() {
               loading="lazy"
             />
             <video 
-              src="/bg.mp4" 
+              src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268703/devis-gym/bg.jpg" 
               autoPlay 
               muted 
               loop 

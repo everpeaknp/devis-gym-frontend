@@ -58,7 +58,7 @@ export const services: Service[] = [
     id: "outdoor-activities",
     name: "Outdoor\nActivities",
     description: "Take your training outside with our outdoor activity programs and sessions.",
-    image: "/classes/OutdoorActivities.jpg",
+    image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268706/devis-gym/classes/OutdoorActivities.webp",
     available: true,
   },
   {
