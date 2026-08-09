@@ -128,7 +128,7 @@ export default function Intro() {
                 }}
               >
                 <Image
-                  src="/hero/training-person.webp"
+                  src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268837/devis-gym/hero/man.webp"
                   alt="Training at Devi's Gym"
                   width={480}
                   height={600}

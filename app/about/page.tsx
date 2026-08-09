@@ -228,9 +228,9 @@ export default function AboutPage() {
       <BackButton />
       <ScrollExpandMedia
         mediaType="video"
-        mediaSrc="/hero/135161-761273563_medium.mp4"
-        posterSrc="/devis/IMG_7361.JPG.jpeg"
-        bgImageSrc="/devis/IMG_7361.JPG.jpeg"
+        mediaSrc="https://res.cloudinary.com/ufiebboc/video/upload/v1786268804/devis-gym/hero/293079_medium.mp4"
+        posterSrc="https://res.cloudinary.com/ufiebboc/image/upload/v1786268716/devis-gym/devis/IMG_7361.JPG.jpg"
+        bgImageSrc="https://res.cloudinary.com/ufiebboc/image/upload/v1786268716/devis-gym/devis/IMG_7361.JPG.jpg"
         title="Devi's Gym Experience"
         date="In Pokhara since 2018"
        

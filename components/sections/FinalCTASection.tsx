@@ -22,7 +22,7 @@ export default function FinalCTASection() {
         className="absolute top-1/2 right-0 -translate-y-1/2 w-96 h-96 opacity-10 pointer-events-none z-0"
       >
         <Image
-          src="/equipment/7.webp"
+          src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268760/devis-gym/equipment/7.webp"
           alt="Equipment background"
           width={384}
           height={384}

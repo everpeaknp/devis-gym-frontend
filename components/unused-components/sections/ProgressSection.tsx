@@ -258,7 +258,7 @@ export default function ProgressSection() {
           {/* Weight Plate */}
           <Image
             ref={weightPlateRef}
-            src="/equipment/1.webp"
+            src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268749/devis-gym/equipment/1.webp"
             alt="Weight Plate"
             width={128}
             height={128}
@@ -269,7 +269,7 @@ export default function ProgressSection() {
           {/* Extra Plate */}
           <Image
             ref={extraPlateRef}
-            src="/equipment/2.webp"
+            src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268751/devis-gym/equipment/2.webp"
             alt="Extra Weight Plate"
             width={96}
             height={96}
@@ -283,7 +283,7 @@ export default function ProgressSection() {
           {/* Dumbbell */}
           <Image
             ref={dumbbellRef}
-            src="/equipment/3.png"
+            src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268752/devis-gym/equipment/3.webp"
             alt="Dumbbell"
             width={144}
             height={144}
@@ -294,7 +294,7 @@ export default function ProgressSection() {
           {/* Barbell */}
           <Image
             ref={barbellRef}
-            src="/equipment/4.png"
+            src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268757/devis-gym/equipment/4.webp"
             alt="Barbell"
             width={160}
             height={160}
@@ -368,7 +368,7 @@ export default function ProgressSection() {
           {/* Skinny Athlete (placeholder - you'll need to replace with actual transformation images) */}
           <Image
             ref={skinnyAthleteRef}
-            src="/hero/training-person.webp"
+            src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268837/devis-gym/hero/man.webp"
             alt="Skinny Athlete"
             width={256}
             height={320}
@@ -379,7 +379,7 @@ export default function ProgressSection() {
           {/* Athletic Athlete (placeholder - you'll need to replace with actual transformation images) */}
           <Image
             ref={athleticAthleteRef}
-            src="/hero/training-person.webp"
+            src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268837/devis-gym/hero/man.webp"
             alt="Athletic Athlete"
             width={256}
             height={320}
@@ -391,7 +391,7 @@ export default function ProgressSection() {
           {/* Muscular Athlete (placeholder - you'll need to replace with actual transformation images) */}
           <Image
             ref={muscularAthleteRef}
-            src="/hero/training-person.webp"
+            src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268837/devis-gym/hero/man.webp"
             alt="Muscular Athlete"
             width={256}
             height={320}

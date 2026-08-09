@@ -341,7 +341,7 @@ export default function GymIntroSection() {
           {/* Approach Image */}
           <div className="xl:col-span-4 card-approach">
             <Image
-              src="/devis/IMG_7374.JPG.jpeg"
+              src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268742/devis-gym/devis/IMG_7374.JPG.jpg"
               alt="Approach"
               width={400}
               height={460}

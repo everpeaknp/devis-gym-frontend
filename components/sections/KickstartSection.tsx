@@ -103,7 +103,7 @@ export default function KickstartSection() {
                 {/* Full visible image */}
                 <div className="absolute inset-0 flex items-center justify-center pl-64 md:pl-80 lg:pl-96">
                   <Image
-                    src="/hero/man.png"
+                    src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268837/devis-gym/hero/man.webp"
                     alt=""
                     width={1600}
                     height={2400}

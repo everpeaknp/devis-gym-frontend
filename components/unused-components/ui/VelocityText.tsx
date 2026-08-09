@@ -117,7 +117,7 @@ const Title = () => (
       "transition-colors duration-300"
     )}>
       <Image
-        src="/devis/IMG_7374.JPG.jpeg"
+        src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268742/devis-gym/devis/IMG_7374.JPG.jpg"
         alt="Gym equipment"
         width={96}
         height={96}

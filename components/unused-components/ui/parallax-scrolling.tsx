@@ -118,7 +118,7 @@ export function ParallaxComponent() {
               <h2 className="parallax__title">Join Our Elite Membership</h2>
             </div>
             <Image 
-              src="/backgrounds/parallax-layer.webp" 
+              src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268785/devis-gym/backgrounds/parallax-layer.webp" 
               alt=""
               width={800}
               height={600}
