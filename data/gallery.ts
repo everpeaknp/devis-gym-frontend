@@ -17,62 +17,62 @@ export type GalleryImage = {
  */
 export const galleryImages: GalleryImage[] = [
   // Row 1 - Mix of all categories
-  { id: "g1", category: "Gym", src: "/devis/IMG_7358.JPG.jpeg", alt: "Modern gym equipment", available: true },
+  { id: "g1", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268711/devis-gym/devis/IMG_7358.JPG.jpg", alt: "Modern gym equipment", available: true },
   { id: "p1", category: "People", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269232/devis-gym/people/DSC07536.JPG.webp", alt: "Gym community", available: true },
   { id: "t1", category: "Training", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269666/devis-gym/people/DSC07641-3.JPG.webp", alt: "Gym training session", available: true },
   
   // Row 2
   { id: "l1", category: "Lifestyle", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269532/devis-gym/people/DSC07624-3.JPG.webp", alt: "Outdoor fitness", available: true },
-  { id: "g2", category: "Gym", src: "/devis/IMG_7359.JPG.jpeg", alt: "Professional gym facilities", available: true },
+  { id: "g2", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268712/devis-gym/devis/IMG_7359.JPG.jpg", alt: "Professional gym facilities", available: true },
   { id: "p2", category: "People", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269554/devis-gym/people/DSC07700-2.JPG.webp", alt: "Training together", available: true },
   
   // Row 3
   { id: "t2", category: "Training", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269586/devis-gym/people/DSC07732.JPG.webp", alt: "Strength training", available: true },
   { id: "l2", category: "Lifestyle", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269561/devis-gym/people/DSC07720-2.JPG.webp", alt: "Active lifestyle", available: true },
-  { id: "g3", category: "Gym", src: "/devis/IMG_7360.JPG.jpeg", alt: "State-of-the-art equipment", available: true },
+  { id: "g3", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268714/devis-gym/devis/IMG_7360.JPG.jpg", alt: "State-of-the-art equipment", available: true },
   
   // Continue mixing...
   { id: "p3", category: "People", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269681/devis-gym/people/DSC07643-3.JPG.webp", alt: "Fitness community", available: true },
   { id: "t3", category: "Training", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269452/devis-gym/people/DSC07615-4.JPG.webp", alt: "Weightlifting workout", available: true },
-  { id: "g4", category: "Gym", src: "/devis/IMG_7361.JPG.jpeg", alt: "Gym interior", available: true },
+  { id: "g4", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268716/devis-gym/devis/IMG_7361.JPG.jpg", alt: "Gym interior", available: true },
   
   { id: "l3", category: "Lifestyle", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269181/devis-gym/people/DSC07524.JPG.webp", alt: "Fitness journey", available: true },
   { id: "p4", category: "People", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269362/devis-gym/people/DSC07586.JPG.webp", alt: "Team training", available: true },
   { id: "t4", category: "Training", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269433/devis-gym/people/DSC07608-3.JPG.webp", alt: "Barbell training", available: true },
   
-  { id: "g5", category: "Gym", src: "/devis/IMG_7362.JPG.jpeg", alt: "Weight training area", available: true },
+  { id: "g5", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268718/devis-gym/devis/IMG_7362.JPG.jpg", alt: "Weight training area", available: true },
   { id: "l4", category: "Lifestyle", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269241/devis-gym/people/DSC07541.JPG.webp", alt: "Outdoor training", available: true },
   { id: "p5", category: "People", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269120/devis-gym/people/DSC07450.JPG.webp", alt: "Zumba class", available: true },
   
   { id: "t5", category: "Training", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269518/devis-gym/people/DSC07618-3.JPG.webp", alt: "Power lifting", available: true },
-  { id: "g6", category: "Gym", src: "/devis/IMG_7363.JPG.jpeg", alt: "Training facility", available: true },
+  { id: "g6", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268720/devis-gym/devis/IMG_7363.JPG.jpg", alt: "Training facility", available: true },
   { id: "p6", category: "People", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269176/devis-gym/people/DSC07483.JPG.webp", alt: "Dance fitness", available: true },
   
   { id: "l5", category: "Lifestyle", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269167/devis-gym/people/DSC07482.JPG.webp", alt: "Healthy lifestyle", available: true },
   { id: "t6", category: "Training", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269454/devis-gym/people/DSC07614-3.JPG.webp", alt: "Weight training", available: true },
-  { id: "g7", category: "Gym", src: "/devis/IMG_7364.JPG.jpeg", alt: "Gym space", available: true },
+  { id: "g7", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268722/devis-gym/devis/IMG_7364.JPG.jpg", alt: "Gym space", available: true },
   
   { id: "p7", category: "People", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269256/devis-gym/people/DSC07554.JPG.webp", alt: "Group workout", available: true },
   { id: "t7", category: "Training", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269608/devis-gym/people/DSC07630-3.JPG.webp", alt: "Cardio training", available: true },
   { id: "l6", category: "Lifestyle", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269568/devis-gym/people/DSC07728-2.JPG.webp", alt: "Fitness culture", available: true },
   
-  { id: "g8", category: "Gym", src: "/devis/IMG_7365.JPG.jpeg", alt: "Workout area", available: true },
+  { id: "g8", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268724/devis-gym/devis/IMG_7365.JPG.jpg", alt: "Workout area", available: true },
   { id: "p8", category: "People", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269203/devis-gym/people/DSC07534.JPG.webp", alt: "Fitness group", available: true },
   { id: "t8", category: "Training", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269580/devis-gym/people/DSC07628-3.JPG.webp", alt: "Cardio workout", available: true },
   
   // Additional Gym images
-  { id: "g9", category: "Gym", src: "/devis/IMG_7366.JPG.jpeg", alt: "Gym equipment setup", available: true },
-  { id: "g10", category: "Gym", src: "/devis/IMG_7367.JPG.jpeg", alt: "Training zone", available: true },
-  { id: "g11", category: "Gym", src: "/devis/IMG_7368.JPG.jpeg", alt: "Gym facility", available: true },
-  { id: "g12", category: "Gym", src: "/devis/IMG_7369.JPG.jpeg", alt: "Exercise area", available: true },
-  { id: "g13", category: "Gym", src: "/devis/IMG_7370.JPG.jpeg", alt: "Workout space", available: true },
-  { id: "g14", category: "Gym", src: "/devis/IMG_7371.JPG.jpeg", alt: "Gym interior view", available: true },
-  { id: "g15", category: "Gym", src: "/devis/IMG_7372.JPG.jpeg", alt: "Training facility view", available: true },
-  { id: "g16", category: "Gym", src: "/devis/IMG_7373.JPG.jpeg", alt: "Gym equipment area", available: true },
-  { id: "g17", category: "Gym", src: "/devis/IMG_7374.JPG.jpeg", alt: "Workout facility", available: true },
-  { id: "g18", category: "Gym", src: "/devis/IMG_7375.JPG.jpeg", alt: "Gym setup", available: true },
-  { id: "g19", category: "Gym", src: "/devis/IMG_7376.JPG.jpeg", alt: "Training area", available: true },
-  { id: "g20", category: "Gym", src: "/devis/IMG_7377.JPG.jpeg", alt: "Gym floor", available: true },
+  { id: "g9", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268726/devis-gym/devis/IMG_7366.JPG.jpg", alt: "Gym equipment setup", available: true },
+  { id: "g10", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268728/devis-gym/devis/IMG_7367.JPG.jpg", alt: "Training zone", available: true },
+  { id: "g11", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268729/devis-gym/devis/IMG_7368.JPG.jpg", alt: "Gym facility", available: true },
+  { id: "g12", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268732/devis-gym/devis/IMG_7369.JPG.jpg", alt: "Exercise area", available: true },
+  { id: "g13", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268734/devis-gym/devis/IMG_7370.JPG.jpg", alt: "Workout space", available: true },
+  { id: "g14", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268735/devis-gym/devis/IMG_7371.JPG.jpg", alt: "Gym interior view", available: true },
+  { id: "g15", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268737/devis-gym/devis/IMG_7372.JPG.jpg", alt: "Training facility view", available: true },
+  { id: "g16", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268739/devis-gym/devis/IMG_7373.JPG.jpg", alt: "Gym equipment area", available: true },
+  { id: "g17", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268742/devis-gym/devis/IMG_7374.JPG.jpg", alt: "Workout facility", available: true },
+  { id: "g18", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268743/devis-gym/devis/IMG_7375.JPG.jpg", alt: "Gym setup", available: true },
+  { id: "g19", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268745/devis-gym/devis/IMG_7376.JPG.jpg", alt: "Training area", available: true },
+  { id: "g20", category: "Gym", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786268747/devis-gym/devis/IMG_7377.JPG.jpg", alt: "Gym floor", available: true },
   
   // Additional People images
   { id: "p9", category: "People", src: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269568/devis-gym/people/DSC07627-3.JPG.webp", alt: "Aerobics class", available: true },
