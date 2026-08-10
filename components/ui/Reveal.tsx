@@ -43,13 +43,14 @@ export default function Reveal({
         {
           opacity: 1,
           y: 0,
-          duration: 1,
+          duration: 0.6,
           delay,
-          ease: "power3.out",
+          ease: "power2.out",
           scrollTrigger: {
             trigger: el,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
+            start: "top 90%",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );

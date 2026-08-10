@@ -44,7 +44,6 @@ const ScrollExpandMedia = ({
   const [isMobileState, setIsMobileState] = useState<boolean>(false);
   const [windowDimensions, setWindowDimensions] = useState({ width: 1200, height: 800 });
   const sectionRef = useRef<HTMLDivElement | null>(null);
-  const shouldHandleScroll = useRef<boolean>(true);
 
   useEffect(() => {
     setScrollProgress(0);
@@ -103,29 +102,19 @@ const ScrollExpandMedia = ({
   }, [horizontalExpansionComplete]);
 
   useEffect(() => {
-    // Don't attach any event listeners once fully expanded - let Lenis handle everything
-    if (horizontalExpansionComplete && mediaFullyExpanded) {
-      return;
-    }
-
     const handleWheel = (e: WheelEvent) => {
       if (typeof window === 'undefined') return;
       
+      // Only handle wheel events when we're at the top of the page and not fully expanded
       const atTop = window.scrollY <= 5;
       
-      // Only interfere if we're at the top and not fully expanded
-      if (!atTop || (horizontalExpansionComplete && mediaFullyExpanded)) {
-        return;
-      }
-      
-      if (mediaFullyExpanded && e.deltaY < 0) {
+      if (mediaFullyExpanded && e.deltaY < 0 && atTop) {
         setMediaFullyExpanded(false);
         setShowContent(false);
         setHorizontalExpansionComplete(false);
-        shouldHandleScroll.current = true;
         e.preventDefault();
-        e.stopPropagation();
-      } else if (!horizontalExpansionComplete) {
+      } else if (!horizontalExpansionComplete && atTop) {
+        // Phase 1: Horizontal expansion ONLY - prevent scrolling only at top
         e.preventDefault();
         e.stopPropagation();
         
@@ -139,40 +128,34 @@ const ScrollExpandMedia = ({
         if (newProgress >= 1) {
           setHorizontalExpansionComplete(true);
           setShowContent(true);
+          // Small delay to ensure smooth transition to scroll phase
           setTimeout(() => {
             setMediaFullyExpanded(true);
-            shouldHandleScroll.current = false;
           }, 100);
         }
       }
+      // Phase 2: Natural scrolling is allowed after horizontalExpansionComplete && mediaFullyExpanded
+      // or when scrollY > 5 (not at top of page)
     };
 
     const handleTouchStart = (e: TouchEvent) => {
-      if (!shouldHandleScroll.current) return;
-      const atTop = window.scrollY <= 5;
-      if (!atTop) return;
       setTouchStartY(e.touches[0].clientY);
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (typeof window === 'undefined' || !touchStartY || !shouldHandleScroll.current) return;
+      if (typeof window === 'undefined' || !touchStartY) return;
 
       const touchY = e.touches[0].clientY;
       const deltaY = touchStartY - touchY;
       const atTop = window.scrollY <= 5;
 
-      if (!atTop || (horizontalExpansionComplete && mediaFullyExpanded)) {
-        return;
-      }
-
-      if (mediaFullyExpanded && deltaY < -20) {
+      if (mediaFullyExpanded && deltaY < -20 && atTop) {
         setMediaFullyExpanded(false);
         setHorizontalExpansionComplete(false);
         setShowContent(false);
-        shouldHandleScroll.current = true;
         e.preventDefault();
-        e.stopPropagation();
-      } else if (!horizontalExpansionComplete) {
+      } else if (!horizontalExpansionComplete && atTop) {
+        // Phase 1: Horizontal expansion ONLY - prevent scrolling only at top
         e.preventDefault();
         e.stopPropagation();
         
@@ -187,14 +170,16 @@ const ScrollExpandMedia = ({
         if (newProgress >= 1) {
           setHorizontalExpansionComplete(true);
           setShowContent(true);
+          // Small delay to ensure smooth transition to scroll phase
           setTimeout(() => {
             setMediaFullyExpanded(true);
-            shouldHandleScroll.current = false;
           }, 100);
         }
 
         setTouchStartY(touchY);
       }
+      // Phase 2: Natural scrolling is allowed after horizontalExpansionComplete && mediaFullyExpanded
+      // or when scrollY > 5 (not at top of page)
     };
 
     const handleTouchEnd = (): void => {
@@ -202,6 +187,8 @@ const ScrollExpandMedia = ({
     };
 
     const handleScroll = (): void => {
+      // Body scroll is already locked during expansion phase
+      // This is just a fallback
       if (typeof window === 'undefined') return;
       
       if (!horizontalExpansionComplete && window.scrollY > 0) {
@@ -211,7 +198,6 @@ const ScrollExpandMedia = ({
 
     if (typeof window === 'undefined') return;
 
-    // Only add listeners if not fully expanded
     window.addEventListener('wheel', handleWheel as unknown as EventListener, {
       passive: false,
     });
@@ -315,6 +301,7 @@ const ScrollExpandMedia = ({
                   maxWidth: horizontalExpansionComplete ? '100vw' : '95vw',
                   maxHeight: horizontalExpansionComplete ? '100vh' : '85vh',
                   boxShadow: '0px 0px 50px rgba(0, 0, 0, 0.3)',
+                  willChange: horizontalExpansionComplete ? 'auto' : 'width, height',
                 }}
               >
                 {mediaType === 'video' ? (
@@ -357,7 +344,7 @@ const ScrollExpandMedia = ({
                         muted
                         loop
                         playsInline
-                        preload='auto'
+                        preload='metadata'
                         className={`w-full h-full object-cover ${horizontalExpansionComplete ? 'rounded-none' : 'rounded-xl'}`}
                         controls={false}
                         disablePictureInPicture

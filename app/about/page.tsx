@@ -84,13 +84,13 @@ const AboutContent = () => {
       {/* Stats Section - Above Team Section */}
       <section className="bg-background">
         <div className="container-edge py-16 md:py-20">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            {aboutStats.map((stat, index) => (
-              <Reveal key={stat.id} delay={index * 0.1}>
-                <StatCounter stat={stat} />
-              </Reveal>
-            ))}
-          </div>
+          <Reveal>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+              {aboutStats.map((stat) => (
+                <StatCounter key={stat.id} stat={stat} />
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -106,10 +106,10 @@ const AboutContent = () => {
             </div>
           </Reveal>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5 max-w-7xl mx-auto">
-            {aboutTeam.members.map((member, index) => (
-              <Reveal key={member.id} delay={index * 0.1}>
-                <div className={`group ${index % 2 === 1 ? 'lg:mt-12' : ''}`}>
+          <Reveal>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5 max-w-7xl mx-auto">
+              {aboutTeam.members.map((member) => (
+                <div key={member.id} className="group">
                   {/* Photo with Hover Effect */}
                   <div className="relative h-[360px] w-full max-w-[285px] mx-auto overflow-hidden bg-background-elevated">
                     <Image
@@ -119,7 +119,7 @@ const AboutContent = () => {
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
                       sizes="285px"
                       loading="lazy"
-                      quality={80}
+                      quality={75}
                     />
                     
                     {/* Social Icons Bar - Show on Hover */}
@@ -152,9 +152,9 @@ const AboutContent = () => {
                     </p>
                   </div>
                 </div>
-              </Reveal>
-            ))}
-          </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 

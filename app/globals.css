@@ -7,6 +7,29 @@
 
 @import "tailwindcss";
 
+/* Performance optimizations - CRITICAL */
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hardware acceleration for better scroll performance */
+.transform,
+[class*="translate"],
+[class*="scale"],
+[class*="rotate"] {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth;
+  }
+}
+
 :root {
   /* Dark mode (default) */
   --background: #0a0a0a;
