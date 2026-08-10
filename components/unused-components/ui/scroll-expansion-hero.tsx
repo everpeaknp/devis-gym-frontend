@@ -103,19 +103,19 @@ const ScrollExpandMedia = ({
   }, [horizontalExpansionComplete]);
 
   useEffect(() => {
+    // Don't attach any event listeners once fully expanded - let Lenis handle everything
+    if (horizontalExpansionComplete && mediaFullyExpanded) {
+      return;
+    }
+
     const handleWheel = (e: WheelEvent) => {
       if (typeof window === 'undefined') return;
       
-      // If fully expanded, never interfere with scroll
-      if (!shouldHandleScroll.current) {
-        return;
-      }
-      
-      // Only handle wheel events when we're at the top of the page
       const atTop = window.scrollY <= 5;
       
-      if (!atTop) {
-        return; // Allow normal scrolling when not at top
+      // Only interfere if we're at the top and not fully expanded
+      if (!atTop || (horizontalExpansionComplete && mediaFullyExpanded)) {
+        return;
       }
       
       if (mediaFullyExpanded && e.deltaY < 0) {
@@ -126,7 +126,6 @@ const ScrollExpandMedia = ({
         e.preventDefault();
         e.stopPropagation();
       } else if (!horizontalExpansionComplete) {
-        // Phase 1: Horizontal expansion ONLY
         e.preventDefault();
         e.stopPropagation();
         
@@ -140,10 +139,9 @@ const ScrollExpandMedia = ({
         if (newProgress >= 1) {
           setHorizontalExpansionComplete(true);
           setShowContent(true);
-          // Small delay to ensure smooth transition to scroll phase
           setTimeout(() => {
             setMediaFullyExpanded(true);
-            shouldHandleScroll.current = false; // Stop handling scroll events
+            shouldHandleScroll.current = false;
           }, 100);
         }
       }
@@ -152,7 +150,7 @@ const ScrollExpandMedia = ({
     const handleTouchStart = (e: TouchEvent) => {
       if (!shouldHandleScroll.current) return;
       const atTop = window.scrollY <= 5;
-      if (!atTop) return; // Allow normal touch when not at top
+      if (!atTop) return;
       setTouchStartY(e.touches[0].clientY);
     };
 
@@ -163,8 +161,8 @@ const ScrollExpandMedia = ({
       const deltaY = touchStartY - touchY;
       const atTop = window.scrollY <= 5;
 
-      if (!atTop) {
-        return; // Allow normal scrolling when not at top
+      if (!atTop || (horizontalExpansionComplete && mediaFullyExpanded)) {
+        return;
       }
 
       if (mediaFullyExpanded && deltaY < -20) {
@@ -175,7 +173,6 @@ const ScrollExpandMedia = ({
         e.preventDefault();
         e.stopPropagation();
       } else if (!horizontalExpansionComplete) {
-        // Phase 1: Horizontal expansion ONLY
         e.preventDefault();
         e.stopPropagation();
         
@@ -190,10 +187,9 @@ const ScrollExpandMedia = ({
         if (newProgress >= 1) {
           setHorizontalExpansionComplete(true);
           setShowContent(true);
-          // Small delay to ensure smooth transition to scroll phase
           setTimeout(() => {
             setMediaFullyExpanded(true);
-            shouldHandleScroll.current = false; // Stop handling scroll events
+            shouldHandleScroll.current = false;
           }, 100);
         }
 
@@ -215,6 +211,7 @@ const ScrollExpandMedia = ({
 
     if (typeof window === 'undefined') return;
 
+    // Only add listeners if not fully expanded
     window.addEventListener('wheel', handleWheel as unknown as EventListener, {
       passive: false,
     });

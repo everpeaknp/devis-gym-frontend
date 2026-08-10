@@ -27,15 +27,15 @@ export const aboutTeam = {
   heading: "Meet Our Team",
   body: "Our certified trainers are passionate about helping you achieve your fitness goals. With years of experience and specialized training, they provide personalized guidance and support throughout your journey.",
   members: [
-    {
-      id: "trainer-1",
-      name: "Anup Grg",
+    {      id: "trainer-5",
+      name: "Bijay Grg",
       role: "Certified Trainer",
-      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269624/devis-gym/people/Trainers/AnupGrg.JPG.webp",
+      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269634/devis-gym/people/Trainers/BijayGrg.JPG.webp",
       social: {
         facebook: "#",
         twitter: "#",
         youtube: "#",
+    
       },
     },
     {
@@ -49,19 +49,7 @@ export const aboutTeam = {
         youtube: "#",
       },
     },
-    {
-      id: "trainer-3",
-      name: "Abhishek Mishra",
-      role: "Certified Trainer",
-      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269614/devis-gym/people/Trainers/AbhishekMishra.JPG.webp",
-      social: {
-        facebook: "#",
-        twitter: "#",
-        youtube: "#",
-      },
-    },
-    {
-      id: "trainer-4",
+    {      id: "trainer-4",
       name: "Barsha Grg",
       role: "Zumba Trainer",
       image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269630/devis-gym/people/Trainers/BarshaGrg.JPG.webp",
@@ -69,17 +57,33 @@ export const aboutTeam = {
         facebook: "#",
         twitter: "#",
         youtube: "#",
+     
       },
     },
     {
-      id: "trainer-5",
-      name: "Bijay Grg",
+       id: "trainer-3",
+      name: "Abhishek Mishra",
       role: "Certified Trainer",
-      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269634/devis-gym/people/Trainers/BijayGrg.JPG.webp",
+      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269614/devis-gym/people/Trainers/AbhishekMishra.JPG.webp",
       social: {
         facebook: "#",
         twitter: "#",
         youtube: "#",
+
+
+      },
+    },
+    {
+        id: "trainer-1",
+      name: "Anup Grg",
+      role: "Certified Trainer",
+      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269624/devis-gym/people/Trainers/AnupGrg.JPG.webp",
+      social: {
+        facebook: "#",
+        twitter: "#",
+        youtube: "#",
+
+
       },
     },
   ],
