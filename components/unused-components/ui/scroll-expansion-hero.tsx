@@ -44,6 +44,7 @@ const ScrollExpandMedia = ({
   const [isMobileState, setIsMobileState] = useState<boolean>(false);
   const [windowDimensions, setWindowDimensions] = useState({ width: 1200, height: 800 });
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const shouldHandleScroll = useRef<boolean>(true);
 
   useEffect(() => {
     setScrollProgress(0);
@@ -102,13 +103,13 @@ const ScrollExpandMedia = ({
   }, [horizontalExpansionComplete]);
 
   useEffect(() => {
-    // Only attach event listeners if expansion is not complete
-    if (mediaFullyExpanded && horizontalExpansionComplete) {
-      return; // Don't attach any listeners once fully expanded
-    }
-
     const handleWheel = (e: WheelEvent) => {
       if (typeof window === 'undefined') return;
+      
+      // If fully expanded, never interfere with scroll
+      if (!shouldHandleScroll.current) {
+        return;
+      }
       
       // Only handle wheel events when we're at the top of the page
       const atTop = window.scrollY <= 5;
@@ -121,6 +122,7 @@ const ScrollExpandMedia = ({
         setMediaFullyExpanded(false);
         setShowContent(false);
         setHorizontalExpansionComplete(false);
+        shouldHandleScroll.current = true;
         e.preventDefault();
         e.stopPropagation();
       } else if (!horizontalExpansionComplete) {
@@ -141,19 +143,21 @@ const ScrollExpandMedia = ({
           // Small delay to ensure smooth transition to scroll phase
           setTimeout(() => {
             setMediaFullyExpanded(true);
+            shouldHandleScroll.current = false; // Stop handling scroll events
           }, 100);
         }
       }
     };
 
     const handleTouchStart = (e: TouchEvent) => {
+      if (!shouldHandleScroll.current) return;
       const atTop = window.scrollY <= 5;
       if (!atTop) return; // Allow normal touch when not at top
       setTouchStartY(e.touches[0].clientY);
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (typeof window === 'undefined' || !touchStartY) return;
+      if (typeof window === 'undefined' || !touchStartY || !shouldHandleScroll.current) return;
 
       const touchY = e.touches[0].clientY;
       const deltaY = touchStartY - touchY;
@@ -167,6 +171,7 @@ const ScrollExpandMedia = ({
         setMediaFullyExpanded(false);
         setHorizontalExpansionComplete(false);
         setShowContent(false);
+        shouldHandleScroll.current = true;
         e.preventDefault();
         e.stopPropagation();
       } else if (!horizontalExpansionComplete) {
@@ -188,6 +193,7 @@ const ScrollExpandMedia = ({
           // Small delay to ensure smooth transition to scroll phase
           setTimeout(() => {
             setMediaFullyExpanded(true);
+            shouldHandleScroll.current = false; // Stop handling scroll events
           }, 100);
         }
 
