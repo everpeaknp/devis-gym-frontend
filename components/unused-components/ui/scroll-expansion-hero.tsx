@@ -105,13 +105,16 @@ const ScrollExpandMedia = ({
     const handleWheel = (e: WheelEvent) => {
       if (typeof window === 'undefined') return;
       
-      if (mediaFullyExpanded && e.deltaY < 0 && window.scrollY <= 5) {
+      // Only handle wheel events when we're at the top of the page and not fully expanded
+      const atTop = window.scrollY <= 5;
+      
+      if (mediaFullyExpanded && e.deltaY < 0 && atTop) {
         setMediaFullyExpanded(false);
         setShowContent(false);
         setHorizontalExpansionComplete(false);
         e.preventDefault();
-      } else if (!horizontalExpansionComplete) {
-        // Phase 1: Horizontal expansion ONLY - prevent ALL scrolling
+      } else if (!horizontalExpansionComplete && atTop) {
+        // Phase 1: Horizontal expansion ONLY - prevent scrolling only at top
         e.preventDefault();
         e.stopPropagation();
         
@@ -132,6 +135,7 @@ const ScrollExpandMedia = ({
         }
       }
       // Phase 2: Natural scrolling is allowed after horizontalExpansionComplete && mediaFullyExpanded
+      // or when scrollY > 5 (not at top of page)
     };
 
     const handleTouchStart = (e: TouchEvent) => {
@@ -143,14 +147,15 @@ const ScrollExpandMedia = ({
 
       const touchY = e.touches[0].clientY;
       const deltaY = touchStartY - touchY;
+      const atTop = window.scrollY <= 5;
 
-      if (mediaFullyExpanded && deltaY < -20 && window.scrollY <= 5) {
+      if (mediaFullyExpanded && deltaY < -20 && atTop) {
         setMediaFullyExpanded(false);
         setHorizontalExpansionComplete(false);
         setShowContent(false);
         e.preventDefault();
-      } else if (!horizontalExpansionComplete) {
-        // Phase 1: Horizontal expansion ONLY - prevent ALL scrolling
+      } else if (!horizontalExpansionComplete && atTop) {
+        // Phase 1: Horizontal expansion ONLY - prevent scrolling only at top
         e.preventDefault();
         e.stopPropagation();
         
@@ -174,6 +179,7 @@ const ScrollExpandMedia = ({
         setTouchStartY(touchY);
       }
       // Phase 2: Natural scrolling is allowed after horizontalExpansionComplete && mediaFullyExpanded
+      // or when scrollY > 5 (not at top of page)
     };
 
     const handleTouchEnd = (): void => {
