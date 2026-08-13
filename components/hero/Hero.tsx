@@ -18,15 +18,16 @@ function cldVideoUrl(publicId: string) {
   return `https://res.cloudinary.com/ufiebboc/video/upload/f_auto,q_auto/${publicId}`;
 }
 
-// Hero media data - 5 slides, shown in this exact order.
+// Hero media data - 6 slides, shown in this exact order.
 // (The 'hfjpk00y9fqeznekhrh9' clip moved to the About page hero instead.)
 const heroMedia = [
   { type: 'video', src: cldVideoUrl('tekl0pzpwab9varn721q') },
-    { type: 'video', src: cldVideoUrl('alvwyjgac27zdnon18cu') },
+ 
+  { type: 'video', src: cldVideoUrl('aj7bla6eryvplzprto9f') },
   { type: 'image', src: cldOptimize('https://res.cloudinary.com/ufiebboc/image/upload/v1786269232/devis-gym/people/DSC07536.JPG.webp', 1600) },
   { type: 'image', src: cldOptimize('https://res.cloudinary.com/ufiebboc/image/upload/v1786269561/devis-gym/people/DSC07720-2.JPG.webp', 1600) },
-
   { type: 'image', src: cldOptimize('https://res.cloudinary.com/ufiebboc/image/upload/v1786269681/devis-gym/people/DSC07643-3.JPG.webp', 1600) },
+   { type: 'video', src: cldVideoUrl('alvwyjgac27zdnon18cu') },
 ];
 
 // Caption content, one entry per slide above, shown in the same order
@@ -49,6 +50,12 @@ const slideContent: {
     heading: ["Discover", "Your", "Strength."],
     description: "Fitness is easier when you're surrounded by people who encourage you. At Devi's Gym, you'll train alongside a welcoming community, learn from experienced coaches, and celebrate every milestone, big or small, together.",
     cta: { href: '/gym', label: 'Join Our Community' },
+  },
+  {
+    eyebrow: "Push Your Limits",
+    heading: ["Experience", "The", "Energy."],
+    description: "Feel the intensity of a real training session. From high-energy group classes to focused workouts, this is where dedication meets results.",
+    cta: { href: '/classes', label: 'View All Classes' },
   },
   {
     eyebrow: "Your Transformation Starts Here",
