@@ -69,22 +69,8 @@ export const aboutTeam = {
         facebook: "#",
         twitter: "#",
         youtube: "#",
-
-
       },
     },
-    {
-        id: "trainer-1",
-      name: "Anup Grg",
-      role: "Certified Trainer",
-      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269624/devis-gym/people/Trainers/AnupGrg.JPG.webp",
-      social: {
-        facebook: "#",
-        twitter: "#",
-        youtube: "#",
-
-
-      },
-    },
+  
   ],
 };
