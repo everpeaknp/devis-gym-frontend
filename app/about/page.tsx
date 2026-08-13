@@ -107,9 +107,15 @@ const AboutContent = () => {
           </Reveal>
 
           <Reveal>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5 max-w-7xl mx-auto">
-              {aboutTeam.members.map((member) => (
-                <div key={member.id} className="group">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+              {aboutTeam.members.map((member, index) => (
+                <div 
+                  key={member.id} 
+                  className="group"
+                  style={{ 
+                    marginTop: index % 2 === 0 ? '0' : '3rem'
+                  }}
+                >
                   {/* Photo with Hover Effect */}
                   <div className="relative h-[360px] w-full max-w-[285px] mx-auto overflow-hidden bg-background-elevated">
                     <Image
