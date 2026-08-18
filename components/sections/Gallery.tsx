@@ -59,10 +59,10 @@ export default function Gallery({ maxImages }: GalleryProps) {
   return (
     <section className="bg-background relative z-20">
       <div className="container-edge pt-16 pb-16 sm:pt-20 sm:pb-20 md:pt-24 md:pb-24">
-        <SectionHeading eyebrow="Gallery" title="A look inside" />
+        <SectionHeading eyebrow="Gallery" title="A look inside" align="center" />
 
         <div className="mt-6 sm:mt-8 md:mt-10 overflow-x-auto scrollbar-hide">
-          <div className="flex gap-2 sm:gap-3 pb-2 min-w-max">
+          <div className="flex gap-2 sm:gap-3 pb-2 min-w-max mx-auto justify-center">
             {["All", ...galleryCategories].map((cat) => (
               <button
                 key={cat}

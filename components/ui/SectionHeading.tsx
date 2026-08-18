@@ -27,8 +27,8 @@ export default function SectionHeading({
     >
       <div
         className={clsx(
-          "flex items-start gap-4",
-          align === "center" && "flex-col items-center gap-2"
+          "flex gap-4",
+          align === "center" ? "flex-col items-center gap-2" : "items-start"
         )}
       >
         {index && (

@@ -106,6 +106,18 @@ const FlowArt: React.FC<FlowArtProps> = ({
                 start: 'top bottom',
                 end: 'top 25%',
                 scrub: true,
+                // Without this, scroll can come to rest at any point in the
+                // rotation (a mouse wheel or trackpad has no obligation to stop
+                // exactly at a boundary), leaving a section visibly frozen
+                // mid-tilt — which reads as broken even though the animation
+                // itself is working. Snap to whichever end of the transition is
+                // closer once scrolling stops, so it only ever rests flat or
+                // fully rotated.
+                snap: {
+                  snapTo: [0, 1],
+                  duration: 0.3,
+                  ease: 'power1.inOut',
+                },
               },
             });
 

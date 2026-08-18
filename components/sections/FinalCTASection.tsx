@@ -16,10 +16,10 @@ export default function FinalCTASection() {
 
   return (
     <section ref={containerRef} className="bg-background-elevated relative overflow-hidden">
-      {/* Equipment image moving from left to right on right side */}
+      {/* Equipment image moving from left to right on left side */}
       <motion.div
         style={{ x }}
-        className="absolute top-1/2 right-0 -translate-y-1/2 w-96 h-96 opacity-10 pointer-events-none z-0"
+        className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 opacity-10 pointer-events-none z-0"
       >
         <Image
           src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268760/devis-gym/equipment/7.webp"
