@@ -27,7 +27,7 @@ const heroMedia = [
   { type: 'image', src: cldOptimize('https://res.cloudinary.com/ufiebboc/image/upload/v1786269232/devis-gym/people/DSC07536.JPG.webp', 1600) },
   { type: 'image', src: cldOptimize('https://res.cloudinary.com/ufiebboc/image/upload/v1786269561/devis-gym/people/DSC07720-2.JPG.webp', 1600) },
   { type: 'image', src: cldOptimize('https://res.cloudinary.com/ufiebboc/image/upload/v1786269681/devis-gym/people/DSC07643-3.JPG.webp', 1600) },
-   { type: 'video', src: cldVideoUrl('alvwyjgac27zdnon18cu') },
+   { type: 'video', src: cldVideoUrl('alvwyjgac27zdnon18cu') }, 
 ];
 
 // Caption content, one entry per slide above, shown in the same order

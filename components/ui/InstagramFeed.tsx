@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 
 // Static Instagram-style posts using images from public/people
@@ -13,29 +14,49 @@ const instagramPosts = [
   { id: "7", media_url: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269532/devis-gym/people/DSC07624-3.JPG.webp", caption: "Outdoor fitness lifestyle", likes: 145, comments: 7 },
 ];
 
+// These were being served at their raw Cloudinary size (2.5MB+ originals) into a
+// 300px-tall grid cell — decoding that much data at once for images already lazy
+// loading is exactly what produces the blank/black boxes while scrolling into
+// view. Cloudinary can crop + compress on the fly via URL params, so ask for a
+// size that actually matches the display instead of shipping the original.
+function toThumbnail(url: string) {
+  return url.replace("/image/upload/", "/image/upload/w_600,h_600,c_fill,q_auto,f_auto/");
+}
+
 export default function InstagramFeed() {
+  const [loadedIds, setLoadedIds] = useState<Set<string>>(new Set());
+
   return (
     <div className="flex h-[300px] touch-pan-y">
-      {instagramPosts.map((post) => (
-        <a
-          key={post.id} 
-          href="https://www.instagram.com/devisgym_pokhara/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-1 min-w-0 relative block"
-        >
-          <Image
-            src={post.media_url}
-            alt={post.caption}
-            width={400}
-            height={300}
-            className="w-full h-full object-cover"
-            loading="lazy"
-            quality={75}
-            draggable={false}
-          />
-        </a>
-      ))}
+      {instagramPosts.map((post) => {
+        const isLoaded = loadedIds.has(post.id);
+        return (
+          <div
+            key={post.id}
+            className="flex-1 min-w-0 relative bg-zinc-800"
+          >
+            <Image
+              src={toThumbnail(post.media_url)}
+              alt={post.caption}
+              fill
+              sizes="(max-width: 768px) 33vw, 15vw"
+              className={`object-cover transition-opacity duration-500 ease-out ${
+                isLoaded ? "opacity-100" : "opacity-0"
+              }`}
+              loading="lazy"
+              quality={75}
+              draggable={false}
+              onLoad={() =>
+                setLoadedIds((prev) => {
+                  const next = new Set(prev);
+                  next.add(post.id);
+                  return next;
+                })
+              }
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }

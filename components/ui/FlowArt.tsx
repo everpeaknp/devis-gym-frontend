@@ -76,53 +76,78 @@ const FlowArt: React.FC<FlowArtProps> = ({
 
       if (sections.length === 0) return;
 
-      const triggers: ScrollTrigger[] = [];
+      let triggers: ScrollTrigger[] = [];
 
-      sections.forEach((section, i) => {
-        gsap.set(section, { zIndex: i + 1 });
+      // Rebuilt (not just re-measured) on resize: on mobile the address bar
+      // collapsing after the first scroll changes window.innerHeight after
+      // mount, which can flip whether a section "fits" the viewport. Since
+      // that decides pin vs. no-pin per section, a stale call here desyncs
+      // the pinning from the rotate-in scrub on the next section.
+      const build = () => {
+        triggers.forEach((t) => t.kill());
+        triggers = [];
 
-        const inner = section.querySelector<HTMLElement>('.flow-art-container');
-        if (!inner) return;
+        const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
 
-        if (i > 0) {
-          gsap.set(inner, { rotation: 30, transformOrigin: 'bottom left' });
+        sections.forEach((section, i) => {
+          gsap.set(section, { zIndex: i + 1 });
 
-          const tween = gsap.to(inner, {
-            rotation: 0,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top bottom',
-              end: 'top 25%',
-              scrub: true,
-            },
-          });
+          const inner = section.querySelector<HTMLElement>('.flow-art-container');
+          if (!inner) return;
 
-          if (tween.scrollTrigger) triggers.push(tween.scrollTrigger);
-        }
+          if (i > 0) {
+            gsap.set(inner, { rotation: 30, transformOrigin: 'bottom left' });
 
-        if (i < sections.length - 1) {
-          const sectionFitsViewport = section.scrollHeight <= window.innerHeight * 1.05;
+            const tween = gsap.to(inner, {
+              rotation: 0,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: section,
+                start: 'top bottom',
+                end: 'top 25%',
+                scrub: true,
+              },
+            });
 
-          if (!sectionFitsViewport) {
-            return;
+            if (tween.scrollTrigger) triggers.push(tween.scrollTrigger);
           }
 
-          triggers.push(
-            ScrollTrigger.create({
-              trigger: section,
-              start: 'bottom bottom',
-              end: 'bottom top',
-              pin: true,
-              pinSpacing: false,
-            }),
-          );
-        }
-      });
+          if (i < sections.length - 1) {
+            const sectionFitsViewport = section.scrollHeight <= viewportHeight * 1.05;
 
-      ScrollTrigger.refresh();
+            if (!sectionFitsViewport) {
+              return;
+            }
+
+            triggers.push(
+              ScrollTrigger.create({
+                trigger: section,
+                start: 'bottom bottom',
+                end: 'bottom top',
+                pin: true,
+                pinSpacing: false,
+              }),
+            );
+          }
+        });
+
+        ScrollTrigger.refresh();
+      };
+
+      build();
+
+      let resizeTimeout: number | undefined;
+      const onResize = () => {
+        window.clearTimeout(resizeTimeout);
+        resizeTimeout = window.setTimeout(build, 200);
+      };
+      window.addEventListener('resize', onResize);
+      window.visualViewport?.addEventListener('resize', onResize);
 
       return () => {
+        window.clearTimeout(resizeTimeout);
+        window.removeEventListener('resize', onResize);
+        window.visualViewport?.removeEventListener('resize', onResize);
         triggers.forEach((t) => t.kill());
       };
     },

@@ -6,6 +6,7 @@ import SmoothScrollProvider from "@/components/layout/SmoothScrollProvider";
 import { Component as KineticNavigation } from "@/components/ui/sterling-gate-kinetic-navigation";
 import SoundManager from "@/components/ui/SoundManager";
 import LoadingScreen from "@/components/ui/LoadingScreen";
+import HydrationProvider from "@/components/providers/HydrationProvider";
 import { Oswald, Kanit } from "next/font/google";
 
 const oswald = Oswald({
@@ -85,11 +86,12 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`h-full antialiased ${oswald.variable} ${kanit.variable}`}>
+    <html lang="en" className={`h-full antialiased ${oswald.variable} ${kanit.variable}`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          suppressHydrationWarning
         />
         <script
           dangerouslySetInnerHTML={{
@@ -102,14 +104,20 @@ export default function RootLayout({
               });
             `,
           }}
+          suppressHydrationWarning
         />
       </head>
-      <body className="min-h-full flex flex-col bg-background text-foreground">
-        <LoadingScreen />
-        <div className="grain" aria-hidden="true" />
-        <KineticNavigation />
-        <SoundManager />
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+      <body
+        className="min-h-full flex flex-col bg-background text-foreground"
+        suppressHydrationWarning
+      >
+        <HydrationProvider>
+          <LoadingScreen />
+          <div className="grain" aria-hidden="true" suppressHydrationWarning />
+          <KineticNavigation />
+          <SoundManager />
+          <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        </HydrationProvider>
       </body>
     </html>
   );

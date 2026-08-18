@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  reactStrictMode: false, // Disable strict mode to reduce hydration warnings in development
   images: {
     unoptimized: true, // Disable Vercel image optimization to avoid 402 errors
     formats: ["image/avif", "image/webp"],

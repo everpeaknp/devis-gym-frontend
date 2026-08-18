@@ -33,43 +33,43 @@ export default function GymPage() {
             
             {/* Hover Reveal Cards */}
             <div className="w-full mt-16">
-              <HoverRevealCards 
+              <HoverRevealCards
                 items={[
                   {
                     id: 1,
                     title: 'Free Weights',
                     subtitle: 'STRENGTH',
-                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268764/devis-gym/equipment/machines/1.webp'
+                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/w_600,h_600,c_fill,q_auto,f_auto/v1786268711/devis-gym/devis/IMG_7358.JPG.jpg'
                   },
                   {
                     id: 2,
                     title: 'Cardio Zone',
                     subtitle: 'ENDURANCE',
-                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268768/devis-gym/equipment/machines/2.webp'
+                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/w_600,h_600,c_fill,q_auto,f_auto/v1786268712/devis-gym/devis/IMG_7359.JPG.jpg'
                   },
                   {
                     id: 3,
                     title: 'Power Racks',
                     subtitle: 'POWER',
-                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268770/devis-gym/equipment/machines/3.webp'
+                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/w_600,h_600,c_fill,q_auto,f_auto/v1786268714/devis-gym/devis/IMG_7360.JPG.jpg'
                   },
                   {
                     id: 4,
                     title: 'Functional',
                     subtitle: 'TRAINING',
-                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268771/devis-gym/equipment/machines/4.webp'
+                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/w_600,h_600,c_fill,q_auto,f_auto/v1786268716/devis-gym/devis/IMG_7361.JPG.jpg'
                   },
                   {
                     id: 5,
                     title: 'Olympic Lifts',
                     subtitle: 'TECHNIQUE',
-                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268775/devis-gym/equipment/machines/5.webp'
+                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/w_600,h_600,c_fill,q_auto,f_auto/v1786268718/devis-gym/devis/IMG_7362.JPG.jpg'
                   },
                   {
                     id: 6,
                     title: 'Recovery Zone',
                     subtitle: 'MOBILITY',
-                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/v1786268777/devis-gym/equipment/machines/6.webp'
+                    imageUrl: 'https://res.cloudinary.com/ufiebboc/image/upload/w_600,h_600,c_fill,q_auto,f_auto/v1786268720/devis-gym/devis/IMG_7363.JPG.jpg'
                   }
                 ]}
                 className="grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 p-0 w-full max-w-none"

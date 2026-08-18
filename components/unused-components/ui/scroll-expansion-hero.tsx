@@ -44,6 +44,8 @@ const ScrollExpandMedia = ({
   const [isMobileState, setIsMobileState] = useState<boolean>(false);
   const [windowDimensions, setWindowDimensions] = useState({ width: 1200, height: 800 });
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const rafIdRef = useRef<number | null>(null);
+  const pendingProgressRef = useRef<number | null>(null);
 
   useEffect(() => {
     setScrollProgress(0);
@@ -62,7 +64,7 @@ const ScrollExpandMedia = ({
     // events, so the two fight over scroll input. Pausing Lenis for the
     // duration of the hijacked phase — and only that phase — resolves the
     // conflict without touching this component's own animation/design.
-    type LenisLike = { stop: () => void; start: () => void };
+    type LenisLike = { stop: () => void; start: () => void; resize: () => void };
     const getLenis = () => (window as unknown as { lenis?: LenisLike }).lenis;
 
     const applyLenisState = () => {
@@ -70,6 +72,14 @@ const ScrollExpandMedia = ({
         getLenis()?.stop();
       } else {
         getLenis()?.start();
+        // The body was position:fixed during the hijack phase, which collapses
+        // the document's scrollable height to the viewport. Lenis measures and
+        // caches that height, and doesn't re-measure on a body style change —
+        // so without an explicit resize() here it stays convinced the page has
+        // nothing left to scroll, and wheel-driven scroll silently dies for the
+        // rest of the page. Deferred a frame so the body's un-locked layout has
+        // actually reflowed before Lenis re-measures it.
+        requestAnimationFrame(() => getLenis()?.resize());
       }
     };
 
@@ -102,12 +112,31 @@ const ScrollExpandMedia = ({
   }, [horizontalExpansionComplete]);
 
   useEffect(() => {
+    // Wheel events fire far faster than the display refreshes, and this
+    // handler used to call setScrollProgress on every single one — each a
+    // synchronous re-render of the whole hero (video + motion overlays +
+    // headline) plus, since scrollProgress sits in this effect's deps below,
+    // a teardown/rebind of all five listeners. Batch to one commit per
+    // animation frame instead; accumulate in the ref so a burst of deltas
+    // within the same uncommitted frame still sums correctly.
+    const scheduleProgress = (nextValue: number) => {
+      pendingProgressRef.current = nextValue;
+      if (rafIdRef.current !== null) return;
+      rafIdRef.current = requestAnimationFrame(() => {
+        rafIdRef.current = null;
+        if (pendingProgressRef.current !== null) {
+          setScrollProgress(pendingProgressRef.current);
+          pendingProgressRef.current = null;
+        }
+      });
+    };
+
     const handleWheel = (e: WheelEvent) => {
       if (typeof window === 'undefined') return;
-      
+
       // Only handle wheel events when we're at the top of the page and not fully expanded
       const atTop = window.scrollY <= 5;
-      
+
       if (mediaFullyExpanded && e.deltaY < 0 && atTop) {
         setMediaFullyExpanded(false);
         setShowContent(false);
@@ -117,13 +146,14 @@ const ScrollExpandMedia = ({
         // Phase 1: Horizontal expansion ONLY - prevent scrolling only at top
         e.preventDefault();
         e.stopPropagation();
-        
+
         const scrollDelta = e.deltaY * 0.002;
+        const base = pendingProgressRef.current ?? scrollProgress;
         const newProgress = Math.min(
-          Math.max(scrollProgress + scrollDelta, 0),
+          Math.max(base + scrollDelta, 0),
           1
         );
-        setScrollProgress(newProgress);
+        scheduleProgress(newProgress);
 
         if (newProgress >= 1) {
           setHorizontalExpansionComplete(true);
@@ -161,11 +191,12 @@ const ScrollExpandMedia = ({
         
         const scrollFactor = deltaY < 0 ? 0.008 : 0.005;
         const scrollDelta = deltaY * scrollFactor;
+        const base = pendingProgressRef.current ?? scrollProgress;
         const newProgress = Math.min(
-          Math.max(scrollProgress + scrollDelta, 0),
+          Math.max(base + scrollDelta, 0),
           1
         );
-        setScrollProgress(newProgress);
+        scheduleProgress(newProgress);
 
         if (newProgress >= 1) {
           setHorizontalExpansionComplete(true);
@@ -231,6 +262,12 @@ const ScrollExpandMedia = ({
         handleTouchMove as unknown as EventListener
       );
       window.removeEventListener('touchend', handleTouchEnd as EventListener);
+
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
+      pendingProgressRef.current = null;
     };
   }, [scrollProgress, mediaFullyExpanded, horizontalExpansionComplete, touchStartY]);
 
@@ -385,7 +422,7 @@ const ScrollExpandMedia = ({
                   {date && (
                     <p
                       className='font-gotham text-white font-bold uppercase tracking-wider'
-                      style={{ 
+                      style={{
                         transform: `translateX(-${textTranslateX}vw)`,
                         fontWeight: 700,
                         fontSize: '17px',
@@ -399,7 +436,7 @@ const ScrollExpandMedia = ({
                   {subtitle && (
                     <p
                       className='font-gotham text-white font-medium uppercase tracking-wider mt-1'
-                      style={{ 
+                      style={{
                         transform: `translateX(-${textTranslateX}vw)`,
                         fontWeight: 500,
                         fontSize: '13px',
@@ -413,7 +450,7 @@ const ScrollExpandMedia = ({
                   {scrollToExpand && (
                     <p
                       className='font-gotham text-white font-medium text-center'
-                      style={{ 
+                      style={{
                         transform: `translateX(${textTranslateX}vw)`,
                         fontWeight: 500,
                         fontSize: '13px',

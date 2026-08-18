@@ -62,13 +62,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       className={`fixed inset-0 z-[99999] bg-black flex items-center justify-center transition-opacity duration-500 ${
         fadeOut ? 'opacity-0' : 'opacity-100'
       }`}
+      suppressHydrationWarning
     >
-      <div className="flex flex-col items-center justify-center gap-8">
+      <div className="flex flex-col items-center justify-center gap-8" suppressHydrationWarning>
         {/* Loading Animation */}
         <UniqueLoading variant="morph" size="lg" className="w-32 h-32" />
         
         {/* Gym Name */}
-        <div className="text-center">
+        <div className="text-center" suppressHydrationWarning>
           <h1 className="text-4xl md:text-6xl font-oswald font-bold text-white tracking-wider">
             DEVI'S
           </h1>
