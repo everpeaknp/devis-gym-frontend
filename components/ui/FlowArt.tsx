@@ -148,6 +148,29 @@ const FlowArt: React.FC<FlowArtProps> = ({
 
       build();
 
+      // Refresh after images load
+      const images = containerRef.current.querySelectorAll('img');
+      let loadedCount = 0;
+      const totalImages = images.length;
+
+      const onImageLoad = () => {
+        loadedCount++;
+        if (loadedCount === totalImages) {
+          setTimeout(() => {
+            build();
+          }, 100);
+        }
+      };
+
+      images.forEach((img) => {
+        if (img.complete) {
+          onImageLoad();
+        } else {
+          img.addEventListener('load', onImageLoad);
+          img.addEventListener('error', onImageLoad);
+        }
+      });
+
       let resizeTimeout: number | undefined;
       const onResize = () => {
         window.clearTimeout(resizeTimeout);
@@ -160,6 +183,10 @@ const FlowArt: React.FC<FlowArtProps> = ({
         window.clearTimeout(resizeTimeout);
         window.removeEventListener('resize', onResize);
         window.visualViewport?.removeEventListener('resize', onResize);
+        images.forEach((img) => {
+          img.removeEventListener('load', onImageLoad);
+          img.removeEventListener('error', onImageLoad);
+        });
         triggers.forEach((t) => t.kill());
       };
     },
