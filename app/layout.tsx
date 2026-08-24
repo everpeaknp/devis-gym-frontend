@@ -7,6 +7,7 @@ import { Component as KineticNavigation } from "@/components/ui/sterling-gate-ki
 import SoundManager from "@/components/ui/SoundManager";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import HydrationProvider from "@/components/providers/HydrationProvider";
+import ErrorBoundary from "@/components/providers/ErrorBoundary";
 import { Oswald, Kanit } from "next/font/google";
 
 const oswald = Oswald({
@@ -111,13 +112,15 @@ export default function RootLayout({
         className="min-h-full flex flex-col bg-background text-foreground"
         suppressHydrationWarning
       >
-        <HydrationProvider>
-          <LoadingScreen />
-          <div className="grain" aria-hidden="true" suppressHydrationWarning />
-          <KineticNavigation />
-          <SoundManager />
-          <SmoothScrollProvider>{children}</SmoothScrollProvider>
-        </HydrationProvider>
+        <ErrorBoundary>
+          <HydrationProvider>
+            <LoadingScreen />
+            <div className="grain" aria-hidden="true" suppressHydrationWarning />
+            <KineticNavigation />
+            <SoundManager />
+            <SmoothScrollProvider>{children}</SmoothScrollProvider>
+          </HydrationProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

@@ -28,6 +28,13 @@ export default function KineticNavigation() {
   useEffect(() => {
     if (!containerRef.current) return;
 
+    // Skip shape animations on mobile for better performance
+    const isMobile = window.innerWidth < 1024;
+    if (isMobile) {
+      console.log('[Navigation] Mobile detected - shape animations disabled');
+      return;
+    }
+
     // Create custom easing
     try {
       if (!gsap.parseEase("main")) {
@@ -40,7 +47,7 @@ export default function KineticNavigation() {
     }
 
     const ctx = gsap.context(() => {
-      // Shape Hover
+      // Shape Hover - Desktop only
       const menuItems = containerRef.current!.querySelectorAll(".menu-list-item[data-shape]");
       const shapesContainer = containerRef.current!.querySelector(".ambient-background-shapes");
       
@@ -93,6 +100,9 @@ export default function KineticNavigation() {
   useEffect(() => {
     if (!containerRef.current) return;
     
+    // Detect mobile for simpler animations
+    const isMobile = window.innerWidth < 1024;
+    
     const ctx = gsap.context(() => {
       const navWrap = containerRef.current!.querySelector(".nav-overlay-wrapper");
       const menu = containerRef.current!.querySelector(".menu-content");
@@ -106,7 +116,7 @@ export default function KineticNavigation() {
       const tl = gsap.timeline();
       
       if (isMenuOpen) {
-        // OPEN - Sidebar from right on mobile
+        // OPEN - Simplified for mobile, full animations for desktop
         if (navWrap) navWrap.setAttribute("data-nav", "open");
         
         tl.set(navWrap, { display: "block" })
@@ -117,21 +127,37 @@ export default function KineticNavigation() {
           tl.fromTo(menuButtonTexts, { yPercent: 0 }, { yPercent: -100, stagger: 0.2 });
         }
           
-        tl.fromTo(overlay, { autoAlpha: 0 }, { autoAlpha: 1 }, "<")
-          .to(menu, { xPercent: 0, duration: 0.6, ease: "power3.out" }, "<")
-          .fromTo(bgPanels, { xPercent: 101 }, { xPercent: 0, stagger: 0.12, duration: 0.575 }, "<+=0.1")
-          .fromTo(menuLinks, { yPercent: 140, rotate: 10 }, { yPercent: 0, rotate: 0, stagger: 0.05 }, "<+=0.35");
+        tl.fromTo(overlay, { autoAlpha: 0 }, { autoAlpha: 1 }, "<");
+        
+        if (isMobile) {
+          // Mobile: Fast, simple slide-in without backdrop animation
+          tl.to(menu, { xPercent: 0, duration: 0.35, ease: "power2.out" }, "<")
+            .fromTo(menuLinks, { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.03, duration: 0.3 }, "<+=0.15");
+        } else {
+          // Desktop: Full animation with backdrops
+          tl.to(menu, { xPercent: 0, duration: 0.6, ease: "power3.out" }, "<")
+            .fromTo(bgPanels, { xPercent: 101 }, { xPercent: 0, stagger: 0.12, duration: 0.575 }, "<+=0.1")
+            .fromTo(menuLinks, { yPercent: 140, rotate: 10 }, { yPercent: 0, rotate: 0, stagger: 0.05 }, "<+=0.35");
+        }
           
         if (fadeTargets.length) {
-          tl.fromTo(fadeTargets, { autoAlpha: 0, yPercent: 50 }, { autoAlpha: 1, yPercent: 0, stagger: 0.04, clearProps: "all" }, "<+=0.2");
+          tl.fromTo(fadeTargets, { autoAlpha: 0, yPercent: 50 }, { autoAlpha: 1, yPercent: 0, stagger: 0.04, clearProps: "all" }, "<+=0.1");
         }
       } else {
-        // CLOSE - Sidebar slides out to right on mobile
+        // CLOSE - Simplified for mobile
         if (navWrap) navWrap.setAttribute("data-nav", "closed");
         
-        tl.to(menuLinks, { yPercent: 140, rotate: 10, stagger: 0.03, duration: 0.3 })
-          .to(overlay, { autoAlpha: 0, duration: 0.4 }, "<")
-          .to(menu, { xPercent: 100, duration: 0.5, ease: "power3.in" }, "<");
+        if (isMobile) {
+          // Mobile: Fast close
+          tl.to(menuLinks, { opacity: 0, y: -10, stagger: 0.02, duration: 0.2 })
+            .to(overlay, { autoAlpha: 0, duration: 0.25 }, "<")
+            .to(menu, { xPercent: 100, duration: 0.3, ease: "power2.in" }, "<");
+        } else {
+          // Desktop: Full animation
+          tl.to(menuLinks, { yPercent: 140, rotate: 10, stagger: 0.03, duration: 0.3 })
+            .to(overlay, { autoAlpha: 0, duration: 0.4 }, "<")
+            .to(menu, { xPercent: 100, duration: 0.5, ease: "power3.in" }, "<");
+        }
           
         if (menuButtonTexts && menuButtonTexts.length > 0) {
           tl.to(menuButtonTexts, { yPercent: 0 }, "<");

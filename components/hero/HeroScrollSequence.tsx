@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import { scrollTriggerManager } from "@/lib/scrollTriggerManager";
 
 interface HeroScrollSequenceProps {
   heroSectionRef?: React.RefObject<HTMLElement | null>;
@@ -35,24 +36,24 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
 
     console.log("HeroScrollSequence: Initializing");
 
-    // Reduce frame count on mobile for better performance
+    // Aggressive mobile optimization - reduce frames dramatically
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const frameCount = isMobile ? 16 : 31; // Half frames on mobile (every other frame)
     const frames = Array.from(framesContainer.querySelectorAll<HTMLImageElement>(".hero-frame"));
     
-    // On mobile, only use every other frame for better performance
+    // On mobile: use only every 4th frame (8 frames total) for 75% memory reduction
+    // On desktop: use every 2nd frame (16 frames) for smoother animation with less memory
     const activeFrames = isMobile 
-      ? frames.filter((_, index) => index % 2 === 0) // Every 2nd frame
-      : frames;
+      ? frames.filter((_, index) => index % 4 === 0) // Every 4th frame = 8 frames on mobile
+      : frames.filter((_, index) => index % 2 === 0); // Every 2nd frame = 16 frames on desktop
     
     if (activeFrames.length === 0) {
       console.error("No .hero-frame elements found!");
       return;
     }
 
-    console.log(`Using ${activeFrames.length} frames (mobile: ${isMobile})`);
+    console.log(`Using ${activeFrames.length} frames (mobile: ${isMobile}, total available: ${frames.length})`);
 
-    // Set initial state for all frames with GSAP
+    // Set initial state for all frames with GSAP - no will-change on mobile
     frames.forEach((frame) => {
       gsap.set(frame, { 
         opacity: 0,
@@ -79,7 +80,7 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
       activeFrames[newIndex].style.opacity = '1';
       currentFrameIndex = newIndex;
       
-      const dayValue = getDayValue(newIndex * (isMobile ? 2 : 1)); // Adjust for skipped frames
+      const dayValue = getDayValue(newIndex * (isMobile ? 4 : 2)); // Adjust for skipped frames
       setCurrentDay(dayValue);
     };
 
@@ -113,9 +114,9 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
 
     console.log("GSAP ScrollTrigger created");
 
-    // Initial refresh
+    // Initial refresh using manager
     const initialRefresh = setTimeout(() => {
-      ScrollTrigger.refresh();
+      scrollTriggerManager.debouncedRefresh(150);
     }, 100);
 
     // Resize handler with debounce - desktop only
@@ -123,8 +124,8 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
     const handleResize = () => {
       if (resizeTimeout) clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 250);
+        scrollTriggerManager.debouncedRefresh(250);
+      }, 300);
     };
 
     if (!isMobile) {
@@ -176,19 +177,18 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
                 key={`frame-${i}`}
                 src={`https://res.cloudinary.com/ufiebboc/image/upload/v${1786268786 + i * 2}/devis-gym/frame/frame_${String(i + 1).padStart(3, "0")}.webp`}
                 alt=""
-                width={800}
-                height={600}
-                priority={i < 3}
-                loading={i < 3 ? "eager" : "lazy"}
+                width={600}
+                height={450}
+                priority={i < 2}
+                loading={i < 2 ? "eager" : "lazy"}
                 className="hero-frame absolute inset-0 w-full h-full object-contain"
                 style={{ 
                   zIndex: 1,
-                  willChange: 'opacity',
                   pointerEvents: 'none',
                   transition: 'none' // Force no transitions
                 }}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                quality={75}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
+                quality={60}
               />
             ))}
 

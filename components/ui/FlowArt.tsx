@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import { scrollTriggerManager } from '@/lib/scrollTriggerManager';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -143,7 +144,7 @@ const FlowArt: React.FC<FlowArtProps> = ({
           }
         });
 
-        ScrollTrigger.refresh();
+        scrollTriggerManager.debouncedRefresh(200);
       };
 
       build();
@@ -174,7 +175,7 @@ const FlowArt: React.FC<FlowArtProps> = ({
       let resizeTimeout: number | undefined;
       const onResize = () => {
         window.clearTimeout(resizeTimeout);
-        resizeTimeout = window.setTimeout(build, 200);
+        resizeTimeout = window.setTimeout(build, 300);
       };
       window.addEventListener('resize', onResize);
       window.visualViewport?.addEventListener('resize', onResize);

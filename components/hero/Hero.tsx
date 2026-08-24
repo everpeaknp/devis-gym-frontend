@@ -89,7 +89,6 @@ export default function Hero() {
   // updater function doing that would get Strict Mode's double-invoke-to-check-
   // purity treatment in dev, firing the side effect twice and skipping a slide.
   const elapsedRef = useRef(0);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [isTransitioning, setIsTransitioning] = useState(false);
   
@@ -161,45 +160,56 @@ export default function Hero() {
     });
   }, [currentMediaIndex, isPaused]);
 
-  // Auto-advance slider with progress
+  // Auto-advance slider with progress using RAF instead of setInterval
   useEffect(() => {
     const slideInterval = 5000; // 5 seconds per slide
-    
-    const updateProgress = () => {
-      if (isPaused) return;
+    let rafId: number | null = null;
+    let lastTimestamp: number | null = null;
 
-      const newElapsed = elapsedRef.current + 100;
-      setProgress(Math.min((newElapsed / slideInterval) * 100, 100));
+    const animate = (timestamp: number) => {
+      if (isPaused) {
+        lastTimestamp = null;
+        rafId = requestAnimationFrame(animate);
+        return;
+      }
+
+      if (lastTimestamp === null) {
+        lastTimestamp = timestamp;
+      }
+
+      const deltaTime = timestamp - lastTimestamp;
+      lastTimestamp = timestamp;
+
+      const newElapsed = elapsedRef.current + deltaTime;
+      const progressPercent = Math.min((newElapsed / slideInterval) * 100, 100);
+      setProgress(progressPercent);
 
       if (newElapsed >= slideInterval) {
         elapsedRef.current = 0;
+        lastTimestamp = timestamp;
         setIsTransitioning(true);
-        const transitionTimeout = setTimeout(() => {
+        
+        // Use RAF for transition instead of setTimeout
+        requestAnimationFrame(() => {
           setCurrentMediaIndex((prevIndex) => (prevIndex + 1) % heroMedia.length);
           setIsTransitioning(false);
-        }, 200);
-        // Store timeout for cleanup
-        return () => clearTimeout(transitionTimeout);
+        });
       } else {
         elapsedRef.current = newElapsed;
       }
+
+      rafId = requestAnimationFrame(animate);
     };
 
-    // Clear any existing interval
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = undefined;
-    }
-    
-    // Start new interval
-    intervalRef.current = setInterval(updateProgress, 100);
+    rafId = requestAnimationFrame(animate);
 
     return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = undefined;
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
       }
       elapsedRef.current = 0;
+      lastTimestamp = null;
     };
   }, [isPaused]);
 

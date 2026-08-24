@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { scrollTriggerManager } from "@/lib/scrollTriggerManager";
 
 export default function SmoothScrollProvider({
   children,
@@ -64,16 +65,16 @@ export default function SmoothScrollProvider({
     gsap.ticker.add(tickerCallback);
     gsap.ticker.lagSmoothing(0);
 
-    // Delayed refresh for initial layout
+    // Delayed refresh for initial layout using manager
     const refreshTimeout = window.setTimeout(() => {
       if (!cleanedUpRef.current) {
-        ScrollTrigger.refresh();
+        scrollTriggerManager.debouncedRefresh(100);
       }
     }, 300);
 
     const onLoad = () => {
       if (!cleanedUpRef.current) {
-        ScrollTrigger.refresh();
+        scrollTriggerManager.debouncedRefresh(200);
       }
     };
     window.addEventListener("load", onLoad);

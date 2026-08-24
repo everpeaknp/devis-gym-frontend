@@ -8,6 +8,7 @@ import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 import { services } from "@/data/services";
 import { cldOptimize } from "@/lib/cloudinary";
+import { scrollTriggerManager } from "@/lib/scrollTriggerManager";
 
 export default function TrainingSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -74,7 +75,10 @@ export default function TrainingSection() {
           let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
           const handleResize = () => {
             if (resizeTimeout) clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(remeasure, 150);
+            resizeTimeout = setTimeout(() => {
+              remeasure();
+              // Don't call ScrollTrigger.refresh here - let the manager handle it globally
+            }, 250);
           };
 
           window.addEventListener("resize", handleResize);
