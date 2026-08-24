@@ -35,37 +35,51 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
 
     console.log("HeroScrollSequence: Initializing");
 
-    const frameCount = 31;
+    // Reduce frame count on mobile for better performance
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const frameCount = isMobile ? 16 : 31; // Half frames on mobile (every other frame)
     const frames = Array.from(framesContainer.querySelectorAll<HTMLImageElement>(".hero-frame"));
     
-    if (frames.length === 0) {
+    // On mobile, only use every other frame for better performance
+    const activeFrames = isMobile 
+      ? frames.filter((_, index) => index % 2 === 0) // Every 2nd frame
+      : frames;
+    
+    if (activeFrames.length === 0) {
       console.error("No .hero-frame elements found!");
       return;
     }
 
+    console.log(`Using ${activeFrames.length} frames (mobile: ${isMobile})`);
+
     // Set initial state for all frames with GSAP
-    frames.forEach((frame, i) => {
+    frames.forEach((frame) => {
       gsap.set(frame, { 
-        opacity: i === 0 ? 1 : 0,
+        opacity: 0,
         visibility: "visible",
         scale: 1.8,
         transformOrigin: "center center",
         force3D: true
       });
     });
+    
+    // Set first active frame visible
+    if (activeFrames[0]) {
+      gsap.set(activeFrames[0], { opacity: 1 });
+    }
 
     // Throttle frame updates for better mobile performance
     let currentFrameIndex = 0;
     let ticking = false;
 
     const updateFrames = (newIndex: number) => {
-      if (newIndex === currentFrameIndex || newIndex < 0 || newIndex >= frameCount) return;
+      if (newIndex === currentFrameIndex || newIndex < 0 || newIndex >= activeFrames.length) return;
       
-      frames[currentFrameIndex].style.opacity = '0';
-      frames[newIndex].style.opacity = '1';
+      activeFrames[currentFrameIndex].style.opacity = '0';
+      activeFrames[newIndex].style.opacity = '1';
       currentFrameIndex = newIndex;
       
-      const dayValue = getDayValue(newIndex);
+      const dayValue = getDayValue(newIndex * (isMobile ? 2 : 1)); // Adjust for skipped frames
       setCurrentDay(dayValue);
     };
 
@@ -85,9 +99,9 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
         ticking = true;
         requestAnimationFrame(() => {
           const progress = self.progress;
-          const exactFrame = progress * (frameCount - 1);
+          const exactFrame = progress * (activeFrames.length - 1);
           const frameIndex = Math.floor(exactFrame);
-          const clampedIndex = Math.min(Math.max(frameIndex, 0), frameCount - 1);
+          const clampedIndex = Math.min(Math.max(frameIndex, 0), activeFrames.length - 1);
           
           updateFrames(clampedIndex);
           ticking = false;
@@ -104,7 +118,7 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
       ScrollTrigger.refresh();
     }, 100);
 
-    // Resize handler with debounce
+    // Resize handler with debounce - desktop only
     let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
     const handleResize = () => {
       if (resizeTimeout) clearTimeout(resizeTimeout);
@@ -113,8 +127,6 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
       }, 250);
     };
 
-    // Only add resize on desktop
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     if (!isMobile) {
       window.addEventListener('resize', handleResize);
     }
@@ -124,7 +136,9 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
       console.log("HeroScrollSequence: Cleanup");
       clearTimeout(initialRefresh);
       if (resizeTimeout) clearTimeout(resizeTimeout);
-      window.removeEventListener('resize', handleResize);
+      if (!isMobile) {
+        window.removeEventListener('resize', handleResize);
+      }
       st.kill();
     };
   }, []); // Remove heroSectionRef dependency to prevent recreation

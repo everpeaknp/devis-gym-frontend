@@ -25,14 +25,22 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         handleComplete()
       }, 1000)
       
-      return () => clearTimeout(timer)
+      return () => {
+        clearTimeout(timer)
+        // Ensure class is removed even if component unmounts early
+        document.body.classList.remove('loading-screen-active')
+      }
     } else {
       // Show "ENTER GYM" button after initial loading
       const timer = setTimeout(() => {
         setShowPreferences(true)
       }, 2000)
       
-      return () => clearTimeout(timer)
+      return () => {
+        clearTimeout(timer)
+        // Ensure class is removed even if component unmounts early
+        document.body.classList.remove('loading-screen-active')
+      }
     }
   }, [])
 

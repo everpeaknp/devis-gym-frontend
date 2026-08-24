@@ -38,6 +38,7 @@ export default function Lightbox({
 
   useEffect(() => {
     // Prevent body scroll
+    const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     // Animate in
@@ -58,7 +59,8 @@ export default function Lightbox({
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = "auto";
+      // Restore original overflow value, not "auto"
+      document.body.style.overflow = originalOverflow || "";
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [onClose, onNext, onPrev]);

@@ -91,28 +91,22 @@ export function ParallaxComponent() {
             <Image 
               src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268703/devis-gym/bg.jpg" 
               alt=""
-              width={800}
-              height={600}
+              fill
+              priority
               data-parallax-layer="1" 
               className="parallax__layer-img" 
-              loading="lazy"
+              quality={90}
+              sizes="100vw"
             />
-            <video 
+            <Image 
               src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268703/devis-gym/bg.jpg" 
-              autoPlay 
-              muted 
-              loop 
-              playsInline 
+              alt=""
+              fill
+              priority
               data-parallax-layer="2" 
               className="parallax__layer-img"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                position: 'absolute',
-                top: 0,
-                left: 0
-              }}
+              quality={90}
+              sizes="100vw"
             />
             <div data-parallax-layer="3" className="parallax__layer-title">
               <h2 className="parallax__title">Join Our Elite Membership</h2>
@@ -120,12 +114,12 @@ export function ParallaxComponent() {
             <Image 
               src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268785/devis-gym/backgrounds/parallax-layer.webp" 
               alt=""
-              width={800}
-              height={600}
+              fill
+              priority
               data-parallax-layer="4" 
               className="parallax__layer-img" 
-              loading="lazy"
-              quality={85}
+              quality={90}
+              sizes="100vw"
             />
           </div>
           <div className="parallax__fade"></div>
