@@ -11,15 +11,32 @@ export default function SmoothScrollProvider({
   children: React.ReactNode;
 }) {
   const lenisRef = useRef<Lenis | null>(null);
+  const tickerCallbackRef = useRef<((time: number) => void) | null>(null);
+  const cleanedUpRef = useRef(false);
 
   useEffect(() => {
+    // Prevent multiple instances
+    if (lenisRef.current) {
+      console.warn("[SmoothScroll] Instance already exists, skipping");
+      return;
+    }
+
     gsap.registerPlugin(ScrollTrigger);
+    cleanedUpRef.current = false;
 
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    if (prefersReducedMotion) return;
+    // Skip smooth scroll on mobile Safari for better performance
+    const isMobileSafari = /iPhone|iPad|iPod/.test(navigator.userAgent) && !/(CriOS|FxiOS|OPiOS|mercury)/i.test(navigator.userAgent);
+    
+    if (prefersReducedMotion || isMobileSafari) {
+      console.log("[SmoothScroll] Skipped - reduced motion or mobile Safari");
+      return;
+    }
+
+    console.log("[SmoothScroll] Initializing");
 
     const lenis = new Lenis({
       duration: 0.8,
@@ -32,36 +49,56 @@ export default function SmoothScrollProvider({
     });
     lenisRef.current = lenis;
 
-    // Expose lenis globally so other components (e.g. anchor links) can call lenis.scrollTo
+    // Expose lenis globally
     (window as unknown as { lenis: Lenis }).lenis = lenis;
-    // Effects in child components can run before this one (React fires effects
-    // bottom-up), so anything that needs window.lenis on its own first mount
-    // can't rely on it existing yet — this event lets them react once it does.
     window.dispatchEvent(new Event("lenis:ready"));
 
     lenis.on("scroll", ScrollTrigger.update);
 
     const tickerCallback = (time: number) => {
-      lenis.raf(time * 1000);
+      if (lenisRef.current && !cleanedUpRef.current) {
+        lenisRef.current.raf(time * 1000);
+      }
     };
+    tickerCallbackRef.current = tickerCallback;
     gsap.ticker.add(tickerCallback);
     gsap.ticker.lagSmoothing(0);
 
-    // Let pinned/scrubbed sections (e.g. HeroScrollSequence) recalc against Lenis-driven scroll
+    // Delayed refresh for initial layout
     const refreshTimeout = window.setTimeout(() => {
-      ScrollTrigger.refresh();
+      if (!cleanedUpRef.current) {
+        ScrollTrigger.refresh();
+      }
     }, 300);
 
-    const onLoad = () => ScrollTrigger.refresh();
+    const onLoad = () => {
+      if (!cleanedUpRef.current) {
+        ScrollTrigger.refresh();
+      }
+    };
     window.addEventListener("load", onLoad);
 
+    console.log("[SmoothScroll] Initialized");
+
     return () => {
+      console.log("[SmoothScroll] Cleanup started");
+      cleanedUpRef.current = true;
+
       window.clearTimeout(refreshTimeout);
       window.removeEventListener("load", onLoad);
-      gsap.ticker.remove(tickerCallback);
-      lenis.destroy();
-      lenisRef.current = null;
+
+      if (tickerCallbackRef.current) {
+        gsap.ticker.remove(tickerCallbackRef.current);
+        tickerCallbackRef.current = null;
+      }
+
+      if (lenisRef.current) {
+        lenisRef.current.destroy();
+        lenisRef.current = null;
+      }
+
       (window as unknown as { lenis: Lenis | null }).lenis = null;
+      console.log("[SmoothScroll] Cleanup complete");
     };
   }, []);
 

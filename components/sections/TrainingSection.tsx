@@ -25,8 +25,6 @@ export default function TrainingSection() {
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    let cleanupMarqueeResize: (() => void) | undefined;
-
     const ctx = gsap.context(() => {
       if (!prefersReducedMotion) {
         // Simple title animation - combined in one timeline
@@ -34,7 +32,7 @@ export default function TrainingSection() {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 70%",
-            once: true, // Only animate once for better performance
+            once: true,
           }
         })
         .fromTo(
@@ -49,20 +47,17 @@ export default function TrainingSection() {
           "-=0.2"
         );
 
-        // Marquee tracks whole-page scroll direction: slides left as the page
-        // scrolls down, right as it scrolls up, looping seamlessly forever
-        // (not just while this element is passing through the viewport).
+        // Marquee animation with proper cleanup
         if (scrollTextRef.current) {
           const scrollElement = scrollTextRef.current;
-          const speed = 0.5; // px of marquee travel per px of page scroll
+          const speed = 0.5;
 
-          // Measure once (and on resize) instead of on every scroll frame,
-          // so the scroll handler never forces a layout read.
           let half = scrollElement.scrollWidth / 2;
-          const remeasure = () => { half = scrollElement.scrollWidth / 2; };
-          window.addEventListener("resize", remeasure);
+          const remeasure = () => { 
+            half = scrollElement.scrollWidth / 2; 
+          };
 
-          ScrollTrigger.create({
+          const scrollTrigger = ScrollTrigger.create({
             start: 0,
             end: "max",
             onUpdate: (self) => {
@@ -75,7 +70,21 @@ export default function TrainingSection() {
             invalidateOnRefresh: true,
           });
 
-          cleanupMarqueeResize = () => window.removeEventListener("resize", remeasure);
+          // Debounced resize handler
+          let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+          const handleResize = () => {
+            if (resizeTimeout) clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(remeasure, 150);
+          };
+
+          window.addEventListener("resize", handleResize);
+
+          // Store cleanup function
+          return () => {
+            window.removeEventListener("resize", handleResize);
+            if (resizeTimeout) clearTimeout(resizeTimeout);
+            scrollTrigger.kill();
+          };
         }
       } else {
         // Show immediately if reduced motion
@@ -84,7 +93,6 @@ export default function TrainingSection() {
     }, sectionRef);
 
     return () => {
-      cleanupMarqueeResize?.();
       ctx.revert();
     };
   }, []);

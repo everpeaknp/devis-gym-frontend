@@ -102,28 +102,37 @@ export default function Hero() {
   // Preload and prepare videos for smooth playback
   useEffect(() => {
     const videos = videoRefs.current;
+    const loadHandlers: Map<HTMLVideoElement, () => void> = new Map();
     
     // Preload all videos
     videos.forEach((video, index) => {
       if (video && heroMedia[index]?.type === 'video') {
-        video.load(); // Reload to ensure it's properly loaded
+        video.load();
         
-        // Set video to ready state
-        video.addEventListener('canplaythrough', () => {
+        const handler = () => {
           if (index === currentMediaIndex && video.paused) {
             video.currentTime = 0;
-            // Better error handling for autoplay
             video.play().catch((error) => {
-              // Handle AbortError and other autoplay issues silently
               if (error.name !== 'AbortError') {
                 console.warn('Video autoplay prevented:', error);
               }
             });
           }
-        });
+        };
+        
+        loadHandlers.set(video, handler);
+        video.addEventListener('canplaythrough', handler);
       }
     });
-  }, []);
+
+    // Cleanup all event listeners
+    return () => {
+      loadHandlers.forEach((handler, video) => {
+        video.removeEventListener('canplaythrough', handler);
+      });
+      loadHandlers.clear();
+    };
+  }, [currentMediaIndex]);
 
   // Handle video playback when slide changes or pause state changes
   useEffect(() => {
@@ -159,16 +168,18 @@ export default function Hero() {
     const updateProgress = () => {
       if (isPaused) return;
 
-      const newElapsed = elapsedRef.current + 100; // Add 100ms
+      const newElapsed = elapsedRef.current + 100;
       setProgress(Math.min((newElapsed / slideInterval) * 100, 100));
 
       if (newElapsed >= slideInterval) {
         elapsedRef.current = 0;
         setIsTransitioning(true);
-        setTimeout(() => {
+        const transitionTimeout = setTimeout(() => {
           setCurrentMediaIndex((prevIndex) => (prevIndex + 1) % heroMedia.length);
           setIsTransitioning(false);
-        }, 200); // Brief delay for smooth transition
+        }, 200);
+        // Store timeout for cleanup
+        return () => clearTimeout(transitionTimeout);
       } else {
         elapsedRef.current = newElapsed;
       }
@@ -177,6 +188,7 @@ export default function Hero() {
     // Clear any existing interval
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
     }
     
     // Start new interval
@@ -185,7 +197,9 @@ export default function Hero() {
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
+        intervalRef.current = undefined;
       }
+      elapsedRef.current = 0;
     };
   }, [isPaused]);
 
@@ -328,16 +342,30 @@ export default function Hero() {
 
   // Rotate logo circle on scroll
   useEffect(() => {
+    let rafId: number | null = null;
+    let currentRotation = 0;
+
     const handleScroll = () => {
-      if (logoCircleRef.current) {
-        const scrollY = window.scrollY;
-        const rotation = scrollY * 0.15; // Rotation speed
-        logoCircleRef.current.style.transform = `rotate(${rotation}deg)`;
-      }
+      if (rafId !== null) return;
+      
+      rafId = requestAnimationFrame(() => {
+        if (logoCircleRef.current) {
+          const scrollY = window.scrollY;
+          currentRotation = scrollY * 0.15;
+          logoCircleRef.current.style.transform = `rotate(${currentRotation}deg)`;
+        }
+        rafId = null;
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+    };
   }, []);
 
   return (

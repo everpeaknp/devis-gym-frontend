@@ -29,19 +29,14 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
     const section = sectionRef.current;
     
     if (!framesContainer || !section) {
-      console.error("HeroScrollSequence: Missing refs", { 
-        framesContainer: !!framesContainer, 
-        section: !!section 
-      });
+      console.error("HeroScrollSequence: Missing refs");
       return;
     }
 
-    console.log("HeroScrollSequence: Refs found");
+    console.log("HeroScrollSequence: Initializing");
 
-    const frameCount = 31; // Using all available frames 001-031
+    const frameCount = 31;
     const frames = Array.from(framesContainer.querySelectorAll<HTMLImageElement>(".hero-frame"));
-    
-    console.log(`Found ${frames.length} frame elements`);
     
     if (frames.length === 0) {
       console.error("No .hero-frame elements found!");
@@ -53,71 +48,86 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
       gsap.set(frame, { 
         opacity: i === 0 ? 1 : 0,
         visibility: "visible",
-        scale: 1.8, // Increased from 1.6 to 1.8 to make images bigger
+        scale: 1.8,
         transformOrigin: "center center",
-        force3D: true // Hardware acceleration
+        force3D: true
       });
     });
-    
-    console.log("Initial frame visibility set with GSAP");
 
-    // Create scroll trigger with manual frame control (NO ANIMATION PROPERTY to prevent flickering)
+    // Throttle frame updates for better mobile performance
+    let currentFrameIndex = 0;
+    let ticking = false;
+
+    const updateFrames = (newIndex: number) => {
+      if (newIndex === currentFrameIndex || newIndex < 0 || newIndex >= frameCount) return;
+      
+      frames[currentFrameIndex].style.opacity = '0';
+      frames[newIndex].style.opacity = '1';
+      currentFrameIndex = newIndex;
+      
+      const dayValue = getDayValue(newIndex);
+      setCurrentDay(dayValue);
+    };
+
+    // Create scroll trigger
     const st = ScrollTrigger.create({
       trigger: section,
       start: "top top",
-      end: "+=1200", // Very fast transitions
+      end: "+=1200",
       pin: true,
-      scrub: 0.2, // Ultra responsive
-      pinSpacing: true, // Proper spacing to prevent overlap
-      anticipatePin: 1, // Better mobile performance
-      refreshPriority: -1, // Refresh after other elements
+      scrub: 0.2,
+      pinSpacing: true,
+      anticipatePin: 1,
+      refreshPriority: -1,
       onUpdate: (self) => {
-        const progress = self.progress;
+        if (ticking) return;
         
-        // Calculate which frame should be visible (0 to frameCount-1)
-        const exactFrame = progress * (frameCount - 1);
-        const frameIndex = Math.floor(exactFrame);
-        const clampedIndex = Math.min(Math.max(frameIndex, 0), frameCount - 1);
-        
-        // Hide all frames instantly with direct DOM manipulation (NO GSAP)
-        frames.forEach((frame, i) => {
-          frame.style.opacity = i === clampedIndex ? '1' : '0';
+        ticking = true;
+        requestAnimationFrame(() => {
+          const progress = self.progress;
+          const exactFrame = progress * (frameCount - 1);
+          const frameIndex = Math.floor(exactFrame);
+          const clampedIndex = Math.min(Math.max(frameIndex, 0), frameCount - 1);
+          
+          updateFrames(clampedIndex);
+          ticking = false;
         });
-        
-        // Update day counter with specific values
-        setCurrentDay(getDayValue(clampedIndex));
-        
-        console.log(`Frame: ${clampedIndex + 1}/${frameCount} | Day: ${getDayValue(clampedIndex)} | Progress: ${(progress * 100).toFixed(1)}%`);
       },
-      onEnter: () => console.log("ScrollTrigger Entered - Section Pinned"),
-      onLeave: () => console.log("ScrollTrigger Left - Section Unpinned"),
-      onRefresh: () => console.log("ScrollTrigger Refreshed")
+      onEnter: () => console.log("ScrollTrigger Entered"),
+      onLeave: () => console.log("ScrollTrigger Left"),
     });
 
-    console.log(`GSAP ScrollTrigger created with PROPER PINNING (no overlap)`);
+    console.log("GSAP ScrollTrigger created");
 
-    // Force refresh after creation and on resize for mobile
-    const refreshTrigger = () => {
+    // Initial refresh
+    const initialRefresh = setTimeout(() => {
       ScrollTrigger.refresh();
-      console.log("ScrollTrigger force refreshed");
+    }, 100);
+
+    // Resize handler with debounce
+    let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+    const handleResize = () => {
+      if (resizeTimeout) clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 250);
     };
-    
-    setTimeout(refreshTrigger, 100);
-    
-    // Handle mobile orientation changes and viewport updates
-    window.addEventListener('resize', refreshTrigger);
-    window.addEventListener('orientationchange', () => {
-      setTimeout(refreshTrigger, 200); // Delay for orientation change
-    });
+
+    // Only add resize on desktop
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (!isMobile) {
+      window.addEventListener('resize', handleResize);
+    }
 
     // Cleanup
     return () => {
-      console.log("Cleanup ScrollTrigger");
-      window.removeEventListener('resize', refreshTrigger);
-      window.removeEventListener('orientationchange', refreshTrigger);
+      console.log("HeroScrollSequence: Cleanup");
+      clearTimeout(initialRefresh);
+      if (resizeTimeout) clearTimeout(resizeTimeout);
+      window.removeEventListener('resize', handleResize);
       st.kill();
     };
-  }, [heroSectionRef]);
+  }, []); // Remove heroSectionRef dependency to prevent recreation
 
   return (
     <div ref={sectionRef} className="relative w-full min-h-screen bg-background">
