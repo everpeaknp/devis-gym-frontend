@@ -148,10 +148,10 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
     <div ref={sectionRef} className="relative w-full min-h-screen bg-background">
       {/* Split Layout Container */}
       <div className="flex flex-col lg:grid lg:grid-cols-2 w-full min-h-screen">
-        {/* Left Side - Text */}
-        <div className="flex items-center justify-center lg:justify-start px-4 py-8 lg:px-16 lg:py-0 order-2 lg:order-1">
+        {/* Left Side - Text - More compact on mobile */}
+        <div className="flex items-center justify-center lg:justify-start px-4 py-6 lg:px-16 lg:py-0 order-2 lg:order-1">
           <div className="max-w-xl text-center lg:text-left">
-            <p className="font-display text-balance text-[clamp(1.5rem,8vw,4rem)] font-bold uppercase leading-[1.1] lg:leading-[1.05] tracking-tight text-white">
+            <p className="font-display text-balance text-[clamp(1.75rem,7vw,4rem)] font-bold uppercase leading-[1.15] lg:leading-[1.05] tracking-tight text-white">
               <span className="inline-block">Built</span>{" "}
               <span className="inline-block">for</span>{" "}
               <span className="inline-block">those</span>{" "}
@@ -165,8 +165,8 @@ export default function HeroScrollSequence({ heroSectionRef }: HeroScrollSequenc
           </div>
         </div>
 
-        {/* Right Side - Frame Animation */}
-        <div className="relative flex-1 min-h-[50vh] lg:min-h-full overflow-hidden order-1 lg:order-2">
+        {/* Right Side - Frame Animation - Taller on mobile for better visibility */}
+        <div className="relative flex-1 min-h-[60vh] lg:min-h-full overflow-hidden order-1 lg:order-2">
           <div 
             ref={framesRef}
             className="absolute inset-0 w-full h-full"

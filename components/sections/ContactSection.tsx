@@ -38,7 +38,7 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="bg-background overflow-hidden">
-      <div className="container-edge py-24 md:py-32 relative">
+      <div className="container-edge py-16 sm:py-20 md:py-24 lg:py-32 relative">
         <SectionHeading
           eyebrow="Contact"
           title="Get in touch"
@@ -49,7 +49,7 @@ export default function ContactSection() {
           }
         />
 
-        <div className="mt-14 grid grid-cols-2 gap-px overflow-hidden border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 sm:mt-10 md:mt-14 grid grid-cols-2 gap-px overflow-hidden border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
           {actions.map((action) => {
             const Icon = action.icon;
             return (
@@ -58,7 +58,7 @@ export default function ContactSection() {
                   href={action.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex h-full flex-col justify-between gap-14 bg-background p-8 transition-colors duration-300 hover:bg-background-elevated cursor-pointer"
+                  className="group flex h-full flex-col justify-between gap-8 sm:gap-10 md:gap-14 bg-background p-6 sm:p-8 transition-colors duration-300 hover:bg-background-elevated cursor-pointer"
                 >
                   <Icon
                     size={24}
@@ -66,7 +66,7 @@ export default function ContactSection() {
                     className="text-muted transition-colors duration-300 group-hover:text-accent"
                   />
                   <div>
-                    <h3 className="font-display text-lg font-bold uppercase tracking-tight">
+                    <h3 className="font-display text-base sm:text-lg font-bold uppercase tracking-tight">
                       {action.label}
                     </h3>
                     <p className="mt-1 text-sm text-muted-dim">{action.sub}</p>

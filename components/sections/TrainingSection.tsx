@@ -103,35 +103,35 @@ export default function TrainingSection() {
 
   return (
     <section ref={sectionRef} className="bg-background-elevated overflow-hidden">
-      <div className="container-edge pt-8 md:pt-12 pb-16 md:pb-20">
-        {/* Centered Heading with Animation */}
-        <div className="text-center mb-14">
+      <div className="container-edge pt-6 sm:pt-8 md:pt-12 pb-12 sm:pb-16 md:pb-20">
+        {/* Centered Heading with Animation - More compact on mobile */}
+        <div className="text-center mb-8 sm:mb-12 md:mb-14">
           <h2 className="font-oswald uppercase text-white">
             <span 
               ref={classesRef}
-              className="block text-2xl md:text-3xl font-normal tracking-wide opacity-0"
+              className="block text-xl sm:text-2xl md:text-3xl font-normal tracking-wide opacity-0"
             >
               Classes Designed
             </span>
             <span 
               ref={forYouRef}
-              className="block text-6xl md:text-7xl font-bold mt-2 opacity-0"
+              className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mt-1 sm:mt-2 opacity-0"
             >
               For You
             </span>
           </h2>
         </div>
 
-        {/* Start fast. Finish faster. - Scroll-triggered animation */}
-        <div className="w-full mb-16 overflow-hidden relative">
+        {/* Start fast. Finish faster. - Scroll-triggered animation - Smaller on mobile */}
+        <div className="w-full mb-8 sm:mb-12 md:mb-16 overflow-hidden relative">
           <div 
             ref={scrollTextRef}
             className="whitespace-nowrap flex"
             style={{
               fontFamily: '"Pilat Condensed", sans-serif',
               fontWeight: 800,
-              fontSize: 'clamp(60px, 8vw, 95px)',
-              lineHeight: '95px',
+              fontSize: 'clamp(40px, 8vw, 95px)',
+              lineHeight: '1.1',
               color: 'rgb(206, 249, 82)',
               transform: 'translate3d(0, 0, 0)',
               willChange: 'transform',
@@ -165,8 +165,8 @@ export default function TrainingSection() {
               <Reveal key={service.id} delay={i * 0.1}>
                 <Link href={servicePath} className="block">
                   <div className="group cursor-pointer">
-                      {/* Background Image */}
-                      <div className="h-[300px] md:h-[450px] overflow-hidden relative rounded-lg shadow-xl">
+                      {/* Background Image - Reduced height on mobile */}
+                      <div className="h-[220px] sm:h-[280px] md:h-[350px] lg:h-[450px] overflow-hidden relative rounded-lg shadow-xl">
                         <Image
                           src={cldOptimize(service.image, 700)}
                           alt={service.name}
@@ -182,27 +182,27 @@ export default function TrainingSection() {
                         <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
 
-                      {/* Text Below Image */}
-                      <div className="bg-background-elevated py-6 relative rounded-b-lg shadow-xl transition-shadow duration-300">
+                      {/* Text Below Image - Compact on mobile */}
+                      <div className="bg-background-elevated py-4 sm:py-5 md:py-6 relative rounded-b-lg shadow-xl transition-shadow duration-300">
                         <h3 
-                          className="font-oswald uppercase text-white whitespace-pre-line pr-12 transition-all duration-300 group-hover:text-[#c7ff3d]"
+                          className="font-oswald uppercase text-white whitespace-pre-line pr-10 sm:pr-12 transition-all duration-300 group-hover:text-[#c7ff3d]"
                           style={{ 
                             fontWeight: 700,
-                            fontSize: '30px',
-                            lineHeight: '38px',
+                            fontSize: 'clamp(20px, 5vw, 30px)',
+                            lineHeight: 'clamp(26px, 5.5vw, 38px)',
                             textShadow: '0 2px 4px rgba(0,0,0,0.3)',
                           }}
                         >
                           {service.name}
                         </h3>
                         
-                        {/* Arrow Icon */}
+                        {/* Arrow Icon - Smaller on mobile */}
                         <Image
                           src="https://res.cloudinary.com/ufiebboc/image/upload/v1786268854/devis-gym/icons/arrow-right.svg"
                           alt=""
                           width={36}
                           height={36}
-                          className="absolute bottom-6 right-0 w-9 h-9 transition-all duration-300 group-hover:translate-x-2 group-hover:scale-110"
+                          className="absolute bottom-4 sm:bottom-5 md:bottom-6 right-0 w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 transition-all duration-300 group-hover:translate-x-2 group-hover:scale-110"
                           style={{ 
                             filter: 'brightness(0) saturate(100%) invert(88%) sepia(85%) saturate(4447%) hue-rotate(358deg) brightness(102%) contrast(101%)',
                           }}

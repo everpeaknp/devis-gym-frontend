@@ -44,8 +44,8 @@ export default function SectionHeading({
       </div>
       <h2
         className={clsx(
-          "font-display mt-3 text-balance font-extrabold uppercase leading-[0.95] tracking-tight text-foreground",
-          "text-[clamp(2.25rem,6vw,4.5rem)]"
+          "font-display mt-2 sm:mt-3 text-balance font-extrabold uppercase leading-[0.95] tracking-tight text-foreground",
+          "text-[clamp(1.75rem,6vw,4.5rem)]"
         )}
       >
         {title}
@@ -53,7 +53,7 @@ export default function SectionHeading({
       {description && (
         <p
           className={clsx(
-            "mt-5 max-w-xl text-base leading-relaxed text-muted",
+            "mt-3 sm:mt-4 md:mt-5 max-w-xl text-sm sm:text-base leading-relaxed text-muted px-2 sm:px-0",
             align === "center" && "mx-auto"
           )}
         >

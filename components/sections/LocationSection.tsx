@@ -10,18 +10,18 @@ export default function LocationSection() {
 
   return (
     <section id="location" className="bg-background-elevated">
-      <div className="container-edge py-24 md:py-32 md:pb-12">
+      <div className="container-edge py-16 sm:py-20 md:py-24 lg:py-32 md:pb-12">
         <SectionHeading eyebrow="Location" title="Find us in Pokhara" />
 
-        <div className="mt-14 grid gap-6 lg:grid-cols-[1fr_1.3fr]">
+        <div className="mt-8 sm:mt-10 md:mt-14 grid gap-4 sm:gap-6 lg:grid-cols-[1fr_1.3fr]">
           <Reveal>
-            <div className="flex h-full flex-col justify-between border border-border p-8">
+            <div className="flex h-full flex-col justify-between border border-border p-6 sm:p-8">
               <div>
                 <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">
                   <MapPin size={14} className="text-white" />
                   {businessData.location.city}, {businessData.location.country}
                 </p>
-                <p className="font-display mt-4 text-3xl font-extrabold uppercase leading-tight">
+                <p className="font-display mt-3 sm:mt-4 text-2xl sm:text-3xl font-extrabold uppercase leading-tight">
                   Devi&apos;s Gym
                 </p>
                 <p className="mt-4 text-sm leading-relaxed text-muted">
@@ -58,7 +58,7 @@ export default function LocationSection() {
               <Button
                 asChild
                 variant="default"
-                className="mt-10 w-fit"
+                className="mt-6 sm:mt-8 md:mt-10 w-fit"
               >
                 <a 
                   href={businessData.location.mapsUrl}

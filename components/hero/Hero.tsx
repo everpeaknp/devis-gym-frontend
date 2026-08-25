@@ -384,7 +384,7 @@ export default function Hero() {
       id="home"
       className="relative flex w-full flex-col justify-center bg-background select-none"
       style={{ 
-        minHeight: '100dvh', // Dynamic viewport height for mobile
+        minHeight: '100svh', // Use svh for better mobile support
         overflow: 'hidden',
         zIndex: 50,
         cursor: isDragging ? 'grabbing' : 'grab',
@@ -445,6 +445,7 @@ export default function Hero() {
                       videoRefs.current[index] = el;
                     }}
                     src={media.src}
+                    poster={heroMedia.find((_, i) => i === index && heroMedia[i].type === 'image')?.src || heroMedia[2].src}
                     autoPlay={isActive}
                     muted
                     loop
@@ -479,47 +480,56 @@ export default function Hero() {
         })}
       </div>
       
-      {/* Gradient overlay - darker left, lighter right */}
+      {/* Gradient overlay - adjusted for mobile */}
       <div 
         className="absolute inset-0"
+        style={{ 
+          zIndex: 10,
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.7) 100%)'
+        }}
+      />
+      
+      {/* Desktop-only side gradient */}
+      <div 
+        className="absolute inset-0 hidden lg:block"
         style={{ 
           zIndex: 10,
           background: 'linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.65) 40%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.1) 100%)'
         }}
       />
 
-      {/* Content Container */}
-      <div className="container-edge relative flex flex-col justify-center min-h-[calc(100vh-60px)] sm:min-h-[calc(100vh-80px)] md:min-h-[calc(100vh-92px)] px-4 sm:px-6 md:px-8" style={{ zIndex: 30 }}>
-        <div className="grid gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-16 items-center">
-          {/* Left Column - Title and Buttons */}
-          <div className="flex flex-col justify-center text-center lg:text-left space-y-3 sm:space-y-4">
-            {/* Welcome text - Show for all slides with animation */}
+      {/* Content Container - Mobile: bottom overlay, Desktop: left side */}
+      <div className="container-edge relative flex flex-col justify-end lg:justify-center min-h-[100svh] px-4 sm:px-6 md:px-8 pb-8 sm:pb-12 lg:pb-0" style={{ zIndex: 30 }}>
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-2 lg:gap-16 lg:items-center">
+          {/* Content - Mobile: compact bottom overlay, Desktop: full left column */}
+          <div className="flex flex-col justify-center text-center lg:text-left space-y-2 sm:space-y-3 lg:space-y-4">
+            {/* Welcome text - More compact on mobile */}
             <div
               className={`transition-all duration-500 ease-in-out ${
                 isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
               }`}
             >
-              <p className="font-gotham text-white font-bold uppercase tracking-wider mb-2 sm:mb-1 lg:mb-1"
+              <p className="font-gotham text-white font-bold uppercase tracking-wider mb-1 sm:mb-2 lg:mb-1"
                  style={{
                    fontWeight: 700,
-                   fontSize: 'clamp(14px, 3.5vw, 17px)',
-                   lineHeight: 'clamp(18px, 4.5vw, 24px)',
+                   fontSize: 'clamp(11px, 2.5vw, 17px)',
+                   lineHeight: 'clamp(14px, 3vw, 24px)',
                    color: 'rgb(255, 255, 255)'
                  }}>
                 {slideContent[currentMediaIndex].eyebrow}
               </p>
             </div>
 
-            {/* Main heading - Changes based on slide with animation */}
+            {/* Main heading - More readable on mobile */}
             <div
               className={`transition-all duration-500 ease-in-out ${
                 isTransitioning ? 'opacity-0 translate-y-8' : 'opacity-100 translate-y-0'
               }`}
             >
-              <h1 className="font-gotham-condensed flex flex-col font-bold uppercase leading-[0.9] tracking-tight relative mb-3 sm:mb-3 lg:mb-4"
+              <h1 className="font-gotham-condensed flex flex-col font-bold uppercase leading-[0.9] tracking-tight relative mb-2 sm:mb-3 lg:mb-4"
                   style={{
-                    fontSize: 'clamp(48px, 12vw, 81px)',
-                    lineHeight: 'clamp(48px, 12vw, 81px)',
+                    fontSize: 'clamp(36px, 10vw, 81px)',
+                    lineHeight: 'clamp(36px, 10vw, 81px)',
                     fontWeight: 700,
                     color: 'rgb(255, 255, 255)'
                   }}>
@@ -531,24 +541,24 @@ export default function Hero() {
               </h1>
             </div>
 
-            {/* Description text - Show for all slides with animation */}
+            {/* Description text - Shorter on small mobile */}
             <div
               className={`transition-all duration-500 ease-in-out ${
                 isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
               }`}
             >
-              <p className="font-gotham text-white mb-3 sm:mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0"
+              <p className="font-gotham text-white mb-3 sm:mb-4 lg:mb-5 max-w-lg mx-auto lg:mx-0 hidden sm:block"
                  style={{
                    fontWeight: 500,
-                   fontSize: 'clamp(12px, 2.8vw, 13px)',
-                   lineHeight: 'clamp(17px, 3.8vw, 19px)',
+                   fontSize: 'clamp(13px, 2.5vw, 15px)',
+                   lineHeight: 'clamp(18px, 3.5vw, 22px)',
                    color: 'rgb(255, 255, 255)'
                  }}>
                 {slideContent[currentMediaIndex].description}
               </p>
             </div>
 
-            {/* Hero Buttons with animation */}
+            {/* Hero Buttons - More compact on mobile */}
             <div
               className={`flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center lg:justify-start relative z-10 transition-all duration-500 ease-in-out ${
                 isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
@@ -568,7 +578,7 @@ export default function Hero() {
                 </a>
               </span>
               {slideContent[currentMediaIndex].secondaryCta && (
-                <span className="hero-cta">
+                <span className="hero-cta hidden sm:inline-block">
                   <a
                     href={slideContent[currentMediaIndex].secondaryCta.href}
                     className="bg-transparent border border-white text-white px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold uppercase tracking-wide hover:bg-white hover:text-black transition-colors rounded-full w-full sm:w-auto inline-block text-center"
@@ -592,9 +602,9 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Current Slide Indicator with Progress - Bottom Right Corner */}
+      {/* Current Slide Indicator with Progress - Bottom Right Corner - Hidden on mobile */}
       <div 
-        className="absolute bottom-4 right-2 sm:right-3 lg:right-4 z-40 cursor-pointer"
+        className="absolute bottom-4 right-2 sm:right-3 lg:right-4 z-40 cursor-pointer hidden sm:block"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleProgressClick}

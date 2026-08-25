@@ -38,17 +38,17 @@ export default function MotivationSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-[#121212] py-24 md:py-32 overflow-hidden">
+    <section ref={sectionRef} className="bg-[#121212] py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
       <div className="container-edge">
-        <div className="flex flex-col gap-8 md:gap-12">
+        <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-12">
           {/* Line 1 - Center aligned, moves right */}
           <div ref={line1Ref} className="text-center">
             <h2 
-              className="text-[#f5f5f5] leading-none"
+              className="text-[#f5f5f5] leading-none px-2"
               style={{
                 fontFamily: '"Pilat Condensed", sans-serif',
                 fontWeight: 800,
-                fontSize: 'clamp(36px, 6vw, 75px)',
+                fontSize: 'clamp(28px, 6vw, 75px)',
               }}
             >
               YOUR COUCH IS VERY
@@ -58,11 +58,11 @@ export default function MotivationSection() {
           {/* Line 2 - Center aligned, moves left */}
           <div ref={line2Ref} className="text-center">
             <h2 
-              className="text-[#f5f5f5] leading-none whitespace-nowrap"
+              className="text-[#f5f5f5] leading-none px-2"
               style={{
                 fontFamily: '"Pilat Condensed", sans-serif',
                 fontWeight: 800,
-                fontSize: 'clamp(36px, 6vw, 75px)',
+                fontSize: 'clamp(28px, 6vw, 75px)',
               }}
             >
               TASTIER IF YOU ADD IT
@@ -72,11 +72,11 @@ export default function MotivationSection() {
           {/* Line 3 - Center aligned, moves right */}
           <div ref={line3Ref} className="text-center">
             <h2 
-              className="text-[#f5f5f5] leading-none"
+              className="text-[#f5f5f5] leading-none px-2"
               style={{
                 fontFamily: '"Pilat Condensed", sans-serif',
                 fontWeight: 800,
-                fontSize: 'clamp(36px, 6vw, 75px)',
+                fontSize: 'clamp(28px, 6vw, 75px)',
               }}
             >
               EXHAUSTED LIES

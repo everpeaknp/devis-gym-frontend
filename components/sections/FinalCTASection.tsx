@@ -32,26 +32,26 @@ export default function FinalCTASection() {
         />
       </motion.div>
 
-      <div className="container-edge py-16 md:py-20 relative z-10">
+      <div className="container-edge py-12 sm:py-16 md:py-20 relative z-10">
         <Reveal>
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="font-oswald text-[48px] leading-[56px] md:text-[64px] md:leading-[72px] font-bold uppercase tracking-tight mb-6 text-white">
+            <h2 className="font-oswald text-[clamp(36px,8vw,64px)] leading-[1.15] md:leading-[1.125] font-bold uppercase tracking-tight mb-4 sm:mb-6 text-white">
               Ready to <span className="text-accent">Start Training?</span>
             </h2>
-            <p className="text-muted text-base leading-relaxed mb-8">
+            <p className="text-muted text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 px-2">
               Join our community and experience what real training feels like.
               No commitments, no pressure - just results.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0">
               <a
                 href="/contact"
-                className="inline-block px-8 py-4 bg-accent hover:bg-accent-bright text-black font-bold uppercase tracking-wide transition-colors rounded-none"
+                className="inline-block px-6 py-3 sm:px-8 sm:py-4 bg-accent hover:bg-accent-bright text-black font-bold text-sm sm:text-base uppercase tracking-wide transition-colors rounded-none"
               >
                 Contact Us
               </a>
               <a
                 href="/#membership"
-                className="inline-block px-8 py-4 bg-transparent border border-zinc-700 hover:bg-white hover:border-white text-white hover:text-black font-bold uppercase tracking-wide transition-all rounded-none"
+                className="inline-block px-6 py-3 sm:px-8 sm:py-4 bg-transparent border border-zinc-700 hover:bg-white hover:border-white text-white hover:text-black font-bold text-sm sm:text-base uppercase tracking-wide transition-all rounded-none"
               >
                 View Membership
               </a>
