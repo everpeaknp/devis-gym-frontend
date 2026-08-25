@@ -19,7 +19,7 @@ export const aboutStats = [
   {
     id: "hours",
     value: "Sun-Fri",
-    label: "5:00 AM - 10:00 PM",
+    label: "5:00 AM - 9:00 PM",
   },
 ];
 
@@ -27,10 +27,11 @@ export const aboutTeam = {
   heading: "Meet Our Team",
   body: "Our certified trainers are passionate about helping you achieve your fitness goals. With years of experience and specialized training, they provide personalized guidance and support throughout your journey.",
   members: [
-    {      id: "trainer-5",
+    {      
+      id: "trainer-5",
       name: "Bijay Grg",
       role: "Certified Trainer",
-      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269634/devis-gym/people/Trainers/BijayGrg.JPG.webp",
+      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269614/devis-gym/people/Trainers/AbhishekMishra.JPG.webp",
       social: {
         facebook: "#",
         twitter: "#",
@@ -49,10 +50,11 @@ export const aboutTeam = {
         youtube: "#",
       },
     },
-    {      id: "trainer-4",
+    {      
+      id: "trainer-4",
       name: "Barsha Grg",
       role: "Zumba Trainer",
-      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269630/devis-gym/people/Trainers/BarshaGrg.JPG.webp",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSigzsVpWsmD90LSK0GBfPah5VTzqxcBe71HYMhtorRPQCdZGFEODnBpziq&s=10",
       social: {
         facebook: "#",
         twitter: "#",
@@ -64,7 +66,7 @@ export const aboutTeam = {
        id: "trainer-3",
       name: "Abhishek Mishra",
       role: "Certified Trainer",
-      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269614/devis-gym/people/Trainers/AbhishekMishra.JPG.webp",
+      image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269634/devis-gym/people/Trainers/BijayGrg.JPG.webp",
       social: {
         facebook: "#",
         twitter: "#",

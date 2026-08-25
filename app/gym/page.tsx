@@ -189,7 +189,7 @@ export default function GymPage() {
               </div>
               <div className="text-center">
                 <div className="font-oswald text-4xl font-bold text-accent mb-1">Sun-Fri</div>
-                <div className="text-muted text-xs uppercase tracking-wide">5 AM - 10 PM</div>
+                <div className="text-muted text-xs uppercase tracking-wide">5 AM - 9 PM</div>
               </div>
             </div>
             
