@@ -107,17 +107,17 @@ const AboutContent = () => {
           </Reveal>
 
           <Reveal>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto justify-items-center">
               {aboutTeam.members.map((member, index) => (
                 <div 
                   key={member.id} 
-                  className="group"
+                  className="group w-full max-w-[360px]"
                   style={{ 
                     marginTop: index % 2 === 0 ? '0' : '3rem'
                   }}
                 >
                   {/* Photo with Hover Effect */}
-                  <div className="relative h-[360px] w-full max-w-[285px] mx-auto overflow-hidden bg-background-elevated">
+                  <div className="relative h-[450px] w-full overflow-hidden bg-background-elevated">
                     <Image
                       src={member.image || "/about/background.jpg"}
                       alt={member.name}
@@ -149,7 +149,7 @@ const AboutContent = () => {
                   </div>
 
                   {/* Text Below Photo */}
-                  <div className="bg-background-elevated py-6 px-6 w-full max-w-[285px] mx-auto">
+                  <div className="bg-background-elevated py-6 px-6 w-full">
                     <h3 className="font-oswald text-[24px] leading-[32px] font-bold uppercase tracking-tight mb-1 text-white">
                       {member.name}
                     </h3>

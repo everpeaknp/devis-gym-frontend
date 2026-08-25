@@ -449,10 +449,13 @@ export default function Hero() {
                     muted
                     loop
                     playsInline
-                    className="w-full h-full object-cover"
+                    className="w-full h-full"
                     preload={isActive ? "auto" : "metadata"}
                     style={{
                       objectFit: 'cover',
+                      objectPosition: 'center',
+                      width: '100%',
+                      height: '100%',
                       willChange: 'transform',
                       backfaceVisibility: 'hidden',
                       transform: 'translateZ(0)' // Hardware acceleration

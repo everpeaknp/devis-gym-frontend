@@ -50,21 +50,9 @@ export const aboutTeam = {
         youtube: "#",
       },
     },
-    {      
-      id: "trainer-4",
-      name: "Barsha Grg",
-      role: "Zumba Trainer",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSigzsVpWsmD90LSK0GBfPah5VTzqxcBe71HYMhtorRPQCdZGFEODnBpziq&s=10",
-      social: {
-        facebook: "#",
-        twitter: "#",
-        youtube: "#",
-     
-      },
-    },
     {
        id: "trainer-3",
-      name: "Abhishek Mishra",
+      name: "Anup Grg",
       role: "Certified Trainer",
       image: "https://res.cloudinary.com/ufiebboc/image/upload/v1786269634/devis-gym/people/Trainers/BijayGrg.JPG.webp",
       social: {
