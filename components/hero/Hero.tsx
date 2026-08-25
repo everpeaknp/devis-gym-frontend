@@ -445,7 +445,6 @@ export default function Hero() {
                       videoRefs.current[index] = el;
                     }}
                     src={media.src}
-                    poster={heroMedia.find((_, i) => i === index && heroMedia[i].type === 'image')?.src || heroMedia[2].src}
                     autoPlay={isActive}
                     muted
                     loop
