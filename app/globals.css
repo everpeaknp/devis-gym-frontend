@@ -482,13 +482,6 @@ button {
   transition: background 0.3s ease;
 }
 
-/* Sticky only on mobile and tablet (below xl breakpoint) */
-@media (max-width: 1279px) {
-  .site-header-wrapper {
-    position: fixed;
-  }
-}
-
 .site-header-wrapper.scrolled {
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(10px);
@@ -551,7 +544,27 @@ button {
 }
 
 .logo-text {
-  display: block;
+  display: block !important;
+  font-family: var(--font-oswald);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  color: white;
+  white-space: nowrap;
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 768px) {
+  .logo-text {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-text {
+    font-size: 13px;
+  }
 }
 
 /* Desktop Horizontal Navigation */

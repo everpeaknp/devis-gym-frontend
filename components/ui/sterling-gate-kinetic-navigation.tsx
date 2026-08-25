@@ -203,7 +203,11 @@ export function Component() {
         <header className="header">
           <div className="container is--full">
             <nav className="nav-row">
-              <Link href="/" aria-label="home" className="nav-logo-row w-inline-block xl:block hidden">
+              <Link 
+                href="/" 
+                aria-label="home" 
+                className={`nav-logo-row w-inline-block block transition-opacity duration-300 ${isMenuOpen ? 'xl:block opacity-0 pointer-events-none' : 'opacity-100'}`}
+              >
                 <div className="logo-container">
                   <img src="/logo/logo.jpg" alt="Devi's Gym Logo" className="logo-image" />
                   <span className="logo-text">DEVI'S GYM</span>
