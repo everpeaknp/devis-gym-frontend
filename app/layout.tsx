@@ -22,7 +22,7 @@ const kanit = Kanit({
   variable: "--font-kanit",
 });
 
-const siteUrl = "https://devisgym.example.com";
+const siteUrl = "https://www.devisgym.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -39,9 +39,22 @@ export const metadata: Metadata = {
     "gym near Phewa Lake",
   ],
   icons: {
-    icon: "/logo/logo.jpg",
-    shortcut: "/logo/logo.jpg",
-    apple: "/logo/logo.jpg",
+    icon: [
+      { url: '/logo/logo.jpg', type: 'image/jpeg' },
+      { url: '/logo/logo.jpg', sizes: '32x32', type: 'image/jpeg' },
+      { url: '/logo/logo.jpg', sizes: '16x16', type: 'image/jpeg' },
+    ],
+    shortcut: '/logo/logo.jpg',
+    apple: [
+      { url: '/logo/logo.jpg', sizes: '180x180', type: 'image/jpeg' },
+    ],
+    other: [
+      {
+        rel: 'icon',
+        type: 'image/jpeg',
+        url: '/logo/logo.jpg',
+      },
+    ],
   },
   alternates: { canonical: "/" },
   openGraph: {
@@ -51,13 +64,16 @@ export const metadata: Metadata = {
     siteName: "Devi's Gym",
     title: "Devi's Gym | Gym in Pokhara, Nepal",
     description: "A gym in Pokhara, Nepal.",
-    images: [{ url: "/images/hero/hero-gym.jpg", width: 1200, height: 630 }],
+    images: [
+      { url: "/logo/logo.jpg", width: 800, height: 800, alt: "Devi's Gym Logo" },
+      { url: "/images/hero/hero-gym.jpg", width: 1200, height: 630, alt: "Devi's Gym" }
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Devi's Gym | Pokhara, Nepal",
     description: "A gym in Pokhara, Nepal.",
-    images: ["/images/hero/hero-gym.jpg"],
+    images: ["/logo/logo.jpg", "/images/hero/hero-gym.jpg"],
   },
   robots: { index: true, follow: true },
 };
